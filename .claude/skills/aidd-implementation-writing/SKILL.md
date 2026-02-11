@@ -1,5 +1,5 @@
 ---
-name: implementation-writing
+name: aidd-implementation-writing
 description: Write production implementation code for features, components, functions, and APIs. Use when the user asks to implement, build, create, or add functionality — including React components, server functions, database facades, and general JS/TS code.
 ---
 

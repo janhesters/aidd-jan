@@ -1,5 +1,5 @@
 ---
-name: test-writing
+name: aidd-test-writing
 description: Write unit, functional, integration, and E2E tests following RITEway principles (Readable, Isolated, Thorough, Explicit). Use when the user asks to write tests, add test coverage, create a test suite, or test a function/module/component/page. Supports Vitest, bun:test, and Playwright.
 ---
 
