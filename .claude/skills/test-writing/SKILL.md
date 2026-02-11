@@ -55,7 +55,7 @@ RITE {
     - Exception: global setup like MSW server start/stop.
     Use `onTestFinished` inside a local `setup()` function for cleanup.
     Use factory functions to create test data per test — no shared fixtures.
-    See [references/factories.md](references/factories.md) for factory patterns.
+    See [references/factories.sudo.md](references/factories.sudo.md) for factory patterns.
     Do not test types or shapes — that is redundant with TypeScript.
   }
 }
@@ -63,13 +63,13 @@ RITE {
 TestType {
   select(task) => match (task) {
     case (pure function, no I/O, no side effects) =>
-      Unit test — see [references/unit-tests.md](references/unit-tests.md)
+      Unit test — see [references/unit-tests.sudo.md](references/unit-tests.sudo.md)
     case (React component, UI rendering, user interaction) =>
-      Functional test — see [references/functional-tests.md](references/functional-tests.md)
+      Functional test — see [references/functional-tests.sudo.md](references/functional-tests.sudo.md)
     case (database, filesystem, network, real external system) =>
-      Integration test — see [references/integration-tests.md](references/integration-tests.md)
+      Integration test — see [references/integration-tests.sudo.md](references/integration-tests.sudo.md)
     case (full user flow, real browser, page navigation, cross-page) =>
-      E2E test — see [references/e2e-tests.md](references/e2e-tests.md)
+      E2E test — see [references/e2e-tests.sudo.md](references/e2e-tests.sudo.md)
   }
 }
 

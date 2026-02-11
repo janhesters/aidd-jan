@@ -99,8 +99,8 @@ ProgressiveDisclosure {
 
 Consult these references based on the skill's needs:
 
-- **Multi-step processes**: See [references/workflows.md](references/workflows.md)
-- **Output formats or quality standards**: See [references/output-patterns.md](references/output-patterns.md)
+- **Multi-step processes**: See [references/workflows.sudo.md](references/workflows.sudo.md)
+- **Output formats or quality standards**: See [references/output-patterns.sudo.md](references/output-patterns.sudo.md)
 - **SudoLang syntax reference**: See [references/sudolang.sudo.md](references/sudolang.sudo.md)
 
 ## Creation Process
