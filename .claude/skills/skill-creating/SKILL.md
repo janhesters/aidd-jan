@@ -1,5 +1,5 @@
 ---
-name: skill-creator
+name: skill-creating
 description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.
 license: Complete terms in LICENSE.txt
 ---
@@ -56,7 +56,14 @@ Frontmatter {
   description: string — what the skill does AND when to use it, max 1024 chars (required)
   compatibility: string? — environment requirements, max 500 chars
 
+  NamingConvention {
+    Skills: [domain]-[activity] using a gerund or deverbal noun.
+    Examples: test-writing, webapp-testing, skill-creating, canvas-design.
+    Skills describe what you know how to do; subagents describe who does it.
+  }
+
   Constraints {
+    name must follow the NamingConvention.
     description is the primary triggering mechanism — include all "when to use" info here.
     Do not include "When to Use" sections in the body; the body loads after triggering.
     Do not include fields beyond name, description, and compatibility.
