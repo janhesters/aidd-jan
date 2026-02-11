@@ -5,9 +5,19 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.14",
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
     "@types/archiver": "^6.0.3",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.15.2",
-    "bun-types": "^1.2.9"
+    "bun-types": "^1.2.9",
+    "husky": "^9.1.7",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "check:lint": "biome check",
+    "check:types": "tsc --noEmit",
+    "prepare": "husky",
+    "validate": "bun run check:types && bun run check:lint"
   }
 }
