@@ -8,7 +8,8 @@ license: Complete terms in LICENSE.txt
 
 constraint SpecAwareness {
   If the official skill specification at https://agentskills.io/specification
-  has not already been read this session, read it before proceeding.
+  and the Claude Code skills docs at https://code.claude.com/docs/en/skills
+  have not already been read this session, read them before proceeding.
 }
 
 Skill {
