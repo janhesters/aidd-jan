@@ -22,6 +22,10 @@ Load references based on the task at hand:
 
 ImplementationContext {
   match (task) {
+    case (form, form field, validation, schema, Conform, useForm, submit) =>
+      Read [references/conform.sudo.md](references/conform.sudo.md)
+      Read [references/react.sudo.md](references/react.sudo.md)
+      Read [references/javascript-typescript.sudo.md](references/javascript-typescript.sudo.md)
     case (React component, UI, page, route, JSX) =>
       Read [references/react.sudo.md](references/react.sudo.md)
       Read [references/javascript-typescript.sudo.md](references/javascript-typescript.sudo.md)

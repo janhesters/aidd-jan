@@ -53,8 +53,9 @@ TypeConstraints {
 }
 
 FormConstraints {
-  This project uses Conform (@conform-to/react) with Zod for form handling,
+  This project uses Conform's **Future API** with Zod for form handling,
   NOT react-hook-form.
+  For full Conform API details, read [references/conform.sudo.md](references/conform.sudo.md).
   For schemas:
     - Define Zod schemas in dedicated `*-schemas.ts` files next to the form component
     - Optionally include intent field: `intent: z.literal('actionName')`
