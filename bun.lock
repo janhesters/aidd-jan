@@ -39,6 +39,7 @@
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
         "@workspace/typescript-config": "workspace:*",
+        "react-router-auto-routes": "^0.7.1",
         "tailwindcss": "^4.1.18",
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
@@ -1181,6 +1182,8 @@
     "react-refresh": ["react-refresh@0.14.2", "", {}, "sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA=="],
 
     "react-router": ["react-router@7.13.0", "", { "dependencies": { "cookie": "^1.0.1", "set-cookie-parser": "^2.6.0" }, "peerDependencies": { "react": ">=18", "react-dom": ">=18" }, "optionalPeers": ["react-dom"] }, "sha512-PZgus8ETambRT17BUm/LL8lX3Of+oiLaPuVTRH3l1eLvSPpKO3AvhAEb5N7ihAFZQrYDqkvvWfFh9p0z9VsjLw=="],
+
+    "react-router-auto-routes": ["react-router-auto-routes@0.7.1", "", { "dependencies": { "picomatch": "^4.0.3" }, "peerDependencies": { "typescript": ">=5.0" }, "bin": { "migrate-auto-routes": "dist/cli.cjs" } }, "sha512-T/erxBvP7IM/UG7oGoKRH+Rniy+TDhdLwQ47gJG9sTcteVRQJpSD10fcWykk+MC2Cwee7L0tXH9jhO7ZNxJLMg=="],
 
     "readable-stream": ["readable-stream@4.7.0", "", { "dependencies": { "abort-controller": "^3.0.0", "buffer": "^6.0.3", "events": "^3.3.0", "process": "^0.11.10", "string_decoder": "^1.3.0" } }, "sha512-oIGGmcpTLwPga8Bn6/Z75SVaH1z5dUut2ibSyAMVhmUggWpmDn2dapB0n7f8nwaSiRtepAsfJyfXIO5DCVAODg=="],
 
