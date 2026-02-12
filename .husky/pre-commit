@@ -1,2 +1,1 @@
-bun run check:types
-bun run check:lint
+turbo run check:types check:lint

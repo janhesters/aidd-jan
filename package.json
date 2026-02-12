@@ -12,12 +12,19 @@
     "@types/node": "^22.15.2",
     "bun-types": "^1.2.9",
     "husky": "^9.1.7",
+    "turbo": "^2.8.7",
     "typescript": "^5.9.3"
   },
+  "name": "aidd-jan",
+  "packageManager": "bun@1.3.6",
   "scripts": {
-    "check:lint": "biome check",
-    "check:types": "tsc --noEmit",
+    "check:lint": "turbo run check:lint",
+    "check:types": "turbo run check:types",
     "prepare": "husky",
-    "validate": "bun run check:types && bun run check:lint"
-  }
+    "validate": "turbo run check:types check:lint"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
