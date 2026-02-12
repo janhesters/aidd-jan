@@ -1,14 +1,7 @@
 {
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "ESNext",
     "types": ["bun-types"]
   },
+  "extends": "@workspace/typescript-config/base.json",
   "include": [".claude/skills/**/scripts/**/*.ts"]
 }

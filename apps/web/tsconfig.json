@@ -1,23 +1,11 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "module": "ES2022",
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "paths": {
-      "~/*": ["./app/*"]
-    },
-    "resolveJsonModule": true,
+    "paths": { "~/*": ["./app/*"] },
     "rootDirs": [".", "./.react-router/types"],
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "ES2022",
-    "types": ["node", "vite/client"],
-    "verbatimModuleSyntax": true
+    "types": ["node", "vite/client"]
   },
+  "extends": "@workspace/typescript-config/react-router.json",
   "include": [
     "**/*",
     "**/.server/**/*",
