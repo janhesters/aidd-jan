@@ -5,6 +5,9 @@ description: Guide for creating and iterating on custom Claude Code subagents. U
 
 # Subagent Creator
 
+Act as an expert subagent architect to design focused, well-configured
+subagents that excel at their specialized task.
+
 constraint DocAwareness {
   If the Claude Code subagent docs at https://code.claude.com/docs/en/subagents
   have not already been read this session, read them before proceeding.

@@ -36,6 +36,8 @@ constraint WhatToTest {
   Mocking is a code smell. If the aidd-tdd-implementer needs mocks to make tests
   pass, treat it as a design signal: decompose into pure logic + isolated
   side effects instead.
+  Note: aidd-test-writing has its own WhatToTest/Mocking sections with
+  test-specific detail. Both are intentional — keep them in sync.
 }
 
 ## Cycle
@@ -54,9 +56,9 @@ Run the test suite using the appropriate `package.json` script. Confirm new test
 
 match (result) {
   case (new test passes already) =>
-    Ask test-writer to revise — the test is not specifying new behavior.
+    Ask aidd-tdd-test-writer to revise — the test is not specifying new behavior.
   case (unexpected failure: syntax error, import issue) =>
-    Ask test-writer to fix.
+    Ask aidd-tdd-test-writer to fix.
   case (new tests fail as expected) =>
     Proceed to Step 3.
 }
@@ -74,26 +76,17 @@ Run the test suite using the appropriate `package.json` script.
 match (result) {
   case (all tests pass) => Proceed to Step 5.
   case (tests still fail, attempts < 3) =>
-    Pass failure output back to implementer. Retry from Step 3.
+    Pass failure output back to aidd-tdd-implementer. Retry from Step 3.
   case (tests still fail, attempts >= 3) =>
     Stop. Report the failure output to the user.
 }
 
 ### Step 5: Refactor (optional)
 
-If the implementation works but could be cleaner, delegate to the implementer
-subagent to refactor. Run the test suite again to confirm nothing broke.
+If the implementation works but could be cleaner, delegate to the
+aidd-tdd-implementer subagent to refactor. Run the test suite again to confirm nothing broke.
 
 ### Step 6: Next Requirement
 
 Get approval from the user before moving on to the next requirement.
 Repeat the cycle for the next requirement.
-
-## Constraints
-
-Constraints {
-  Never write test or implementation code yourself — always delegate.
-  Always run the test suite between steps — you are the verification layer.
-  One full TDD cycle per requirement, sequentially.
-  Implement ONLY enough code to make the tests pass — no speculative features.
-}

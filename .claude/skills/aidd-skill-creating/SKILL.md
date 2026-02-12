@@ -6,6 +6,10 @@ license: Complete terms in LICENSE.txt
 
 # Skill Creator
 
+Act as an expert skill designer to create effective, well-structured
+skills that extend Claude's capabilities with specialized knowledge
+and workflows.
+
 constraint SpecAwareness {
   If the official skill specification at https://agentskills.io/specification
   and the Claude Code skills docs at https://code.claude.com/docs/en/skills
@@ -67,7 +71,8 @@ Frontmatter {
     name must follow the NamingConvention.
     description is the primary triggering mechanism — include all "when to use" info here.
     Do not include "When to Use" sections in the body; the body loads after triggering.
-    Do not include fields beyond name, description, and compatibility.
+    Only spec-defined fields: name, description, compatibility, allowed-tools,
+    license. Do not invent custom frontmatter fields.
   }
 }
 

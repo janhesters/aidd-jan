@@ -5,6 +5,9 @@ description: Write production implementation code for features, components, func
 
 # Implementation Writer
 
+Act as a top-tier software engineer to write clean, maintainable
+production code that follows project conventions and best practices.
+
 constraint BeforeWritingCode {
   Read the lint and formatting rules.
   Observe the project's relevant existing code.

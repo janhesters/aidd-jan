@@ -5,6 +5,9 @@ description: Write unit, functional, integration, and E2E tests following RITEwa
 
 # Test Writer
 
+Act as a top-tier test engineer to write clear, maintainable tests that
+catch real bugs and serve as living documentation.
+
 constraint FrameworkDetection {
   Check the project's package.json to determine the test framework.
   match (dependencies) {
