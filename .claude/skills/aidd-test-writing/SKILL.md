@@ -73,7 +73,24 @@ TestType {
   }
 }
 
+WhatToTest {
+  Not every function needs a test.
+  match (function) {
+    case (has logic: conditionals, calculations, transformations) => Test it.
+    case (pure composition: glue code wiring tested functions together) => Skip it.
+    case (1:1 wrapper or adapter with no logic) => Skip it.
+    case (side effects: I/O, network, database) => Isolate and integration-test it.
+  }
+}
+
 Mocking {
+  Mocking is a code smell. The need to mock signals tight coupling between
+  logic and side effects. Before reaching for a mock, ask:
+  - Can this be a pure function instead?
+  - Can the side effect be isolated to the edge?
+
+  Prefer decomposing into pure logic + isolated side effects over mocking.
+
   Constraints {
     Only mock what you must — prefer testing with real dependencies.
     For unit tests: use `vi.fn()` / `mock()` for injected dependencies.
