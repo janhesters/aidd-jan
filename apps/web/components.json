@@ -9,7 +9,7 @@
   },
   "iconLibrary": "tabler",
   "rsc": true,
-  "style": "radix-nova",
+  "style": "base-nova",
   "tailwind": {
     "baseColor": "neutral",
     "config": "",
