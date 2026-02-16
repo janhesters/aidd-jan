@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
+  data,
   isRouteErrorResponse,
   Links,
   Meta,
@@ -8,7 +11,14 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import {
+  getLocale,
+  i18nextMiddleware,
+  localeCookie,
+} from "./middleware/i18next";
 import "@workspace/ui/globals.css";
+
+export const middleware = [i18nextMiddleware];
 
 export const links: Route.LinksFunction = () => [
   { href: "https://fonts.googleapis.com", rel: "preconnect" },
@@ -23,9 +33,19 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export async function loader({ context }: Route.LoaderArgs) {
+  const locale = getLocale(context);
+  return data(
+    { locale },
+    { headers: { "Set-Cookie": await localeCookie.serialize(locale) } },
+  );
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { i18n } = useTranslation();
+
   return (
-    <html lang="en">
+    <html dir={i18n.dir(i18n.language)} lang={i18n.language}>
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -41,7 +61,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export default function App({ loaderData: { locale } }: Route.ComponentProps) {
+  const { i18n } = useTranslation();
+  useEffect(() => {
+    if (i18n.language !== locale) i18n.changeLanguage(locale);
+  }, [locale, i18n]);
   return <Outlet />;
 }
 
