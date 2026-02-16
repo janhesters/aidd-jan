@@ -15,6 +15,22 @@
     },
     "check:lint": {},
     "check:types": {},
+    "e2e": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*"
+      ],
+      "outputs": [
+        "playwright-report/**",
+        "test-results/**"
+      ],
+      "passThroughEnv": [
+        "PLAYWRIGHT_*"
+      ]
+    },
     "dev": {
       "cache": false,
       "persistent": true

@@ -1,0 +1,19 @@
+{
+  "name": "@workspace/playwright-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.10.3",
+    "@workspace/playwright-utilities": "workspace:*",
+    "web": "workspace:*"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  }
+}

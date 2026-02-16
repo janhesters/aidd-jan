@@ -1,0 +1,11 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "e2e": {
+      "outputs": [
+        "playwright-report/**",
+        "test-results/**"
+      ]
+    }
+  }
+}

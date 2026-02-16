@@ -22,10 +22,12 @@
     "check:lint": "turbo run check:lint",
     "check:types": "turbo run check:types",
     "prepare": "husky",
+    "e2e": "turbo run e2e",
     "validate": "turbo run check:types check:lint"
   },
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "tooling/*"
   ]
 }
