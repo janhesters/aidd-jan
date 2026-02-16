@@ -1,10 +1,16 @@
 import { Welcome } from "../welcome/welcome";
 import type { Route } from "./+types/index";
+import { getInstance } from "~/middleware/i18next";
 
-export function meta(_args: Route.MetaArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
+  const t = getInstance(context).getFixedT(null, "landing");
+  return { description: t("description"), title: t("title") };
+}
+
+export function meta({ data }: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { content: "Welcome to React Router!", name: "description" },
+    { title: data?.title },
+    { content: data?.description, name: "description" },
   ];
 }
 

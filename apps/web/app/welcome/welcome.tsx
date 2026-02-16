@@ -1,12 +1,16 @@
+import { useTranslation } from "react-i18next";
+
 import logoDark from "./logo-dark.svg";
 import logoLight from "./logo-light.svg";
 
 export function Welcome() {
+  const { t } = useTranslation("landing");
+
   return (
     <main className="flex items-center justify-center pt-16 pb-4">
       <div className="flex-1 flex flex-col items-center gap-16 min-h-0">
         <header className="flex flex-col items-center gap-9">
-          <h1 className="sr-only">Welcome to React Router</h1>
+          <h1 className="sr-only">{t("heading")}</h1>
           <div className="w-[500px] max-w-[100vw] p-4">
             <img
               alt="React Router"
@@ -23,10 +27,10 @@ export function Welcome() {
         <div className="max-w-[300px] w-full space-y-6 px-4">
           <nav className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">
             <p className="leading-6 text-gray-700 dark:text-gray-200 text-center">
-              What&apos;s next?
+              {t("nav.title")}
             </p>
             <ul>
-              {resources.map(({ href, text, icon }) => (
+              {resources.map(({ href, icon, textKey }) => (
                 <li key={href}>
                   <a
                     className="group flex items-center gap-3 self-stretch p-3 leading-normal text-blue-700 hover:underline dark:text-blue-500"
@@ -35,7 +39,7 @@ export function Welcome() {
                     target="_blank"
                   >
                     {icon}
-                    {text}
+                    {t(textKey)}
                   </a>
                 </li>
               ))}
@@ -52,11 +56,10 @@ const resources = [
     href: "https://reactrouter.com/docs",
     icon: (
       <svg
-        aria-label="React Router Docs"
+        aria-hidden="true"
         className="stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300"
         fill="none"
         height="20"
-        role="img"
         viewBox="0 0 20 20"
         width="24"
         xmlns="http://www.w3.org/2000/svg"
@@ -68,17 +71,16 @@ const resources = [
         />
       </svg>
     ),
-    text: "React Router Docs",
+    textKey: "nav.docs" as const,
   },
   {
     href: "https://rmx.as/discord",
     icon: (
       <svg
-        aria-label="Join Discord"
+        aria-hidden="true"
         className="stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300"
         fill="none"
         height="20"
-        role="img"
         viewBox="0 0 24 20"
         width="24"
         xmlns="http://www.w3.org/2000/svg"
@@ -89,6 +91,6 @@ const resources = [
         />
       </svg>
     ),
-    text: "Join Discord",
+    textKey: "nav.discord" as const,
   },
 ];
