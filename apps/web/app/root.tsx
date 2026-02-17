@@ -10,6 +10,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -21,25 +22,31 @@ import {
 import "@workspace/ui/globals.css";
 import "./styles/fonts.css";
 
-export const middleware = [i18nextMiddleware, securityMiddleware];
+export const middleware = [securityMiddleware, i18nextMiddleware];
 
 export async function loader({ context }: Route.LoaderArgs) {
   const locale = getLocale(context);
+  const allowIndexing = process.env.ALLOW_INDEXING !== "false";
   return data(
-    { locale },
+    { allowIndexing, locale },
     { headers: { "Set-Cookie": await localeCookie.serialize(locale) } },
   );
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const loaderData = useLoaderData<typeof loader>();
   const nonce = useNonce();
   const { i18n } = useTranslation();
+  const allowIndexing = loaderData?.allowIndexing;
 
   return (
     <html dir={i18n.dir(i18n.language)} lang={i18n.language}>
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
+        {allowIndexing ? null : (
+          <meta content="noindex, nofollow" name="robots" />
+        )}
         <Meta />
         <Links />
       </head>
