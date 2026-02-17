@@ -19,6 +19,7 @@ import {
   i18nextMiddleware,
   localeCookie,
 } from "./middleware/i18next";
+import { getEnv } from "./utils/env.server";
 import "@workspace/ui/globals.css";
 import "./styles/fonts.css";
 
@@ -26,9 +27,8 @@ export const middleware = [securityMiddleware, i18nextMiddleware];
 
 export async function loader({ context }: Route.LoaderArgs) {
   const locale = getLocale(context);
-  const allowIndexing = process.env.ALLOW_INDEXING !== "false";
   return data(
-    { allowIndexing, locale },
+    { ENV: getEnv(), locale },
     { headers: { "Set-Cookie": await localeCookie.serialize(locale) } },
   );
 }
@@ -37,7 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const loaderData = useLoaderData<typeof loader>();
   const nonce = useNonce();
   const { i18n } = useTranslation();
-  const allowIndexing = loaderData?.allowIndexing;
+  const allowIndexing = loaderData?.ENV.ALLOW_INDEXING !== "false";
 
   return (
     <html dir={i18n.dir(i18n.language)} lang={i18n.language}>
@@ -52,6 +52,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: This is how you expose public env variables to the client with React Router.
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(loaderData?.ENV ?? {})}`,
+          }}
+          nonce={nonce}
+        />
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
