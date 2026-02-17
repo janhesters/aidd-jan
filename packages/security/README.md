@@ -108,6 +108,22 @@ Add `securityMiddleware` to the `middleware` array in `root.tsx` (shown above). 
 
 `@nichtsam/helmet` ships sensible defaults for each directive. You only need to override the ones your app requires (like adding a nonce to `script-src`).
 
+## Controlling search engine indexing
+
+The security middleware reads the `ALLOW_INDEXING` environment variable. When set to `"false"`, two things happen:
+
+1. The middleware sets `X-Robots-Tag: noindex, nofollow` on every response.
+2. `root.tsx` renders `<meta name="robots" content="noindex, nofollow">` in the `<head>`.
+
+This is useful for staging and preview environments where you don't want search engines crawling the site. Omit the variable or set it to `"true"` for production.
+
+```bash
+# .env
+ALLOW_INDEXING="false"
+```
+
+The `ALLOW_INDEXING` value is validated at startup by `env.server.ts` and exposed to the client via `getEnv()`, so both the server header and the client meta tag stay in sync.
+
 ## Switching from report-only to enforced
 
 Start with `reportOnly: true`. This logs violations to the browser console without blocking anything, so you can catch issues before they break the app.
