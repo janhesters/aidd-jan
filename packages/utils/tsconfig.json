@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "types": ["bun-types"]
+  },
+  "extends": "@workspace/typescript-config/base.json",
+  "include": ["src"]
+}

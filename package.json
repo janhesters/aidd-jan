@@ -23,6 +23,7 @@
     "check:types": "turbo run check:types",
     "prepare": "husky",
     "e2e": "turbo run e2e",
+    "test": "turbo run test",
     "validate": "turbo run check:types check:lint"
   },
   "workspaces": [
