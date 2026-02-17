@@ -1,3 +1,5 @@
+import { useNonce } from "@workspace/security/nonce-provider";
+import { securityMiddleware } from "@workspace/security/security-middleware";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -17,21 +19,9 @@ import {
   localeCookie,
 } from "./middleware/i18next";
 import "@workspace/ui/globals.css";
+import "./styles/fonts.css";
 
-export const middleware = [i18nextMiddleware];
-
-export const links: Route.LinksFunction = () => [
-  { href: "https://fonts.googleapis.com", rel: "preconnect" },
-  {
-    crossOrigin: "anonymous",
-    href: "https://fonts.gstatic.com",
-    rel: "preconnect",
-  },
-  {
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-    rel: "stylesheet",
-  },
-];
+export const middleware = [i18nextMiddleware, securityMiddleware];
 
 export async function loader({ context }: Route.LoaderArgs) {
   const locale = getLocale(context);
@@ -42,6 +32,7 @@ export async function loader({ context }: Route.LoaderArgs) {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const nonce = useNonce();
   const { i18n } = useTranslation();
 
   return (
@@ -54,8 +45,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <ScrollRestoration />
-        <Scripts />
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
       </body>
     </html>
   );
