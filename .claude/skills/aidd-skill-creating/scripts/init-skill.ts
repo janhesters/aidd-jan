@@ -133,9 +133,9 @@ export function initSkill(skillName: string, basePath: string): InitResult {
 
   try {
     mkdirSync(skillDir, { recursive: true });
-  } catch (e) {
+  } catch (error) {
     return {
-      message: `Error creating directory: ${e}`,
+      message: `Error creating directory: ${error}`,
       path: null,
       success: false,
     };

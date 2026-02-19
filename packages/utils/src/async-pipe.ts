@@ -5,7 +5,7 @@
 type MaybePromise<T> = T | Promise<T>;
 
 // An async (or sync) function that may return a Promise.
-type AsyncFn = (...args: any[]) => MaybePromise<any>;
+type AsyncFn = (...args: Array<any>) => MaybePromise<any>;
 
 // A unary async (or sync) function.
 type AsyncUnaryFn = (arg: any) => MaybePromise<any>;
@@ -28,7 +28,7 @@ type ValidAsyncPipeline<Fns extends readonly AsyncFn[]> = Fns extends []
           infer Second extends AsyncFn,
           ...infer Rest extends AsyncFn[],
         ]
-      ? First extends (...args: any[]) => MaybePromise<infer B>
+      ? First extends (...args: Array<any>) => MaybePromise<infer B>
         ? [First, ...ValidAsyncPipeline<[(arg: Awaited<B>) => ReturnType<Second>, ...Rest]>]
         : never
       : never;
@@ -36,7 +36,7 @@ type ValidAsyncPipeline<Fns extends readonly AsyncFn[]> = Fns extends []
 /** Extract the Awaited return type of the last function in a tuple. */
 type LastReturnType<Fns extends readonly AsyncFn[]> = Fns extends [
   ...any[],
-  (...args: any[]) => infer R,
+  (...args: Array<any>) => infer R,
 ]
   ? Awaited<R>
   : never;
@@ -76,16 +76,16 @@ export function asyncPipe<const Fns extends [AsyncFn, ...AsyncUnaryFn[]]>(
 ): Fns extends [(...args: infer A) => any, ...any[]]
   ? (...args: A) => Promise<LastReturnType<Fns>>
   : never;
-export function asyncPipe(...fns: AsyncFn[]): (...args: any[]) => Promise<any> {
+export function asyncPipe(...fns: Array<AsyncFn>): (...args: Array<any>) => Promise<any> {
   if (fns.length === 0) {
     return (x: any) => Promise.resolve(x);
   }
 
   if (fns.length === 1) {
-    return (...args: any[]) => Promise.resolve(fns[0]!(...args));
+    return (...args: Array<any>) => Promise.resolve(fns[0]!(...args));
   }
 
-  return (...args: any[]) => {
+  return (...args: Array<any>) => {
     const [first, ...rest] = fns;
     return rest.reduce(
       (chain, fn) => chain.then((result) => fn(result)),

@@ -44,7 +44,7 @@ export default function handleRequest(
       streamTimeout + oneSecond,
     );
 
-    const { pipe, abort } = renderToPipeableStream(
+    const { abort, pipe } = renderToPipeableStream(
       <NonceProvider value={nonce}>
         <I18nextProvider i18n={getInstance(routerContext)}>
           <ServerRouter context={entryContext} nonce={nonce} url={request.url} />
@@ -52,6 +52,16 @@ export default function handleRequest(
       </NonceProvider>,
       {
         nonce,
+        onError(error: unknown) {
+          const internalServerErrorStatusCode = 500;
+          responseStatusCode = internalServerErrorStatusCode;
+          if (shellRendered) {
+            console.error(error); // oxlint-disable-line eslint(no-console) -- Log render errors after shell is rendered
+          }
+        },
+        onShellError(error: unknown) {
+          reject(error as Error);
+        },
         [readyOption]() {
           shellRendered = true;
           const body = new PassThrough({
@@ -90,14 +100,6 @@ export default function handleRequest(
           );
 
           pipe(body);
-        },
-        onError(error: unknown) {
-          const internalServerErrorStatusCode = 500;
-          responseStatusCode = internalServerErrorStatusCode;
-          if (shellRendered) console.error(error);
-        },
-        onShellError(error: unknown) {
-          reject(error as Error);
         },
       },
     );

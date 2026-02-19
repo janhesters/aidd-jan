@@ -36,9 +36,9 @@ function parseFrontmatter(raw: string): ValidationResult | Record<string, unknow
       return { message: "Frontmatter must be a YAML dictionary", valid: false };
     }
     return parsed as Record<string, unknown>;
-  } catch (e) {
+  } catch (error) {
     return {
-      message: `Invalid YAML in frontmatter: ${e}`,
+      message: `Invalid YAML in frontmatter: ${error}`,
       valid: false,
     };
   }
@@ -121,7 +121,7 @@ function validateDescription(fm: Record<string, unknown>): ValidationResult | nu
 
 function validateCompatibility(fm: Record<string, unknown>): ValidationResult | null {
   const compat = fm.compatibility;
-  if (compat == null) return null;
+  if (compat == null) {return null;}
   if (typeof compat !== "string") {
     return {
       message: `Compatibility must be a string, got ${typeof compat}`,
@@ -142,16 +142,16 @@ export function validateSkill(skillPath: string): ValidationResult {
 
   let content: string;
   try {
-    content = readFileSync(skillMdPath, "utf-8");
+    content = readFileSync(skillMdPath, "utf8");
   } catch {
     return { message: "SKILL.md not found", valid: false };
   }
 
   const rawOrError = extractFrontmatter(content);
-  if (typeof rawOrError !== "string") return rawOrError;
+  if (typeof rawOrError !== "string") {return rawOrError;}
 
   const fmOrError = parseFrontmatter(rawOrError);
-  if ("valid" in fmOrError) return fmOrError as ValidationResult;
+  if ("valid" in fmOrError) {return fmOrError as ValidationResult;}
 
   const fm = fmOrError as Record<string, unknown>;
 
@@ -162,7 +162,7 @@ export function validateSkill(skillPath: string): ValidationResult {
     validateCompatibility,
   ]) {
     const result = check(fm);
-    if (result) return result;
+    if (result) {return result;}
   }
 
   return { message: "Skill is valid!", valid: true };
@@ -174,7 +174,7 @@ if (import.meta.main) {
     console.log("Usage: bun validate.ts <skill_directory>");
     process.exit(1);
   }
-  const { valid, message } = validateSkill(process.argv[2]);
+  const { message, valid } = validateSkill(process.argv[2]);
   console.log(message);
   process.exit(valid ? 0 : 1);
 }

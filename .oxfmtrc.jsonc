@@ -25,5 +25,5 @@
   "experimentalTailwindcss": {
     "stylesheet": "./packages/ui/src/styles/globals.css",
   },
-  "ignorePatterns": [".react-router/", "dist/"],
+  "ignorePatterns": [".react-router/", "dist/", ".claude/"],
 }

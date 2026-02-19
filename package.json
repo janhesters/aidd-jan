@@ -5,6 +5,7 @@
     "packages/*",
     "tooling/*"
   ],
+  "type": "module",
   "scripts": {
     "check:format": "turbo run check:format",
     "check:lint": "turbo run check:lint",

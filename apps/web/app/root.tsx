@@ -64,7 +64,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App({ loaderData: { locale } }: Route.ComponentProps) {
   const { i18n } = useTranslation();
   useEffect(() => {
-    if (i18n.language !== locale) i18n.changeLanguage(locale);
+    if (i18n.language !== locale) {
+      i18n.changeLanguage(locale);
+    }
   }, [locale, i18n]);
   return <Outlet />;
 }

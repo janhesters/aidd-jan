@@ -7,6 +7,7 @@ const schema = z.object({
 
 declare global {
   namespace NodeJS {
+    // oxlint-disable-next-line typescript-eslint(no-empty-object-type) -- Extending ProcessEnv via declaration merging
     interface ProcessEnv extends z.infer<typeof schema> {}
   }
 }
@@ -15,6 +16,7 @@ export function init() {
   const parsed = schema.safeParse(process.env);
 
   if (parsed.success === false) {
+    // oxlint-disable-next-line eslint(no-console) -- Log env validation errors at startup
     console.error("Invalid environment variables:", z.flattenError(parsed.error).fieldErrors);
 
     throw new Error("Invalid environment variables");
