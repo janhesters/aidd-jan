@@ -35,7 +35,7 @@
   "scripts": {
     "build": "react-router build",
     "check:lint": "biome check .",
-    "check:types": "react-router typegen && tsc",
+    "check:types": "react-router typegen && tsgo",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js"
   },

@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": { "~/*": ["./app/*"] },
     "rootDirs": [".", "./.react-router/types"],
     "types": ["node", "vite/client"]

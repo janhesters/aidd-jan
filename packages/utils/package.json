@@ -12,7 +12,7 @@
   "private": true,
   "scripts": {
     "check:lint": "biome check .",
-    "check:types": "tsc",
+    "check:types": "tsgo",
     "test": "bun test"
   },
   "type": "module",

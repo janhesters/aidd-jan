@@ -16,7 +16,7 @@
   "name": "@workspace/security",
   "private": true,
   "scripts": {
-    "check:types": "tsc"
+    "check:types": "tsgo"
   },
   "type": "module",
   "version": "0.0.0"
