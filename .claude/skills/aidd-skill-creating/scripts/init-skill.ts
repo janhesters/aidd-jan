@@ -90,9 +90,7 @@ function main() {
 main();
 `;
 
-const EXAMPLE_REFERENCE = (
-  title: string,
-) => `# Reference Documentation for ${title}
+const EXAMPLE_REFERENCE = (title: string) => `# Reference Documentation for ${title}
 
 This is a placeholder for detailed reference documentation.
 Replace with actual reference content or delete if not needed.
@@ -146,10 +144,7 @@ export function initSkill(skillName: string, basePath: string): InitResult {
   const title = titleCase(skillName);
 
   // SKILL.md
-  writeFileSync(
-    resolve(skillDir, "SKILL.md"),
-    SKILL_TEMPLATE(skillName, title),
-  );
+  writeFileSync(resolve(skillDir, "SKILL.md"), SKILL_TEMPLATE(skillName, title));
 
   // scripts/
   const scriptsDir = resolve(skillDir, "scripts");

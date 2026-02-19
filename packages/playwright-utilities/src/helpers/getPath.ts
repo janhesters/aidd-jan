@@ -7,6 +7,6 @@ import type { APIResponse, Page } from "@playwright/test";
  * @returns The path of the page's url.
  */
 export const getPath = (page: Page | APIResponse) => {
-	const url = new URL(page.url());
-	return `${url.pathname}${url.search}`;
+  const url = new URL(page.url());
+  return `${url.pathname}${url.search}`;
 };
