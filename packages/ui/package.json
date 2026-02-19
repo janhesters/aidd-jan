@@ -31,7 +31,7 @@
   "private": true,
   "scripts": {
     "check:lint": "biome check .",
-    "check:types": "tsc"
+    "check:types": "tsgo"
   },
   "type": "module",
   "version": "0.0.0"
