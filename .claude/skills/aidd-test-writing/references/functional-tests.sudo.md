@@ -1,20 +1,20 @@
 # Functional Test Examples
 
 FunctionalTest {
-  Tests a React component in isolation by rendering it and asserting on the
-  rendered output and user interactions.
+Tests a React component in isolation by rendering it and asserting on the
+rendered output and user interactions.
 
-  Constraints {
-    Import from shared test-utils files (e.g. `~/test/react-test-utils`) if they
-    exist in the project, instead of directly from `@testing-library/react`.
-    Use `userEvent` for simulating interactions — not `fireEvent`.
-    Query by accessible role first (`getByRole`), then by text (`getByText`).
-    Name the `describe` block after the component: `"ComponentName component"`.
-    Use `test` string pattern: `"given: [condition], should: [behavior]"`.
-    Create a `createProps` factory for the component's props.
-    Use `createRoutesStub` when the component needs router context.
-    Use `test.each` for parameterized tests over multiple variants.
-  }
+Constraints {
+Import from shared test-utils files (e.g. `~/test/react-test-utils`) if they
+exist in the project, instead of directly from `@testing-library/react`.
+Use `userEvent` for simulating interactions — not `fireEvent`.
+Query by accessible role first (`getByRole`), then by text (`getByText`).
+Name the `describe` block after the component: `"ComponentName component"`.
+Use `test` string pattern: `"given: [condition], should: [behavior]"`.
+Create a `createProps` factory for the component's props.
+Use `createRoutesStub` when the component needs router context.
+Use `test.each` for parameterized tests over multiple variants.
+}
 }
 
 ## Simple Example
@@ -140,15 +140,16 @@ test.each([
 ## Patterns
 
 PropsFactory {
-  Create a `createProps` factory per component test file.
-  Use `Factory<ComponentProps>` type.
-  Use `vi.fn()` for callback prop defaults.
-  Each test overrides only what it cares about.
+Create a `createProps` factory per component test file.
+Use `Factory<ComponentProps>` type.
+Use `vi.fn()` for callback prop defaults.
+Each test overrides only what it cares about.
 }
 
 QueryPriority {
-  1. `getByRole` — accessible, resilient to markup changes
-  2. `getByText` — for content assertions
-  3. `queryByRole` / `queryByText` — for asserting absence
-  Avoid `getByTestId` unless no accessible alternative exists.
-}
+
+1. `getByRole` — accessible, resilient to markup changes
+2. `getByText` — for content assertions
+3. `queryByRole` / `queryByText` — for asserting absence
+   Avoid `getByTestId` unless no accessible alternative exists.
+   }

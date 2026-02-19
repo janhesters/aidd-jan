@@ -1,20 +1,21 @@
 {
-  "devDependencies": {
-    "@workspace/typescript-config": "workspace:*",
-    "bun-types": "^1.3.9",
-    "typescript": "^5.9.3"
-  },
+  "name": "@workspace/utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
   "exports": {
     "./async-pipe": "./src/async-pipe.ts",
     "./types": "./src/types.ts"
   },
-  "name": "@workspace/utils",
-  "private": true,
   "scripts": {
-    "check:lint": "biome check .",
+    "check:format": "oxfmt --check .",
+    "check:lint": "oxlint --type-aware .",
     "check:types": "tsgo",
     "test": "bun test"
   },
-  "type": "module",
-  "version": "0.0.0"
+  "devDependencies": {
+    "@workspace/typescript-config": "workspace:*",
+    "bun-types": "^1.3.9",
+    "typescript": "^5.9.3"
+  }
 }

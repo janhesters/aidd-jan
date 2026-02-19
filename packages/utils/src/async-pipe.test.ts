@@ -1,5 +1,6 @@
-import { asyncPipe } from "./async-pipe";
 import { describe, expect, test } from "bun:test";
+
+import { asyncPipe } from "./async-pipe";
 
 const asyncInc = async (x: number) => x + 1;
 const asyncDouble = async (x: number) => x * 2;
@@ -17,12 +18,7 @@ describe("asyncPipe()", () => {
   });
 
   test("given: four promise returning functions with mixed types, should: compose them in left-to-right order", async () => {
-    const asyncSquareHalveDoubleInc = asyncPipe(
-      asyncDouble,
-      asyncInc,
-      asyncToString,
-      asyncShout,
-    );
+    const asyncSquareHalveDoubleInc = asyncPipe(asyncDouble, asyncInc, asyncToString, asyncShout);
 
     const actual = await asyncSquareHalveDoubleInc(10);
     const expected = "21!";

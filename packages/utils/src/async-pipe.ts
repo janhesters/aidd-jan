@@ -1,5 +1,5 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: required for type-level function composition
-// biome-ignore-all lint/style/noNonNullAssertion: safe after length checks
+/* oxlint-disable @typescript-eslint/no-explicit-any -- required for type-level function composition */
+/* oxlint-disable @typescript-eslint/no-non-null-assertion -- safe after length checks */
 
 // A type that represents either a value or a promise of that value.
 type MaybePromise<T> = T | Promise<T>;
@@ -29,12 +29,7 @@ type ValidAsyncPipeline<Fns extends readonly AsyncFn[]> = Fns extends []
           ...infer Rest extends AsyncFn[],
         ]
       ? First extends (...args: any[]) => MaybePromise<infer B>
-        ? [
-            First,
-            ...ValidAsyncPipeline<
-              [(arg: Awaited<B>) => ReturnType<Second>, ...Rest]
-            >,
-          ]
+        ? [First, ...ValidAsyncPipeline<[(arg: Awaited<B>) => ReturnType<Second>, ...Rest]>]
         : never
       : never;
 

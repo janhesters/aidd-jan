@@ -3,19 +3,18 @@
 Use these patterns when skills need to produce consistent, high-quality output.
 
 TemplatePattern {
-  Constraints {
-    Provide templates for output format.
-    Match strictness level to the skill's needs.
-  }
+Constraints {
+Provide templates for output format.
+Match strictness level to the skill's needs.
+}
 
-  apply(requirements) => match (requirements) {
-    case (strict: API responses, data formats) => {
-      Use exact template structure.
-      Mark template with "ALWAYS use this exact template structure."
-      Example {
-        ```markdown
-        ## Report structure
+apply(requirements) => match (requirements) {
+case (strict: API responses, data formats) => {
+Use exact template structure.
+Mark template with "ALWAYS use this exact template structure."
+Example {
 
+`````markdown ## Report structure
         ALWAYS use this exact template structure:
 
         # [Analysis Title]
@@ -53,19 +52,19 @@ TemplatePattern {
         ```
       }
     }
-  }
+
+}
 }
 
 ExamplesPattern {
-  Constraints {
-    Use input/output pairs when output quality depends on seeing examples.
-    Examples communicate desired style and detail level better than descriptions alone.
-  }
+Constraints {
+Use input/output pairs when output quality depends on seeing examples.
+Examples communicate desired style and detail level better than descriptions alone.
+}
 
-  Example {
-    ```markdown
-    ## Commit message format
+Example {
 
+````markdown ## Commit message format
     Generate commit messages following these examples:
 
     **Example 1:**
@@ -82,5 +81,12 @@ ExamplesPattern {
 
     Follow this style: type(scope): brief description, then detailed explanation.
     ```
-  }
+
 }
+}
+````
+`````
+
+```
+
+```

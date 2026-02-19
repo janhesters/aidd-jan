@@ -2,35 +2,19 @@
   "$schema": "https://turborepo.dev/schema.v2.json",
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env*"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**"]
     },
+    "check:format": {},
     "check:lint": {},
     "check:types": {},
     "test": {},
     "e2e": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env*"
-      ],
-      "outputs": [
-        "playwright-report/**",
-        "test-results/**"
-      ],
-      "passThroughEnv": [
-        "PLAYWRIGHT_*"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["playwright-report/**", "test-results/**"],
+      "passThroughEnv": ["PLAYWRIGHT_*"]
     },
     "dev": {
       "cache": false,
