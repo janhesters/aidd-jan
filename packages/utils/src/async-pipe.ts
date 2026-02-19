@@ -29,12 +29,7 @@ type ValidAsyncPipeline<Fns extends readonly AsyncFn[]> = Fns extends []
           ...infer Rest extends AsyncFn[],
         ]
       ? First extends (...args: any[]) => MaybePromise<infer B>
-        ? [
-            First,
-            ...ValidAsyncPipeline<
-              [(arg: Awaited<B>) => ReturnType<Second>, ...Rest]
-            >,
-          ]
+        ? [First, ...ValidAsyncPipeline<[(arg: Awaited<B>) => ReturnType<Second>, ...Rest]>]
         : never
       : never;
 
