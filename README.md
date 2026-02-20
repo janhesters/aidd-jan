@@ -4,8 +4,17 @@ Personal experiments with AI Driven Development (AIDD); exploring skills, subage
 
 Everything here is experimental. For production-ready AIDD techniques, see the [AIDD framework](https://github.com/paralleldrive/aidd).
 
+## Quick Start
+
+```bash
+npx giget@latest gh:janhesters/aidd-jan my-project
+cd my-project
+bun install
+```
+
 ## Table of contents
 
+- [Quick start](#quick-start)
 - [Stack](#stack)
 - [Project structure](#project-structure)
 - [Skills](#skills)
