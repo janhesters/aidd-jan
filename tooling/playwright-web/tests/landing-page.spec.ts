@@ -23,7 +23,10 @@ test("given: any user, should: display correct metadata, logo, navigation, and l
 
   const docsLink = page.getByRole("link", { name: /React Router Docs/i });
   await expect(docsLink).toBeVisible();
-  await expect(docsLink).toHaveAttribute("href", "https://reactrouter.com/docs");
+  await expect(docsLink).toHaveAttribute(
+    "href",
+    "https://reactrouter.com/docs",
+  );
   await expect(docsLink).toHaveAttribute("target", "_blank");
 
   const discordLink = page.getByRole("link", { name: /Join Discord/i });
@@ -32,7 +35,9 @@ test("given: any user, should: display correct metadata, logo, navigation, and l
   await expect(discordLink).toHaveAttribute("target", "_blank");
 });
 
-test("given: any user, should: have no accessibility violations", async ({ page }) => {
+test("given: any user, should: have no accessibility violations", async ({
+  page,
+}) => {
   await page.goto(LANDING_PAGE);
 
   const results = await new AxeBuilder({ page }).analyze();

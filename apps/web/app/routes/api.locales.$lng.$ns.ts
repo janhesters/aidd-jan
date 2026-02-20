@@ -7,13 +7,17 @@ import resources from "~/locales";
 import type { Route } from "./+types/api.locales.$lng.$ns";
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const lng = z.enum(Object.keys(resources) as [keyof typeof resources]).safeParse(params.lng);
+  const lng = z
+    .enum(Object.keys(resources) as [keyof typeof resources])
+    .safeParse(params.lng);
 
   if (lng.error) return data({ error: lng.error }, { status: 400 });
 
   const namespaces = resources[lng.data];
 
-  const ns = z.enum(Object.keys(namespaces) as [keyof typeof namespaces]).safeParse(params.ns);
+  const ns = z
+    .enum(Object.keys(namespaces) as [keyof typeof namespaces])
+    .safeParse(params.ns);
 
   if (ns.error) return data({ error: ns.error }, { status: 400 });
 
