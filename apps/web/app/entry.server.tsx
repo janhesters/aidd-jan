@@ -37,7 +37,9 @@ export default function handleRequest(
     const userAgent = request.headers.get("user-agent");
 
     const readyOption: keyof RenderToPipeableStreamOptions =
-      (userAgent && isbot(userAgent)) || entryContext.isSpaMode ? "onAllReady" : "onShellReady";
+      (userAgent && isbot(userAgent)) || entryContext.isSpaMode
+        ? "onAllReady"
+        : "onShellReady";
 
     let timeoutId: ReturnType<typeof setTimeout> | undefined = setTimeout(
       () => abort(),
@@ -47,7 +49,11 @@ export default function handleRequest(
     const { pipe, abort } = renderToPipeableStream(
       <NonceProvider value={nonce}>
         <I18nextProvider i18n={getInstance(routerContext)}>
-          <ServerRouter context={entryContext} nonce={nonce} url={request.url} />
+          <ServerRouter
+            context={entryContext}
+            nonce={nonce}
+            url={request.url}
+          />
         </I18nextProvider>
       </NonceProvider>,
       {
@@ -69,11 +75,18 @@ export default function handleRequest(
             contentSecurityPolicy: {
               directives: {
                 fetch: {
-                  "connect-src": [MODE === "development" ? "ws:" : undefined, "'self'"],
+                  "connect-src": [
+                    MODE === "development" ? "ws:" : undefined,
+                    "'self'",
+                  ],
                   "font-src": ["'self'"],
                   "frame-src": ["'self'"],
                   "img-src": ["'self'", "data:"],
-                  "script-src": ["'strict-dynamic'", "'self'", `'nonce-${nonce}'`],
+                  "script-src": [
+                    "'strict-dynamic'",
+                    "'self'",
+                    `'nonce-${nonce}'`,
+                  ],
                   "script-src-attr": [`'nonce-${nonce}'`],
                 },
               },

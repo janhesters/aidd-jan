@@ -12,8 +12,16 @@ export function Welcome() {
         <header className="flex flex-col items-center gap-9">
           <h1 className="sr-only">{t("heading")}</h1>
           <div className="w-[500px] max-w-[100vw] p-4">
-            <img alt="React Router" className="block w-full dark:hidden" src={logoLight} />
-            <img alt="React Router" className="hidden w-full dark:block" src={logoDark} />
+            <img
+              alt="React Router"
+              className="block w-full dark:hidden"
+              src={logoLight}
+            />
+            <img
+              alt="React Router"
+              className="hidden w-full dark:block"
+              src={logoDark}
+            />
           </div>
         </header>
         <div className="w-full max-w-[300px] space-y-6 px-4">

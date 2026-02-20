@@ -9,7 +9,10 @@ export async function loader({ context }: Route.LoaderArgs) {
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  return [{ title: data?.title }, { content: data?.description, name: "description" }];
+  return [
+    { title: data?.title },
+    { content: data?.description, name: "description" },
+  ];
 }
 
 export default function Home() {
