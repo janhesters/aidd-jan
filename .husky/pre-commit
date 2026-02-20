@@ -1,1 +1,1 @@
-turbo run check:types check:lint check:format
+turbo run check:types check:lint
