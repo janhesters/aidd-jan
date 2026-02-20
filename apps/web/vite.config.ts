@@ -19,5 +19,10 @@ function staticCacheHeaders(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [tailwindcss(), reactRouter(), tsconfigPaths(), staticCacheHeaders()],
+  plugins: [
+    tailwindcss(),
+    reactRouter(),
+    tsconfigPaths(),
+    staticCacheHeaders(),
+  ],
 });

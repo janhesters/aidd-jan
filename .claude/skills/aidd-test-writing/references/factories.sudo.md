@@ -1,18 +1,18 @@
 # Test Data Factories
 
 Factory {
-A function that creates a fully populated test entity with realistic defaults.
-Every field has a sensible default; callers override only what the test cares about.
+  A function that creates a fully populated test entity with realistic defaults.
+  Every field has a sensible default; callers override only what the test cares about.
 
-Constraints {
-Name factories `createPopulated[Entity]`.
-Accept a single optional object parameter with defaults for every field.
-Use faker for realistic values, cuid2 for IDs, date-fns for date math.
-Return a plain object matching the entity's type.
-Sort object keys alphabetically in the return value.
-Import a shared `Factory<T>` utility type: `(params?: Partial<T>) => T`.
-Never share factory output as mutable state between tests — invoke per test.
-}
+  Constraints {
+    Name factories `createPopulated[Entity]`.
+    Accept a single optional object parameter with defaults for every field.
+    Use faker for realistic values, cuid2 for IDs, date-fns for date math.
+    Return a plain object matching the entity's type.
+    Sort object keys alphabetically in the return value.
+    Import a shared `Factory<T>` utility type: `(params?: Partial<T>) => T`.
+    Never share factory output as mutable state between tests — invoke per test.
+  }
 }
 
 ## Base Factory Example
@@ -76,12 +76,12 @@ export const createOrganizationWithMembershipsAndSubscriptions = ({
 ## Patterns
 
 CompoundFactory {
-Composes base factories for entities with relations.
-Spreads the base entity and adds computed/nested fields.
-Each nested relation uses its own factory as a default.
+  Composes base factories for entities with relations.
+  Spreads the base entity and adds computed/nested fields.
+  Each nested relation uses its own factory as a default.
 }
 
 FactoryFileConvention {
-Colocate factory files with the feature they serve.
-Name: `[feature]-factories.server.ts` or `[feature]-factories.ts`.
+  Colocate factory files with the feature they serve.
+  Name: `[feature]-factories.server.ts` or `[feature]-factories.ts`.
 }

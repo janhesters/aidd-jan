@@ -13,15 +13,16 @@ export const localeCookie = createCookie("lng", {
   secure: process.env.NODE_ENV === "production",
 });
 
-export const [i18nextMiddleware, getLocale, getInstance] = createI18nextMiddleware({
-  detection: {
-    cookie: localeCookie,
-    fallbackLanguage: "en",
-    supportedLanguages: ["de", "en"],
-  },
-  i18next: { resources },
-  plugins: [initReactI18next],
-});
+export const [i18nextMiddleware, getLocale, getInstance] =
+  createI18nextMiddleware({
+    detection: {
+      cookie: localeCookie,
+      fallbackLanguage: "en",
+      supportedLanguages: ["de", "en"],
+    },
+    i18next: { resources },
+    plugins: [initReactI18next],
+  });
 
 declare module "i18next" {
   interface CustomTypeOptions {

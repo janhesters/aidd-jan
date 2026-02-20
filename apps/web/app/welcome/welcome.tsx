@@ -8,17 +8,25 @@ export function Welcome() {
 
   return (
     <main className="flex items-center justify-center pt-16 pb-4">
-      <div className="flex min-h-0 flex-1 flex-col items-center gap-16">
+      <div className="flex-1 flex flex-col items-center gap-16 min-h-0">
         <header className="flex flex-col items-center gap-9">
           <h1 className="sr-only">{t("heading")}</h1>
           <div className="w-[500px] max-w-[100vw] p-4">
-            <img alt="React Router" className="block w-full dark:hidden" src={logoLight} />
-            <img alt="React Router" className="hidden w-full dark:block" src={logoDark} />
+            <img
+              alt="React Router"
+              className="block w-full dark:hidden"
+              src={logoLight}
+            />
+            <img
+              alt="React Router"
+              className="hidden w-full dark:block"
+              src={logoDark}
+            />
           </div>
         </header>
-        <div className="w-full max-w-[300px] space-y-6 px-4">
-          <nav className="space-y-4 rounded-3xl border border-gray-200 p-6 dark:border-gray-700">
-            <p className="text-center leading-6 text-gray-700 dark:text-gray-200">
+        <div className="max-w-[300px] w-full space-y-6 px-4">
+          <nav className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">
+            <p className="leading-6 text-gray-700 dark:text-gray-200 text-center">
               {t("nav.title")}
             </p>
             <ul>

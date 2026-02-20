@@ -1,9 +1,0 @@
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "experimentalSortImports": {},
-  "experimentalSortPackageJson": {},
-  "experimentalTailwindcss": {
-    "functions": ["clsx", "cn"],
-  },
-  "ignorePatterns": [".react-router"],
-}

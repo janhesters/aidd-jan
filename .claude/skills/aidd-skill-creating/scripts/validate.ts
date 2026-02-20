@@ -1,7 +1,6 @@
 #!/usr/bin/env bun
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-
 import yaml from "js-yaml";
 
 interface ValidationResult {
@@ -29,10 +28,16 @@ function extractFrontmatter(content: string): ValidationResult | string {
   return match[1];
 }
 
-function parseFrontmatter(raw: string): ValidationResult | Record<string, unknown> {
+function parseFrontmatter(
+  raw: string,
+): ValidationResult | Record<string, unknown> {
   try {
     const parsed = yaml.load(raw);
-    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+    if (
+      typeof parsed !== "object" ||
+      parsed === null ||
+      Array.isArray(parsed)
+    ) {
       return { message: "Frontmatter must be a YAML dictionary", valid: false };
     }
     return parsed as Record<string, unknown>;
@@ -44,7 +49,9 @@ function parseFrontmatter(raw: string): ValidationResult | Record<string, unknow
   }
 }
 
-function validateProperties(fm: Record<string, unknown>): ValidationResult | null {
+function validateProperties(
+  fm: Record<string, unknown>,
+): ValidationResult | null {
   const unexpected = Object.keys(fm).filter((k) => !ALLOWED_PROPERTIES.has(k));
   if (unexpected.length > 0) {
     return {
@@ -74,7 +81,11 @@ function validateName(fm: Record<string, unknown>): ValidationResult | null {
         valid: false,
       };
     }
-    if (trimmed.startsWith("-") || trimmed.endsWith("-") || trimmed.includes("--")) {
+    if (
+      trimmed.startsWith("-") ||
+      trimmed.endsWith("-") ||
+      trimmed.includes("--")
+    ) {
       return {
         message: `Name '${trimmed}' cannot start/end with hyphen or contain consecutive hyphens`,
         valid: false,
@@ -90,7 +101,9 @@ function validateName(fm: Record<string, unknown>): ValidationResult | null {
   return null;
 }
 
-function validateDescription(fm: Record<string, unknown>): ValidationResult | null {
+function validateDescription(
+  fm: Record<string, unknown>,
+): ValidationResult | null {
   if (!("description" in fm)) {
     return { message: "Missing 'description' in frontmatter", valid: false };
   }
@@ -119,7 +132,9 @@ function validateDescription(fm: Record<string, unknown>): ValidationResult | nu
   return null;
 }
 
-function validateCompatibility(fm: Record<string, unknown>): ValidationResult | null {
+function validateCompatibility(
+  fm: Record<string, unknown>,
+): ValidationResult | null {
   const compat = fm.compatibility;
   if (compat == null) return null;
   if (typeof compat !== "string") {

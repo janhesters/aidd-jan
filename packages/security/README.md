@@ -33,7 +33,10 @@ export default function handleRequest(
     contentSecurityPolicy: {
       reportOnly: true, // start in report-only mode
       directives: {
-        "script-src": ["'self'", `'nonce-${nonce}'`],
+        "script-src": [
+          "'self'",
+          `'nonce-${nonce}'`,
+        ],
         "script-src-attr": [`'nonce-${nonce}'`],
       },
     },
@@ -43,10 +46,14 @@ export default function handleRequest(
   const { pipe, abort } = renderToPipeableStream(
     <NonceProvider value={nonce}>
       <I18nextProvider i18n={getInstance(routerContext)}>
-        <ServerRouter context={entryContext} url={request.url} nonce={nonce} />
+        <ServerRouter
+          context={entryContext}
+          url={request.url}
+          nonce={nonce}
+        />
       </I18nextProvider>
     </NonceProvider>,
-    { nonce /* ...other options */ },
+    { nonce, /* ...other options */ },
   );
 }
 ```
@@ -89,14 +96,14 @@ Add `securityMiddleware` to the `middleware` array in `root.tsx` (shown above). 
 
 ## CSP directive reference
 
-| Directive         | Controls                            |
-| ----------------- | ----------------------------------- |
-| `default-src`     | Fallback for all fetch directives   |
-| `script-src`      | JavaScript execution                |
-| `style-src`       | Stylesheets                         |
-| `img-src`         | Images                              |
-| `font-src`        | Font files                          |
-| `connect-src`     | XHR, fetch, WebSocket               |
+| Directive | Controls |
+|---|---|
+| `default-src` | Fallback for all fetch directives |
+| `script-src` | JavaScript execution |
+| `style-src` | Stylesheets |
+| `img-src` | Images |
+| `font-src` | Font files |
+| `connect-src` | XHR, fetch, WebSocket |
 | `frame-ancestors` | Who can embed the page in an iframe |
 
 `@nichtsam/helmet` ships sensible defaults for each directive. You only need to override the ones your app requires (like adding a nonce to `script-src`).
@@ -127,9 +134,7 @@ Once the console stays clean, flip to enforced:
 contentSecurity(responseHeaders, {
   contentSecurityPolicy: {
     // reportOnly: true,  <-- remove or set to false
-    directives: {
-      /* ... */
-    },
+    directives: { /* ... */ },
   },
 });
 ```

@@ -1,7 +1,6 @@
-import { getInstance } from "~/middleware/i18next";
-
 import { Welcome } from "../welcome/welcome";
 import type { Route } from "./+types/index";
+import { getInstance } from "~/middleware/i18next";
 
 export async function loader({ context }: Route.LoaderArgs) {
   const t = getInstance(context).getFixedT(null, "landing");
@@ -9,7 +8,10 @@ export async function loader({ context }: Route.LoaderArgs) {
 }
 
 export function meta({ data }: Route.MetaArgs) {
-  return [{ title: data?.title }, { content: data?.description, name: "description" }];
+  return [
+    { title: data?.title },
+    { content: data?.description, name: "description" },
+  ];
 }
 
 export default function Home() {

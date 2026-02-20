@@ -1,17 +1,4 @@
 {
-  "name": "@workspace/security",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "exports": {
-    "./nonce-provider": "./src/nonce-provider.ts",
-    "./security-middleware": "./src/security-middleware.server.ts"
-  },
-  "scripts": {
-    "check:format": "oxfmt --check .",
-    "check:lint": "oxlint --type-aware",
-    "check:types": "tsgo"
-  },
   "dependencies": {
     "@nichtsam/helmet": "^0.3.1",
     "react": "^19.2.4",
@@ -21,5 +8,16 @@
     "@types/react": "^19.2.14",
     "@workspace/typescript-config": "workspace:*",
     "typescript": "^5.9.3"
-  }
+  },
+  "exports": {
+    "./nonce-provider": "./src/nonce-provider.ts",
+    "./security-middleware": "./src/security-middleware.server.ts"
+  },
+  "name": "@workspace/security",
+  "private": true,
+  "scripts": {
+    "check:types": "tsgo"
+  },
+  "type": "module",
+  "version": "0.0.0"
 }

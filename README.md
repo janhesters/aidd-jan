@@ -21,7 +21,7 @@ This places UI components in `packages/ui/src/components`.
 Import components from the `@workspace/ui` package:
 
 ```tsx
-import { Button } from "@workspace/ui/components/button";
+import { Button } from "@workspace/ui/components/button"
 ```
 
 Tailwind and `globals.css` are already configured to work with the `ui` package.
