@@ -1,17 +1,17 @@
 # Unit Test Examples
 
 UnitTest {
-  Tests a single function or module in isolation.
-  No I/O, no network, no database — pure logic.
+Tests a single function or module in isolation.
+No I/O, no network, no database — pure logic.
 
-  Constraints {
-    Import the function under test — never define it inline in the test file.
-    One `describe` block per function, named after the function with parentheses.
-    Each `test` string follows the pattern: "given [condition]: [expected result]".
-    Declare `actual` and `expected` variables explicitly before asserting.
-    Use `expect(actual).toEqual(expected)` for value comparison.
-    Use cuid2 for IDs in test data unless specified otherwise.
-  }
+Constraints {
+Import the function under test — never define it inline in the test file.
+One `describe` block per function, named after the function with parentheses.
+Each `test` string follows the pattern: "given [condition]: [expected result]".
+Declare `actual` and `expected` variables explicitly before asserting.
+Use `expect(actual).toEqual(expected)` for value comparison.
+Use cuid2 for IDs in test data unless specified otherwise.
+}
 }
 
 ## Vitest Example

@@ -14,13 +14,13 @@ breaking changes possible in minor versions. Always import from `/future` paths.
 ## Import Paths
 
 constraint FutureImports {
-  Always use future imports. Never use stable API imports.
+Always use future imports. Never use stable API imports.
 
-  React:  `@conform-to/react/future`
-  Zod v4: `@conform-to/zod/v4/future`
+React: `@conform-to/react/future`
+Zod v4: `@conform-to/zod/v4/future`
 
-  Project wrapper: `~/utils/conform` (re-exports configureForms-customized hooks)
-  Server helper:   `~/utils/validate-form-data.server`
+Project wrapper: `~/utils/conform` (re-exports configureForms-customized hooks)
+Server helper: `~/utils/validate-form-data.server`
 }
 
 ## React Hooks
@@ -38,29 +38,29 @@ const { form, fields, intent } = useForm(options);
 ```
 
 Options {
-  id?: string                    — form identifier (auto-generated via useId if omitted)
-  key?: string                   — changes reset form state
-  schema?: StandardSchemaV1      — Zod schema for validation
-  defaultValue?: DefaultValue    — initial form values
-  constraint?: Record<string, ValidationAttributes>
-  shouldValidate?: 'onSubmit' | 'onBlur' | 'onInput'  — default: 'onSubmit'
-  shouldRevalidate?: 'onSubmit' | 'onBlur' | 'onInput'
-  lastResult?: SubmissionResult | null   — server submission result
-  onValidate?: ValidateHandler
-  onSubmit?: SubmitHandler
-  onError?: ErrorHandler
-  onInput?: InputHandler
-  onBlur?: BlurHandler
+id?: string — form identifier (auto-generated via useId if omitted)
+key?: string — changes reset form state
+schema?: StandardSchemaV1 — Zod schema for validation
+defaultValue?: DefaultValue — initial form values
+constraint?: Record<string, ValidationAttributes>
+shouldValidate?: 'onSubmit' | 'onBlur' | 'onInput' — default: 'onSubmit'
+shouldRevalidate?: 'onSubmit' | 'onBlur' | 'onInput'
+lastResult?: SubmissionResult | null — server submission result
+onValidate?: ValidateHandler
+onSubmit?: SubmitHandler
+onError?: ErrorHandler
+onInput?: InputHandler
+onBlur?: BlurHandler
 }
 
 Returns {
-  form: FormMetadata  — spread form.props on <form>, use form.context with FormProvider
-  fields: Fieldset    — fields.fieldName gives field metadata
-  intent: IntentDispatcher — programmatic form actions
+form: FormMetadata — spread form.props on <form>, use form.context with FormProvider
+fields: Fieldset — fields.fieldName gives field metadata
+intent: IntentDispatcher — programmatic form actions
 }
 
 constraint FormElement {
-  Always spread form.props: `<Form method="POST" {...form.props}>`
+Always spread form.props: `<Form method="POST" {...form.props}>`
 }
 
 ### useField
@@ -73,24 +73,24 @@ const field = useField(name, { formId? });
 ```
 
 Field metadata {
-  id, name, formId, descriptionId, errorId
-  defaultValue: string          — empty string if null/undefined/non-serializable
-  defaultOptions: string[]      — for multi-select/checkbox groups
-  defaultChecked: boolean       — true if value is 'on'
-  touched, valid: boolean
-  errors: ErrorShape[] | undefined
-  fieldErrors: Record<string, ErrorShape[]>
-  ariaInvalid: boolean | undefined
-  ariaDescribedBy: string | undefined
-  required?, minLength?, maxLength?, pattern?, min?, max?, step?, multiple?
-  getFieldset(): Fieldset       — nested object fields
-  getFieldList(): Field[]       — array fields
+id, name, formId, descriptionId, errorId
+defaultValue: string — empty string if null/undefined/non-serializable
+defaultOptions: string[] — for multi-select/checkbox groups
+defaultChecked: boolean — true if value is 'on'
+touched, valid: boolean
+errors: ErrorShape[] | undefined
+fieldErrors: Record<string, ErrorShape[]>
+ariaInvalid: boolean | undefined
+ariaDescribedBy: string | undefined
+required?, minLength?, maxLength?, pattern?, min?, max?, step?, multiple?
+getFieldset(): Fieldset — nested object fields
+getFieldList(): Field[] — array fields
 }
 
 constraint Deprecated {
-  `invalid` is deprecated — use `valid` instead.
-  `inputProps` is stable API — in future API use individual properties
-  (id, name, defaultValue, ariaInvalid, ariaDescribedBy, required, etc.)
+`invalid` is deprecated — use `valid` instead.
+`inputProps` is stable API — in future API use individual properties
+(id, name, defaultValue, ariaInvalid, ariaDescribedBy, required, etc.)
 }
 
 ### useFormMetadata
@@ -102,16 +102,16 @@ const form = useFormMetadata({ formId? });
 ```
 
 Returns FormMetadata {
-  id, key, errorId, descriptionId
-  touched, valid: boolean
-  errors: ErrorShape[] | undefined
-  fieldErrors: Record<string, ErrorShape[]>
-  defaultValue: Record<string, unknown>
-  props: FormProps               — spread on <form>
-  context: FormContext            — pass to <FormProvider>
-  getField(name): Field
-  getFieldset(name): Fieldset
-  getFieldList(name): Field[]
+id, key, errorId, descriptionId
+touched, valid: boolean
+errors: ErrorShape[] | undefined
+fieldErrors: Record<string, ErrorShape[]>
+defaultValue: Record<string, unknown>
+props: FormProps — spread on <form>
+context: FormContext — pass to <FormProvider>
+getField(name): Field
+getFieldset(name): Fieldset
+getFieldList(name): Field[]
 }
 
 ### useIntent
@@ -119,23 +119,23 @@ Returns FormMetadata {
 Intent dispatcher for form actions without submitting.
 
 ```ts
-const intent = useIntent(formRef);  // ref or form ID string
+const intent = useIntent(formRef); // ref or form ID string
 ```
 
 IntentDispatcher {
-  validate(name?): void         — validate field or entire form
-  reset(options?): void         — reset form; options.defaultValue to set specific state
-  update(options): void         — options: { name?, index?, value }
-  insert(options): void         — options: { name, index?, defaultValue?, from?, onInvalid? }
-  remove(options): void         — options: { name, index, onInvalid?, defaultValue? }
-  reorder(options): void        — options: { name, from, to }
+validate(name?): void — validate field or entire form
+reset(options?): void — reset form; options.defaultValue to set specific state
+update(options): void — options: { name?, index?, value }
+insert(options): void — options: { name, index?, defaultValue?, from?, onInvalid? }
+remove(options): void — options: { name, index, onInvalid?, defaultValue? }
+reorder(options): void — options: { name, from, to }
 }
 
 constraint ArrayIntentSync {
-  `insert.from` reads value from another field, validates, inserts if valid.
-  `insert.onInvalid: 'revert'` cancels insert on validation error.
-  `remove.onInvalid: 'revert'` cancels removal; `'insert'` removes but adds blank.
-  These require synchronous error availability.
+`insert.from` reads value from another field, validates, inserts if valid.
+`insert.onInvalid: 'revert'` cancels insert on validation error.
+`remove.onInvalid: 'revert'` cancels removal; `'insert'` removes but adds blank.
+These require synchronous error availability.
 }
 
 ### useControl
@@ -153,25 +153,27 @@ const control = useControl({
 ```
 
 Returns {
-  value: string | undefined
-  options: string[] | undefined     — multi-select/checkbox group
-  checked: boolean | undefined      — single checkbox/radio
-  files: File[] | undefined
-  register: (element) => void       — register hidden input(s)
-  change(value): void               — update + emit change/input events
-  blur(): void                      — emit blur/focusout events
-  focus(): void                     — emit focus/focusin events
+value: string | undefined
+options: string[] | undefined — multi-select/checkbox group
+checked: boolean | undefined — single checkbox/radio
+files: File[] | undefined
+register: (element) => void — register hidden input(s)
+change(value): void — update + emit change/input events
+blur(): void — emit blur/focusout events
+focus(): void — emit focus/focusin events
 }
 
 Pattern: hidden input + custom component {
-  ```tsx
-  <input type="checkbox" name={fields.name.name} ref={control.register} hidden />
-  <CustomSwitch
-    checked={control.checked}
-    onChange={(checked) => control.change(checked)}
-    onBlur={() => control.blur()}
-  />
-  ```
+
+```tsx
+<input type="checkbox" name={fields.name.name} ref={control.register} hidden />
+<CustomSwitch
+  checked={control.checked}
+  onChange={(checked) => control.change(checked)}
+  onBlur={() => control.blur()}
+/>
+```
+
 }
 
 ### useFormData
@@ -193,9 +195,7 @@ const result = useFormData(formRef, selector, { acceptFiles?, fallback? });
 Provides form context for useField and useFormMetadata in child components.
 
 ```tsx
-<FormProvider context={form.context}>
-  {/* useField/useFormMetadata work here */}
-</FormProvider>
+<FormProvider context={form.context}>{/* useField/useFormMetadata work here */}</FormProvider>
 ```
 
 ### configureForms
@@ -219,7 +219,7 @@ const { FormProvider, useForm, useFormMetadata, useField, useIntent } =
 ```
 
 constraint ConfigureFormsComposition {
-  Use `config` to extend: `configureForms({ ...base.config, ...extensions })`
+Use `config` to extend: `configureForms({ ...base.config, ...extensions })`
 }
 
 ### PreserveBoundary
@@ -234,9 +234,9 @@ Use for multi-step wizards, form dialogs, virtualized lists.
 ```
 
 constraint PreserveBoundaryUsage {
-  Only for navigational conditions (step changes, dialog open/close).
-  NOT for conditional data exclusion — let those fields unmount normally.
-  Stale values cleaned up automatically on remount.
+Only for navigational conditions (step changes, dialog open/close).
+NOT for conditional data exclusion — let those fields unmount normally.
+Stale values cleaned up automatically on remount.
 }
 
 ## Server Utilities
@@ -251,10 +251,10 @@ const submission = parseSubmission(formData, { intentName?, skipEntry? });
 ```
 
 Field naming conventions:
-  `name` → `{ name: "value" }`
-  `object.property` → `{ object: { property: "value" } }`
-  `array[0]` → `{ array: ["value"] }`
-  `items[]` → `{ items: ["value1", "value2"] }`
+`name` → `{ name: "value" }`
+`object.property` → `{ object: { property: "value" } }`
+`array[0]` → `{ array: ["value"] }`
+`items[]` → `{ items: ["value1", "value2"] }`
 
 ### report
 
@@ -271,9 +271,9 @@ const result = report(submission, {
 ```
 
 constraint ReportPattern {
-  For validation errors: `report(submission, { error: { fieldErrors: { ... } } })`
-  For success with reset: `report(submission, { error: null, reset: true })`
-  Hide sensitive fields: `report(submission, { hideFields: ['password'] })`
+For validation errors: `report(submission, { error: { fieldErrors: { ... } } })`
+For success with reset: `report(submission, { error: null, reset: true })`
+Hide sensitive fields: `report(submission, { hideFields: ['password'] })`
 }
 
 ## Zod Integration
@@ -289,16 +289,16 @@ const enhanced = coerceFormValue(schema, { defaultCoercion?, customize? });
 ```
 
 Default coercion rules:
-  empty string/file → undefined
-  z.number() → Number(trimmed)
-  z.boolean() → true if 'on'
-  z.date() → new Date(value)
-  z.bigint() → BigInt(trimmed)
+empty string/file → undefined
+z.number() → Number(trimmed)
+z.boolean() → true if 'on'
+z.date() → new Date(value)
+z.bigint() → BigInt(trimmed)
 
 constraint CoerceFormValueUsage {
-  Always wrap schema with coerceFormValue when form includes
-  non-string types (numbers, booleans, dates, files).
-  For default values after coercion, use `.transform(v => v ?? fallback)`.
+Always wrap schema with coerceFormValue when form includes
+non-string types (numbers, booleans, dates, files).
+For default values after coercion, use `.transform(v => v ?? fallback)`.
 }
 
 ### formatResult
@@ -336,10 +336,9 @@ isDirty(formData, { defaultValue?, serialize?, skipEntry?, intentName? })
 ```
 
 Use with useFormData:
+
 ```tsx
-const dirty = useFormData(formRef,
-  (formData) => isDirty(formData, { defaultValue }) ?? false
-);
+const dirty = useFormData(formRef, (formData) => isDirty(formData, { defaultValue }) ?? false);
 ```
 
 ### getFieldValue
@@ -361,5 +360,5 @@ const check = useMemo(() => memoize(asyncFn), []);
 ```
 
 constraint MemoizeScope {
-  Always wrap in useMemo at component level. Never define at module scope.
+Always wrap in useMemo at component level. Never define at module scope.
 }
