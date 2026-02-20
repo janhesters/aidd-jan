@@ -1,7 +1,6 @@
 #!/usr/bin/env bun
 import { createWriteStream, existsSync, statSync } from "node:fs";
 import { basename, resolve } from "node:path";
-
 import archiver from "archiver";
 
 import { validateSkill } from "./validate.ts";
@@ -20,7 +19,10 @@ export interface PackageResult {
   success: boolean;
 }
 
-export async function packageSkill(skillPath: string, outputDir?: string): Promise<PackageResult> {
+export async function packageSkill(
+  skillPath: string,
+  outputDir?: string,
+): Promise<PackageResult> {
   const resolved = resolve(skillPath);
 
   if (!existsSync(resolved)) {
@@ -92,7 +94,9 @@ export async function packageSkill(skillPath: string, outputDir?: string): Promi
 // CLI entry point
 if (import.meta.main) {
   if (process.argv.length < 3) {
-    console.log("Usage: bun package-skill.ts <path/to/skill-folder> [output-directory]");
+    console.log(
+      "Usage: bun package-skill.ts <path/to/skill-folder> [output-directory]",
+    );
     process.exit(1);
   }
 
