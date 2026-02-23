@@ -16,6 +16,7 @@ bun install
 
 - [Quick start](#quick-start)
 - [Stack](#stack)
+- [Development](#development)
 - [Project structure](#project-structure)
 - [Skills](#skills)
 - [Subagents](#subagents)
@@ -34,6 +35,24 @@ bun install
 - **Testing**: Playwright (E2E), bun:test (unit)
 - **i18n**: i18next (English + German)
 - **Security**: CSP nonce support, helmet headers
+- **Dev URLs**: [Portless](https://port1355.dev/) (stable `.localhost` URLs)
+
+## Development
+
+The dev server uses [Portless](https://port1355.dev/) to replace port numbers with a stable, named URL:
+
+```bash
+bun run --filter web dev
+# -> http://web.localhost:1355
+```
+
+Portless runs a local reverse proxy on port 1355 and routes `web.localhost:1355` to the app's randomly assigned port. This avoids port conflicts, makes URLs memorable, and prevents cookie/storage clashes between projects.
+
+To bypass Portless and use a regular port:
+
+```bash
+PORTLESS=0 bun run --filter web dev
+```
 
 ## Project structure
 
