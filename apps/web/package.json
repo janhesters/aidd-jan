@@ -7,7 +7,7 @@
     "check:format": "oxfmt --check .",
     "check:lint": "oxlint --type-aware",
     "check:types": "react-router typegen && tsgo",
-    "dev": "react-router dev",
+    "dev": "portless web react-router dev",
     "start": "react-router-serve ./build/server/index.js"
   },
   "dependencies": {
