@@ -12,6 +12,7 @@
     "prepare": "husky",
     "e2e": "turbo run e2e",
     "test": "turbo run test",
+    "tree": "tree . -I 'node_modules|dist|build|.git|coverage|.next|.turbo|playwright-report|test-results|inter|uploaded|openimg'",
     "validate": "turbo run check:types check:lint check:format"
   },
   "dependencies": {

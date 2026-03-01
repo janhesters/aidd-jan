@@ -124,4 +124,5 @@ bun run e2e             # Run Playwright E2E tests
 bun run check:types     # Type check with tsgo
 bun run check:lint      # Lint with oxlint
 bun run check:format    # Check formatting with oxfmt
+bun run tree            # Print the project directory tree (excludes generated dirs)
 ```
