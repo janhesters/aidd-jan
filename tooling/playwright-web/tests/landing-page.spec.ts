@@ -3,36 +3,61 @@ import { expect, test } from "@playwright/test";
 
 const LANDING_PAGE = "/";
 
-test("given: any user, should: display correct metadata, logo, navigation, and links", async ({
+test("given: any user, should: display correct metadata, header, hero, and logo cloud", async ({
   page,
 }) => {
   await page.goto(LANDING_PAGE);
 
-  await expect(page).toHaveTitle("New React Router App");
+  await expect(page).toHaveTitle("React SaaS Template");
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     "content",
-    "Welcome to React Router!",
+    /Ship your SaaS faster/,
   );
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
 
-  const logo = page.getByAltText("React Router");
-  await expect(logo.first()).toBeVisible();
-
   const nav = page.getByRole("navigation");
-  await expect(nav).toContainText("What's next?");
+  await expect(nav).toBeVisible();
 
-  const docsLink = page.getByRole("link", { name: /React Router Docs/i });
-  await expect(docsLink).toBeVisible();
-  await expect(docsLink).toHaveAttribute(
-    "href",
-    "https://reactrouter.com/docs",
-  );
-  await expect(docsLink).toHaveAttribute("target", "_blank");
+  const heading = page.getByRole("heading", {
+    level: 1,
+    name: /React Router SaaS Template/,
+  });
+  await expect(heading).toBeVisible();
 
-  const discordLink = page.getByRole("link", { name: /Join Discord/i });
-  await expect(discordLink).toBeVisible();
-  await expect(discordLink).toHaveAttribute("href", "https://rmx.as/discord");
-  await expect(discordLink).toHaveAttribute("target", "_blank");
+  const getStartedButton = page.getByRole("link", { name: /Get Started/i });
+  await expect(getStartedButton.first()).toBeVisible();
+
+  const heroImage = page.getByAltText(/Application dashboard preview/i);
+  await expect(heroImage.first()).toBeVisible();
+
+  const trustedByHeading = page.getByRole("heading", {
+    level: 2,
+    name: /Trusted by/,
+  });
+  await expect(trustedByHeading).toBeVisible();
+});
+
+test("given: any user on mobile, should: open and close mobile navigation", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto(LANDING_PAGE);
+
+  const menuButton = page.getByRole("button", { name: /Toggle menu/i });
+  await expect(menuButton).toBeVisible();
+
+  await menuButton.click();
+
+  const mobileNav = page.getByRole("navigation", { name: /Mobile/i });
+  await expect(mobileNav).toBeVisible();
+
+  const navLinks = mobileNav.getByRole("listitem");
+  await expect(navLinks).toHaveCount(3);
+
+  const closeButton = page.getByRole("button", { name: /Close/i });
+  await closeButton.click();
+
+  await expect(mobileNav).toBeHidden();
 });
 
 test("given: any user, should: have no accessibility violations", async ({

@@ -1,10 +1,20 @@
 export default {
-  description: "Welcome to React Router!",
-  heading: "Welcome to React Router",
+  announcement: "Accepting New Contributors",
+  announcementLabel: "NEW",
+  bookCall: "Documentation",
+  description:
+    "Ship your SaaS faster with this free React Router template. Authentication, billing, i18n, and more.",
+  getStarted: "Get Started",
+  heading: "The React Router SaaS Template",
   nav: {
-    discord: "Join Discord",
-    docs: "React Router Docs",
-    title: "What's next?",
+    about: "About",
+    features: "Features",
+    pricing: "Pricing",
   },
-  title: "New React Router App",
+  signIn: "Sign In",
+  subtitle:
+    "Save months when building your next SaaS. A free, community-driven template with authentication, billing, i18n, and more.",
+  title: "React SaaS Template",
+  trustedBy: "Trusted by",
+  trustedByHighlight: "experts",
 };

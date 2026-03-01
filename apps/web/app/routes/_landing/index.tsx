@@ -1,6 +1,7 @@
 import { getInstance } from "~/middleware/i18next";
 
-import { Welcome } from "../welcome/welcome";
+import { HeroSection } from "./+/hero-section";
+import { LogosSection } from "./+/logos-section";
 import type { Route } from "./+types/index";
 
 export async function loader({ context }: Route.LoaderArgs) {
@@ -16,5 +17,10 @@ export function meta({ data }: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <>
+      <HeroSection />
+      <LogosSection />
+    </>
+  );
 }
