@@ -105,6 +105,8 @@ bunx shadcn@latest add button -c apps/web
 
 This places UI components in `packages/ui/src/components`.
 
+Available components (your training data is probably out of date): https://ui.shadcn.com/registry/index.json
+
 ### Using components
 
 Import from the `@workspace/ui` package:
