@@ -4,6 +4,26 @@ export default {
   bookCall: "Dokumentation",
   description:
     "Starte dein SaaS schneller mit diesem kostenlosen React Router Template. Authentifizierung, Abrechnung, i18n und mehr.",
+  footer: {
+    company: {
+      aboutUs: "Über uns",
+      brandAssets: "Markenressourcen",
+      careers: "Karriere",
+      privacyPolicy: "Datenschutz",
+      termsOfService: "Nutzungsbedingungen",
+    },
+    companyHeading: "Unternehmen",
+    copyright: "aidd, Alle Rechte vorbehalten",
+    resources: {
+      blog: "Blog",
+      community: "Community",
+      contactSupport: "Support kontaktieren",
+      helpCenter: "Hilfecenter",
+      security: "Sicherheit",
+    },
+    resourcesHeading: "Ressourcen",
+    tagline: "Starte dein SaaS schneller mit aidd.",
+  },
   getStarted: "Loslegen",
   heading: "Das React Router SaaS Template",
   nav: {
