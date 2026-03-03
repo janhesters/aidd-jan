@@ -17,6 +17,7 @@
     "@tabler/icons-react": "^3.38.0",
     "@workspace/security": "workspace:*",
     "@workspace/ui": "workspace:*",
+    "cobe": "^0.6.5",
     "i18next": "^25.8.13",
     "i18next-browser-languagedetector": "^8.2.1",
     "i18next-fetch-backend": "^7.0.0",
