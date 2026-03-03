@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 const LANDING_PAGE = "/";
 
-test("given: any user, should: display correct metadata, header, hero, and logo cloud", async ({
+test("given: any user, should: display correct metadata, header, hero, logo cloud, features, and footer", async ({
   page,
 }) => {
   await page.goto(LANDING_PAGE);
@@ -35,6 +35,15 @@ test("given: any user, should: display correct metadata, header, hero, and logo 
     name: /Trusted by/,
   });
   await expect(trustedByHeading).toBeVisible();
+
+  const featureHeading = page.getByRole("heading", {
+    level: 3,
+    name: /2 Minutes Setup/,
+  });
+  await expect(featureHeading).toBeVisible();
+
+  const footer = page.getByRole("contentinfo");
+  await expect(footer).toBeVisible();
 });
 
 test("given: any user on mobile, should: open and close mobile navigation", async ({

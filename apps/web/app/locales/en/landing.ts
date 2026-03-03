@@ -4,6 +4,33 @@ export default {
   bookCall: "Documentation",
   description:
     "Ship your SaaS faster with this free React Router template. Authentication, billing, i18n, and more.",
+  features: {
+    dashboard: {
+      description:
+        "Manage & scale your business effortlessly using our user-friendly interface.",
+      title: "Sleek & Intuitive Design",
+    },
+    presence: {
+      description:
+        "Stay connected to your business no matter where you are, with our cloud-based access.",
+      title: "Access Anytime, Anywhere",
+    },
+    reports: {
+      description:
+        "Get detailed insights and analytics to make data-driven decisions.",
+      title: "Reports & Analytics",
+    },
+    security: {
+      description:
+        "Grant specific permissions to users based on their roles and responsibilities.",
+      title: "User-Based Security",
+    },
+    setup: {
+      description:
+        "Get your company's account up and running in under 2 minutes.",
+      title: "2 Minutes Setup",
+    },
+  },
   footer: {
     company: {
       aboutUs: "About Us",

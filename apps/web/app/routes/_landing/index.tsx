@@ -1,5 +1,6 @@
 import { getInstance } from "~/middleware/i18next";
 
+import { FeatureSection } from "./+/feature-section";
 import { HeroSection } from "./+/hero-section";
 import { LogosSection } from "./+/logos-section";
 import type { Route } from "./+types/index";
@@ -21,6 +22,7 @@ export default function Home() {
     <>
       <HeroSection />
       <LogosSection />
+      <FeatureSection />
     </>
   );
 }
