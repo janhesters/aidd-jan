@@ -2,6 +2,7 @@ import { z } from "zod";
 
 const schema = z.object({
   ALLOW_INDEXING: z.enum(["true", "false"]).optional(),
+  COOKIE_SECRET: z.string().min(1).default("s3cr3t"),
   NODE_ENV: z.enum(["production", "development", "test"] as const),
 });
 
