@@ -1,5 +1,4 @@
 import {
-  IconBrandFacebook,
   IconBrandGithub,
   IconBrandInstagram,
   IconBrandLinkedin,
@@ -10,10 +9,11 @@ import { cn } from "@workspace/ui/lib/utils";
 import type { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 
+import { ThemeToggle } from "~/features/color-scheme/theme-toggle";
+
 import { Logo } from "./logo";
 
 const socialLinks = [
-  { icon: <IconBrandFacebook />, label: "Facebook", link: "#" },
   { icon: <IconBrandGithub />, label: "GitHub", link: "#" },
   { icon: <IconBrandInstagram />, label: "Instagram", link: "#" },
   { icon: <IconBrandLinkedin />, label: "LinkedIn", link: "#" },
@@ -73,6 +73,7 @@ export function Footer() {
                   {item.icon}
                 </a>
               ))}
+              <ThemeToggle />
             </div>
           </div>
           <div className="col-span-3 w-full md:col-span-1">

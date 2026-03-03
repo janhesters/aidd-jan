@@ -69,6 +69,34 @@ test("given: any user on mobile, should: open and close mobile navigation", asyn
   await expect(mobileNav).toBeHidden();
 });
 
+test("given: any user, should: let the user switch the theme", async ({
+  page,
+}) => {
+  await page.goto(LANDING_PAGE);
+
+  const htmlElement = page.locator("html");
+  await expect(htmlElement).not.toHaveClass("dark");
+
+  await page.getByRole("button", { name: /open theme menu/i }).click();
+  await page.getByRole("menuitem", { name: /dark/i }).click();
+
+  await expect(htmlElement).toHaveClass(/dark/);
+
+  await page.getByRole("button", { name: /open theme menu/i }).click();
+  await expect(
+    page.getByRole("menuitem", { name: /dark/i }),
+  ).toHaveAttribute("aria-disabled", "true");
+
+  await page.reload();
+  await expect(htmlElement).toHaveClass(/dark/);
+
+  await page.getByRole("button", { name: /open theme menu/i }).click();
+  await page.getByRole("menuitem", { name: /light/i }).click();
+
+  await expect(htmlElement).toHaveClass(/light/);
+  await expect(htmlElement).not.toHaveClass(/dark/);
+});
+
 test("given: any user, should: have no accessibility violations", async ({
   page,
 }) => {
