@@ -20,7 +20,7 @@ export const [i18nextMiddleware, getLocale, getInstance] =
       fallbackLanguage: "en",
       supportedLanguages: ["de", "en"],
     },
-    i18next: { resources },
+    i18next: { resources, showSupportNotice: false },
     plugins: [initReactI18next],
   });
 

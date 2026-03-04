@@ -15,6 +15,7 @@ async function main() {
       backend: { loadPath: "/api/locales/{{lng}}/{{ns}}" },
       detection: { caches: [], order: ["htmlTag"] },
       fallbackLng: "en",
+      showSupportNotice: false,
     });
 
   startTransition(() => {
