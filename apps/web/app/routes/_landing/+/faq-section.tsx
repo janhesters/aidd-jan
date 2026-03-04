@@ -18,7 +18,7 @@ import {
   InputGroupInput,
 } from "@workspace/ui/components/input-group";
 import { cn } from "@workspace/ui/lib/utils";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { FullWidthDivider } from "./full-width-divider";
@@ -44,25 +44,32 @@ const faqItems = [
   { category: "features", key: "testing" },
   { category: "support", key: "help" },
   { category: "support", key: "contributing" },
-] as const;
+] as const satisfies readonly {
+  category: Exclude<Category, "all">;
+  key: string;
+}[];
 
 export function FaqSection() {
   const { t } = useTranslation("landing");
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category>("all");
 
-  const filtered = faqItems.filter((item) => {
-    if (activeCategory !== "all" && item.category !== activeCategory) {
-      return false;
-    }
-    if (search.trim()) {
-      const query = search.toLowerCase();
-      const question = t(`faq.items.${item.key}.question`).toLowerCase();
-      const answer = t(`faq.items.${item.key}.answer`).toLowerCase();
-      return question.includes(query) || answer.includes(query);
-    }
-    return true;
-  });
+  const filtered = useMemo(
+    () =>
+      faqItems.filter((item) => {
+        if (activeCategory !== "all" && item.category !== activeCategory) {
+          return false;
+        }
+        if (search.trim()) {
+          const query = search.toLowerCase();
+          const question = t(`faq.items.${item.key}.question`).toLowerCase();
+          const answer = t(`faq.items.${item.key}.answer`).toLowerCase();
+          return question.includes(query) || answer.includes(query);
+        }
+        return true;
+      }),
+    [activeCategory, search, t],
+  );
 
   return (
     <section className="relative py-12">
@@ -86,6 +93,7 @@ export function FaqSection() {
             <IconSearch />
           </InputGroupAddon>
           <InputGroupInput
+            aria-label={t("faq.searchPlaceholder")}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t("faq.searchPlaceholder")}
             type="search"
