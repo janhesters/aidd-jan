@@ -11,8 +11,8 @@ import { I18nextProvider } from "react-i18next";
 import type { EntryContext, RouterContextProvider } from "react-router";
 import { ServerRouter } from "react-router";
 
-import { getInstance } from "./middleware/i18next";
 import { getEnv, init } from "./lib/env.server";
+import { getInstance } from "./middleware/i18next";
 
 init();
 global.ENV = getEnv();

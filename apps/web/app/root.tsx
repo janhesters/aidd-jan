@@ -16,12 +16,12 @@ import {
 import type { Route } from "./+types/root";
 import { getColorScheme } from "./lib/color-scheme/color-scheme.server";
 import { useColorScheme } from "./lib/color-scheme/use-color-scheme";
+import { getEnv } from "./lib/env.server";
 import {
   getLocale,
   i18nextMiddleware,
   localeCookie,
 } from "./middleware/i18next";
-import { getEnv } from "./lib/env.server";
 
 import "@workspace/ui/globals.css";
 import "./styles/fonts.css";
