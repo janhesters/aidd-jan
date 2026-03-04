@@ -3,6 +3,9 @@ node_modules/
 .turbo
 .claude/settings.local.json
 
+# Database
+*.db
+
 # Playwright
 test-results/
 playwright-report/
