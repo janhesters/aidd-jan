@@ -1,0 +1,25 @@
+{
+  "name": "@workspace/email",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./send-email": "./src/send-email.ts",
+    "./templates/*": "./src/templates/*.tsx"
+  },
+  "scripts": {
+    "check:format": "oxfmt --check .",
+    "check:lint": "oxlint --type-aware",
+    "check:types": "tsgo"
+  },
+  "dependencies": {
+    "@react-email/components": "^0.0.41",
+    "react": "^19.2.4",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  }
+}
