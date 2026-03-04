@@ -1,0 +1,26 @@
+{
+  "name": "@workspace/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check:format": "oxfmt --check .",
+    "check:lint": "oxlint --type-aware",
+    "check:types": "tsgo",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "drizzle-orm": "^0.44.0"
+  },
+  "devDependencies": {
+    "@workspace/typescript-config": "workspace:*",
+    "drizzle-kit": "^0.30.0",
+    "typescript": "^5.9.3"
+  }
+}
