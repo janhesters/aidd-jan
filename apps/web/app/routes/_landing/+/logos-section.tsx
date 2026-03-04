@@ -8,7 +8,7 @@ export function LogosSection() {
   const { t } = useTranslation("landing");
 
   return (
-    <section className="mb-12">
+    <section>
       <h2 className="text-muted-foreground py-6 text-center text-lg font-medium tracking-tight md:text-xl">
         {t("trustedBy")}{" "}
         <span className="text-foreground">{t("trustedByHighlight")}</span>

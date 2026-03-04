@@ -48,7 +48,7 @@ export function Footer() {
           "dark:bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.1),transparent)]",
         )}
       >
-        <div className="bg-border absolute inset-x-0 h-px w-full" />
+        <div className="bg-border pointer-events-none absolute left-1/2 h-px w-screen -translate-x-1/2" />
         <div className="grid max-w-4xl grid-cols-6 gap-6 p-4">
           <div className="col-span-6 flex flex-col gap-4 pt-5 md:col-span-4">
             <a aria-label="Home" className="w-max" href="#">
@@ -105,7 +105,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="bg-border absolute inset-x-0 h-px w-full" />
+        <div className="bg-border pointer-events-none absolute left-1/2 h-px w-screen -translate-x-1/2" />
         <div className="flex max-w-4xl flex-col justify-between gap-2 py-4">
           <p className="text-muted-foreground text-center text-sm font-light">
             &copy; {new Date().getFullYear()} {t("footer.copyright")}
