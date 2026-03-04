@@ -1,5 +1,6 @@
 import { getInstance } from "~/middleware/i18next";
 
+import { FaqSection } from "./+/faq-section";
 import { FeatureSection } from "./+/feature-section";
 import { HeroSection } from "./+/hero-section";
 import { LogosSection } from "./+/logos-section";
@@ -23,6 +24,7 @@ export default function Home() {
       <HeroSection />
       <LogosSection />
       <FeatureSection />
+      <FaqSection />
     </>
   );
 }

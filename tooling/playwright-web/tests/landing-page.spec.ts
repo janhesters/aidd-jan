@@ -42,6 +42,12 @@ test("given: any user, should: display correct metadata, header, hero, logo clou
   });
   await expect(featureHeading).toBeVisible();
 
+  const faqHeading = page.getByRole("heading", {
+    level: 2,
+    name: /Frequently asked questions/,
+  });
+  await expect(faqHeading).toBeVisible();
+
   const footer = page.getByRole("contentinfo");
   await expect(footer).toBeVisible();
 });
@@ -95,6 +101,51 @@ test("given: any user, should: let the user switch the theme", async ({
 
   await expect(htmlElement).toHaveClass(/light/);
   await expect(htmlElement).not.toHaveClass(/dark/);
+});
+
+test("given: any user, should: filter FAQ items by search and category", async ({
+  page,
+}) => {
+  await page.goto(LANDING_PAGE);
+
+  const faqHeading = page.getByRole("heading", {
+    level: 2,
+    name: /Frequently asked questions/,
+  });
+  await faqHeading.scrollIntoViewIfNeeded();
+
+  await expect(
+    page.getByRole("button", { name: /Is aidd free\?/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /How does authentication work\?/ }),
+  ).toBeVisible();
+
+  const searchInput = page.getByPlaceholder(/Search questions/);
+  await searchInput.fill("Drizzle");
+  await expect(
+    page.getByRole("button", { name: /What database does this use\?/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /Is aidd free\?/ }),
+  ).toBeHidden();
+
+  await searchInput.fill("xyznonexistent");
+  await expect(page.getByText(/No questions found/)).toBeVisible();
+
+  await searchInput.clear();
+
+  const supportTab = page.getByRole("button", { name: /^Support$/ });
+  await supportTab.click();
+  await expect(
+    page.getByRole("button", { name: /Where can I get help\?/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /Is aidd free\?/ }),
+  ).toBeHidden();
+
+  await page.getByRole("button", { name: /Where can I get help\?/ }).click();
+  await expect(page.getByText(/GitHub Discussions/)).toBeVisible();
 });
 
 test("given: any user, should: have no accessibility violations", async ({
