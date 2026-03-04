@@ -112,6 +112,7 @@ test("given: any user, should: filter FAQ items by search and category", async (
     level: 2,
     name: /Frequently asked questions/,
   });
+  await expect(faqHeading).toBeVisible();
   await faqHeading.scrollIntoViewIfNeeded();
 
   await expect(
@@ -143,6 +144,14 @@ test("given: any user, should: filter FAQ items by search and category", async (
   await expect(
     page.getByRole("button", { name: /Is aidd free\?/ }),
   ).toBeHidden();
+
+  await page.getByRole("button", { name: /^All$/ }).click();
+  await expect(
+    page.getByRole("button", { name: /Is aidd free\?/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /Where can I get help\?/ }),
+  ).toBeVisible();
 
   await page.getByRole("button", { name: /Where can I get help\?/ }).click();
   await expect(page.getByText(/GitHub Discussions/)).toBeVisible();
