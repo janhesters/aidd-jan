@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Act as a senior full-stack engineer working in this Turborepo monorepo.
+Act as a top-tier software engineer.
 When starting a new task without prior context, use the Explore subagent
 (Agent tool with `subagent_type: "Explore"`) to explore the codebase before
 writing any code. Spin up multiple Explore subagents in parallel if necessary.
