@@ -9,7 +9,13 @@ export function FeatureSection() {
   const { t } = useTranslation("landing");
 
   return (
-    <section className="py-12">
+    <section
+      className={cn(
+        "relative z-10 py-12",
+        "before:bg-background before:absolute before:inset-y-0 before:-left-px before:z-10 before:w-px",
+        "after:bg-background after:absolute after:inset-y-0 after:-right-px after:z-10 after:w-px",
+      )}
+    >
       <div className="relative mx-auto grid w-full grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-6">
         <FeatureCard className="md:col-span-2">
           <SetupVisual />
