@@ -9,7 +9,7 @@ import { cn } from "@workspace/ui/lib/utils";
 import type { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ThemeToggle } from "~/features/color-scheme/theme-toggle";
+import { ThemeToggle } from "~/lib/color-scheme/theme-toggle";
 
 import { Logo } from "./logo";
 

@@ -12,7 +12,7 @@ import type { EntryContext, RouterContextProvider } from "react-router";
 import { ServerRouter } from "react-router";
 
 import { getInstance } from "./middleware/i18next";
-import { getEnv, init } from "./utils/env.server";
+import { getEnv, init } from "./lib/env.server";
 
 init();
 global.ENV = getEnv();
