@@ -2,8 +2,15 @@ import { z } from "zod";
 
 const schema = z.object({
   ALLOW_INDEXING: z.enum(["true", "false"]).optional(),
+  BETTER_AUTH_SECRET: z
+    .string()
+    .min(1)
+    .default("s3cr3t-f0r-d3v-0nly-ch4ng3-1n-pr0d"),
+  BETTER_AUTH_URL: z.string().url().default("http://web.localhost:1355"),
   COOKIE_SECRET: z.string().min(1).default("s3cr3t"),
+  EMAIL_FROM: z.string().optional(),
   NODE_ENV: z.enum(["production", "development", "test"] as const),
+  RESEND_API_KEY: z.string().optional(),
 });
 
 declare global {
