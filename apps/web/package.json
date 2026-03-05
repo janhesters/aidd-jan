@@ -40,12 +40,14 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@paralleldrive/cuid2": "^3.3.0",
     "@react-router/dev": "7.13.1",
     "@tailwindcss/vite": "^4.2.1",
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@workspace/typescript-config": "workspace:*",
+    "msw": "^2.12.10",
     "react-router-auto-routes": "^0.8.2",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
