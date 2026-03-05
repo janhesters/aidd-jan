@@ -1,6 +1,3 @@
-/**
- * biome-ignore-all lint/suspicious/noConsole:helpful local dev messages
- */
 import type { RequestHandler } from "msw";
 import type { SetupServer } from "msw/node";
 import { setupServer } from "msw/node";

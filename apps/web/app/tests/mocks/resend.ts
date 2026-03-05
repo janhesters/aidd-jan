@@ -8,7 +8,6 @@ export const resendHandlers: Array<HttpHandler> = [
   http.post("https://api.resend.com/emails", async ({ request }) => {
     requireHeader(request.headers, "Authorization");
     const body = await request.json();
-    // biome-ignore lint/suspicious/noConsole: helpful local dev message
     console.info("🔶 mocked email contents:", body);
 
     const email = await writeEmail(body);

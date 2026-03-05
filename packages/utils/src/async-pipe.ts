@@ -1,6 +1,3 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: required for type-level function composition
-// biome-ignore-all lint/style/noNonNullAssertion: safe after length checks
-
 // A type that represents either a value or a promise of that value.
 type MaybePromise<T> = T | Promise<T>;
 

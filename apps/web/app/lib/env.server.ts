@@ -2,6 +2,7 @@ import { z } from "zod";
 
 const schema = z.object({
   ALLOW_INDEXING: z.enum(["true", "false"]).optional(),
+  MOCKS: z.literal("true").optional(),
   BETTER_AUTH_SECRET: z
     .string()
     .min(1)
@@ -19,7 +20,7 @@ const schema = z.object({
 
 declare global {
   namespace NodeJS {
-    interface ProcessEnv extends z.infer<typeof schema> {}
+    interface ProcessEnv extends Omit<z.infer<typeof schema>, "NODE_ENV"> {}
   }
 }
 

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "paths": { "~/*": ["./app/*"] },
     "rootDirs": [".", "./.react-router/types"],
-    "types": ["node", "vite/client"]
+    "types": ["bun", "vite/client"]
   },
   "extends": "@workspace/typescript-config/react-router.json",
   "include": [

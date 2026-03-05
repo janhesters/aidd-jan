@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./operators": "./src/operators.ts",
     "./schema": "./src/schema.ts"
   },
   "scripts": {
@@ -13,6 +14,7 @@
     "check:types": "tsgo",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {

@@ -70,7 +70,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </OpenImgContextProvider>
         <script
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: This is how you expose public env variables to the client with React Router.
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(loaderData?.ENV ?? {})}`,
           }}
