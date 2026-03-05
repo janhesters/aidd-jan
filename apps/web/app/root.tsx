@@ -1,5 +1,6 @@
 import { useNonce } from "@workspace/security/nonce-provider";
 import { securityMiddleware } from "@workspace/security/security-middleware";
+import { OpenImgContextProvider } from "openimg/react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -61,7 +62,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <OpenImgContextProvider
+          breakpoints={[640, 768, 1024, 1280, 1536]}
+          optimizerEndpoint={loaderData?.ENV.IMAGE_OPTIMIZER_ENDPOINT ?? "/img"}
+          targetFormats={["avif", "webp"]}
+        >
+          {children}
+        </OpenImgContextProvider>
         <script
           // biome-ignore lint/security/noDangerouslySetInnerHtml: This is how you expose public env variables to the client with React Router.
           dangerouslySetInnerHTML={{
@@ -79,7 +86,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App({ loaderData: { locale } }: Route.ComponentProps) {
   const { i18n } = useTranslation();
   useEffect(() => {
-    if (i18n.language !== locale) i18n.changeLanguage(locale);
+    if (i18n.language !== locale) void i18n.changeLanguage(locale);
   }, [locale, i18n]);
   return <Outlet />;
 }

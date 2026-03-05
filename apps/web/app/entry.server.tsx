@@ -23,6 +23,19 @@ const oneSecond = 1000;
 const nonceLength = 16;
 const MODE = process.env.NODE_ENV ?? "development";
 
+function parseImageOrigins(csv: string | undefined): string[] {
+  if (!csv) return [];
+
+  return csv
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .filter((origin) => URL.canParse(origin))
+    .map((origin) => new URL(origin).origin);
+}
+
+const imageOrigins = parseImageOrigins(process.env.IMAGE_REMOTE_ALLOWLIST);
+
 export default function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -81,7 +94,7 @@ export default function handleRequest(
                   ],
                   "font-src": ["'self'"],
                   "frame-src": ["'self'"],
-                  "img-src": ["'self'", "data:"],
+                  "img-src": ["'self'", "data:", ...imageOrigins],
                   "script-src": [
                     "'strict-dynamic'",
                     "'self'",

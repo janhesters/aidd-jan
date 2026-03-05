@@ -1,7 +1,10 @@
 import { IconArrowRight, IconPhoneCall } from "@tabler/icons-react";
 import { buttonVariants } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
+import { Img } from "openimg/react";
 import { useTranslation } from "react-i18next";
+
+import { getLocalImageSrc } from "~/lib/images/sources";
 
 import { DecorIcon } from "./decor-icon";
 import { FullWidthDivider } from "./full-width-divider";
@@ -83,18 +86,20 @@ export function HeroSection() {
 
         <FullWidthDivider className="-top-px" />
         <div className="overflow-hidden *:pointer-events-none *:aspect-video *:select-none">
-          <img
+          <Img
             alt="Application dashboard preview"
             className="dark:hidden"
             height={1080}
-            src="/images/screen/dashboard-light.webp"
+            isAboveFold
+            src={getLocalImageSrc("dashboardLight")}
             width={1920}
           />
-          <img
+          <Img
             alt="Application dashboard preview"
             className="hidden dark:block"
             height={1080}
-            src="/images/screen/dashboard-dark.webp"
+            isAboveFold
+            src={getLocalImageSrc("dashboardDark")}
             width={1920}
           />
         </div>

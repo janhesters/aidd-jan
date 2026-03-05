@@ -10,7 +10,11 @@ const schema = z.object({
   COOKIE_SECRET: z.string().min(1).default("s3cr3t"),
   EMAIL_FROM: z.string().optional(),
   NODE_ENV: z.enum(["production", "development", "test"] as const),
+  IMAGE_OPTIMIZER_ENDPOINT: z.string().optional(),
+  IMAGE_REMOTE_ALLOWLIST: z.string().optional(),
+  IMAGE_SOURCE_MODE: z.enum(["local", "blob", "mixed"] as const).optional(),
   RESEND_API_KEY: z.string().optional(),
+  VERCEL_BLOB_BASE_URL: z.string().url().optional(),
 });
 
 declare global {
@@ -41,6 +45,7 @@ export function init() {
 export function getEnv() {
   return {
     ALLOW_INDEXING: process.env.ALLOW_INDEXING,
+    IMAGE_OPTIMIZER_ENDPOINT: process.env.IMAGE_OPTIMIZER_ENDPOINT ?? "/img",
     MODE: process.env.NODE_ENV,
   };
 }
