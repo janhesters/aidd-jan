@@ -1,7 +1,10 @@
 import { IconGlobe, IconPointer, IconTrendingUp } from "@tabler/icons-react";
 import { cn } from "@workspace/ui/lib/utils";
+import { Img } from "openimg/react";
 import type { ComponentProps, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+
+import { getLocalImageSrc } from "~/lib/images/sources";
 
 import { Globe } from "./globe";
 
@@ -65,18 +68,18 @@ export function FeatureSection() {
             <div className="relative aspect-video mask-r-from-90% mask-b-from-90% sm:aspect-auto">
               <div className="bg-card absolute -right-1 -bottom-1 aspect-video max-h-50 rounded-tl-md border p-1 sm:max-h-42 md:aspect-square md:max-h-50 lg:aspect-16/12">
                 <div className="aspect-video h-full overflow-hidden rounded-tl-sm border *:pointer-events-none *:size-full *:shrink-0 *:select-none">
-                  <img
+                  <Img
                     alt="Dashboard preview"
                     className="dark:hidden"
                     height={360}
-                    src="/images/screen/dashboard-light.webp"
+                    src={getLocalImageSrc("dashboardLight")}
                     width={640}
                   />
-                  <img
+                  <Img
                     alt="Dashboard preview"
                     className="hidden dark:block"
                     height={360}
-                    src="/images/screen/dashboard-dark.webp"
+                    src={getLocalImageSrc("dashboardDark")}
                     width={640}
                   />
                 </div>
