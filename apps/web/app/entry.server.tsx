@@ -13,9 +13,25 @@ import { ServerRouter } from "react-router";
 
 import { getEnv, init } from "./lib/env.server";
 import { getInstance } from "./middleware/i18next";
+import { startMockServer } from "./tests/mocks/server";
 
 init();
 global.ENV = getEnv();
+
+let mockServerInitialized = false;
+
+async function initializeMockServer() {
+  if (mockServerInitialized) {
+    return;
+  }
+
+  if (process.env.MOCKS === "true") {
+    const { resendHandlers } = await import("~/tests/mocks/handlers/resend");
+    startMockServer([...resendHandlers]);
+  }
+
+  mockServerInitialized = true;
+}
 
 export const streamTimeout = 5000;
 
@@ -36,13 +52,15 @@ function parseImageOrigins(csv: string | undefined): string[] {
 
 const imageOrigins = parseImageOrigins(process.env.IMAGE_REMOTE_ALLOWLIST);
 
-export default function handleRequest(
+export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   entryContext: EntryContext,
   routerContext: RouterContextProvider,
 ) {
+  await initializeMockServer();
+
   const nonce = crypto.randomBytes(nonceLength).toString("hex");
 
   return new Promise((resolve, reject) => {

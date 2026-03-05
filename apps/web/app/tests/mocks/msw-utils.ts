@@ -11,7 +11,6 @@ export const onUnhandledRequest: UnhandledRequestCallback = (request) => {
     return;
   }
 
-  // biome-ignore lint/suspicious/noConsole: Replaying an wan message
   console.warn(
     "[MSW] Warning: captured a request without a matching request handler:\n\n",
     `  • ${request.method} ${new URL(request.url).href}\n\n`,

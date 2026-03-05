@@ -71,6 +71,10 @@ jobs:
         with:
           bun-version: latest
       - run: bun install --frozen-lockfile
+      - name: Copy test env vars
+        run: cp apps/web/.env.example apps/web/.env
+      - name: Setup database
+        run: bun run db:push
       - run: bun run test
 
   e2e:
@@ -87,7 +91,7 @@ jobs:
           cp apps/web/.env.example apps/web/.env
           grep -v '^#' apps/web/.env.example | grep -v '^\s*$' >> "$GITHUB_ENV"
       - name: Setup database
-        run: bun run --filter @workspace/db db:migrate
+        run: bun run db:push
       - name: Install Playwright Chromium
         run: bunx playwright install chromium --with-deps
       - run: bun run e2e

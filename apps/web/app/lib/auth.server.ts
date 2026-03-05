@@ -1,3 +1,4 @@
+import { createId } from "@paralleldrive/cuid2";
 import { db } from "@workspace/db";
 import { sendEmail } from "@workspace/email/send";
 import { betterAuth } from "better-auth";
@@ -9,6 +10,7 @@ import { localeCookie } from "~/middleware/i18next";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "sqlite" }),
+  advanced: { database: { generateId: () => createId() } },
   baseURL: process.env.BETTER_AUTH_URL,
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: { enabled: false },

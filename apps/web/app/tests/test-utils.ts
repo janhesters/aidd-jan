@@ -1,6 +1,9 @@
+import type { FormValue, SubmissionResult } from "@conform-to/react/future";
 import type { MiddlewareFunction, Params } from "react-router";
 import { RouterContextProvider } from "react-router";
 
+import { badRequest } from "~/lib/data-responses.server";
+import type { DataWithResponseInit } from "~/lib/data-responses.server";
 import { i18nextMiddleware } from "~/middleware/i18next";
 
 /**
@@ -55,4 +58,22 @@ export async function createTestContextProvider({
   }
 
   return context;
+}
+
+export function createValidationErrorResponse(
+  payload: Record<string, FormValue<string | number | boolean | null>>,
+  fieldErrors: Record<string, string[]>,
+): DataWithResponseInit<{
+  result: SubmissionResult<string, string | number | boolean | null>;
+}> {
+  return badRequest({
+    result: {
+      error: { fieldErrors, formErrors: [] },
+      submission: {
+        fields: Object.keys(payload),
+        intent: null,
+        payload,
+      },
+    },
+  });
 }

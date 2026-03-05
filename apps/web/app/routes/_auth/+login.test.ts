@@ -1,0 +1,75 @@
+import { describe, expect, test } from "bun:test";
+
+import { toFormData } from "~/lib/to-form-data";
+import { resendHandlers } from "~/tests/mocks/handlers/resend";
+import { setupMockServerLifecycle } from "~/tests/msw-test-utils";
+import {
+  createTestContextProvider,
+  createValidationErrorResponse,
+} from "~/tests/test-utils";
+
+import { action, LOGIN_WITH_EMAIL_INTENT } from "./login";
+
+const createUrl = () => `http://localhost:3000/login`;
+
+async function sendRequest({ formData }: { formData: FormData }) {
+  const request = new Request(createUrl(), { body: formData, method: "POST" });
+  const params = {};
+
+  return await action({
+    context: await createTestContextProvider({
+      params,
+      request,
+    }),
+    params,
+    request,
+    unstable_pattern: "/login",
+  });
+}
+
+setupMockServerLifecycle(...resendHandlers);
+
+describe("/login route action", () => {
+  describe(`given: ${LOGIN_WITH_EMAIL_INTENT} intent`, () => {
+    const intent = LOGIN_WITH_EMAIL_INTENT;
+
+    test("given: a valid email and intent, should: redirect to /verify (with an email cookie, which is verified in the E2E tests)", async () => {
+      const email = "test@example.com";
+      const formData = toFormData({ email, intent });
+
+      const response = (await sendRequest({ formData })) as Response;
+
+      const redirectStatus = 302;
+      expect(response.status).toEqual(redirectStatus);
+      expect(response.headers.get("Location")).toEqual("/verify");
+    });
+
+    test.each([
+      {
+        body: { intent },
+        expected: createValidationErrorResponse(
+          { intent },
+          { email: ["auth:login.errors.invalidEmail"] },
+        ),
+        given: "no email",
+      },
+      {
+        body: { email: "invalid-email", intent },
+        expected: createValidationErrorResponse(
+          { email: "invalid-email", intent },
+          { email: ["auth:login.errors.invalidEmail"] },
+        ),
+        given: "an invalid email",
+      },
+    ])(
+      "given: $given, should: return a 400 status code with an error message",
+      async ({ body, expected }) => {
+        const formData = toFormData(body);
+
+        const actual = await sendRequest({ formData });
+
+        expect(actual).toEqual(expected);
+      },
+    );
+  });
+});

@@ -6,6 +6,9 @@ node_modules/
 # Database
 *.db
 
+# Test fixtures
+**/tests/mocks/fixtures/
+
 # Playwright
 test-results/
 playwright-report/

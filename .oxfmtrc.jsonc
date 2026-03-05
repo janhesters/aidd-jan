@@ -6,5 +6,5 @@
   "experimentalTailwindcss": {
     "functions": ["clsx", "cn"],
   },
-  "ignorePatterns": [".react-router", ".agents", ".claude", ".cursor"],
+  "ignorePatterns": [".react-router", ".agents", ".claude", ".cursor", "**/tests/mocks/fixtures"],
 }
