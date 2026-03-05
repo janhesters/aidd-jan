@@ -74,7 +74,7 @@ export function ThemeToggle() {
       <DropdownMenuContent align="end" sideOffset={4}>
         <DropdownMenuGroup
           render={
-            <Form action="/color-scheme" method="post" navigate={false} />
+            <Form action="/api/color-scheme" method="post" navigate={false} />
           }
         >
           <DropdownMenuLabel className="sr-only">

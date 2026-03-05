@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import resources from "~/locales";
 
-import type { Route } from "./+types/api.locales.$lng.$ns";
+import type { Route } from "./+types/$lng.$ns";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const lng = z
