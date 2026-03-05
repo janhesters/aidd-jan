@@ -5,6 +5,11 @@ When starting a new task without prior context, use the Explore subagent
 (Agent tool with `subagent_type: "Explore"`) to explore the codebase before
 writing any code. Spin up multiple Explore subagents in parallel if necessary.
 
+## Shell
+
+- Avoid `$()` command substitution in shell commands — it triggers an extra approval step.
+- For commit messages and PR bodies, pass them directly as string arguments or use `gh` CLI flags.
+
 ## Commits
 
 constraint CommitConvention {
