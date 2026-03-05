@@ -14,7 +14,16 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["playwright-report/**", "test-results/**"],
-      "passThroughEnv": ["PLAYWRIGHT_*"]
+      "passThroughEnv": [
+        "ALLOW_INDEXING",
+        "BETTER_AUTH_*",
+        "COOKIE_SECRET",
+        "EMAIL_FROM",
+        "NODE_ENV",
+        "PLAYWRIGHT_*",
+        "RESEND_API_KEY",
+        "TURSO_*"
+      ]
     },
     "db:generate": {
       "cache": false

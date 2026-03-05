@@ -11,13 +11,18 @@
     "start": "react-router-serve ./build/server/index.js"
   },
   "dependencies": {
+    "@better-auth/drizzle-adapter": "^1.5.3",
+    "@libsql/client": "^0.14.0",
     "@nichtsam/helmet": "^0.3.1",
+    "@react-email/components": "^0.0.36",
     "@react-router/node": "7.13.1",
     "@react-router/serve": "7.13.1",
     "@tabler/icons-react": "^3.38.0",
     "@workspace/db": "workspace:*",
+    "@workspace/email": "workspace:*",
     "@workspace/security": "workspace:*",
     "@workspace/ui": "workspace:*",
+    "better-auth": "^1.5.3",
     "cobe": "^0.6.5",
     "i18next": "^25.8.13",
     "i18next-browser-languagedetector": "^8.2.1",
