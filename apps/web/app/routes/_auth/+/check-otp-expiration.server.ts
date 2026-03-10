@@ -1,7 +1,7 @@
 import { retrieveVerificationFromDatabaseByIdentifier } from "~/lib/database/facades.server";
 
 export async function getIsOTPExpired(email: string) {
-  const identifier = `sign-in-otp-${email}`;
+  const identifier = `sign-in-otp-${email.toLowerCase()}`;
   const record = await retrieveVerificationFromDatabaseByIdentifier(identifier);
 
   if (!record) {
