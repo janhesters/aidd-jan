@@ -37,7 +37,7 @@ export async function serializeEmailCookie(email: string, maxAge?: number) {
 }
 
 export async function setEmailCookie(email: string) {
-  const identifier = `sign-in-otp-${email}`;
+  const identifier = `sign-in-otp-${email.toLowerCase()}`;
   const record = await retrieveVerificationFromDatabaseByIdentifier(identifier);
 
   let maxAge = DEFAULT_MAX_AGE;
