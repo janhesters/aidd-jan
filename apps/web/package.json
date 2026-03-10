@@ -10,7 +10,7 @@
     "db:push": "cd ../../packages/db && TURSO_DATABASE_URL=file:../../apps/web/local.db bun run drizzle-kit push",
     "db:reset": "rm -f local.db && bun run db:push",
     "dev": "MOCKS=true portless web react-router dev",
-    "dev:mocks": "MOCKS=true react-router dev",
+    "start:mocks": "MOCKS=true react-router-serve ./build/server/index.js",
     "test": "bun test",
     "start": "react-router-serve ./build/server/index.js"
   },
