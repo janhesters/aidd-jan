@@ -1,4 +1,4 @@
 {
   "extends": "@workspace/typescript-config/playwright.json",
-  "include": ["tests", "playwright.config.ts"]
+  "include": ["tests", "playwright.config.ts", "auth.ts", "utils.ts"]
 }
