@@ -4,11 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.11.1",
+    "@faker-js/faker": "^10.3.0",
+    "@libsql/client": "^0.14.0",
+    "@paralleldrive/cuid2": "^3.3.0",
     "@workspace/playwright-utilities": "workspace:*",
+    "better-auth": "^1.5.3",
+    "drizzle-orm": "^0.44.0",
     "web": "workspace:*"
   },
   "devDependencies": {
