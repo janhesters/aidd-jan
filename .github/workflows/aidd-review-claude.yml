@@ -32,8 +32,10 @@ jobs:
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
 
-            Your ONLY output should be GitHub comments (inline and summary).
-            Do NOT emit review text as plain messages.
+            You are a code reviewer. Post inline comments only — do NOT post
+            a summary comment and do NOT emit review text as plain messages.
+            A post-processing step will extract your final message and post it
+            as the summary comment automatically.
 
             Steps:
             1. Run `gh pr diff ${{ github.event.pull_request.number }}` to get the full diff.
@@ -44,14 +46,11 @@ jobs:
                line number, your recommendation, and confirmed=true.
                If that tool is unavailable, run:
                  echo "::warning::Inline comment MCP tool unavailable — falling back to summary"
-               and include line-level findings in the summary instead.
-            4. Post your full review as a summary comment using:
-               gh pr comment ${{ github.event.pull_request.number }} --body "<review>"
+            4. As your FINAL message, write the full review summary in markdown.
                Follow the skill's output format. Be thorough — do not abbreviate.
-            5. At the very end of the summary comment, add a "Quick fix prompt"
-               section with a fenced code block (triple backticks) containing a
-               standalone prompt a developer can copy-paste into Claude Code to
-               fix all findings:
+               At the very end, add a "Quick fix prompt" section with a fenced code
+               block (triple backticks) containing a standalone prompt a developer
+               can copy-paste into Claude Code to fix all findings:
 
                ### Quick fix prompt
                ```text
@@ -61,7 +60,36 @@ jobs:
                ...
                ```
           claude_args: |
-            --model claude-sonnet-4-6 --max-turns 25 --allowedTools "Read,Glob,Grep,Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(gh pr view:*),Bash(echo:*),mcp__github_inline_comment__create_inline_comment"
+            --model claude-sonnet-4-6 --max-turns 15 --allowedTools "Read,Glob,Grep,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(echo:*),mcp__github_inline_comment__create_inline_comment" --disallowedTools "Task,Write,Edit"
+
+      - name: Post summary comment
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LOG="/home/runner/work/_temp/claude-execution-output.json"
+          if [ ! -f "$LOG" ]; then
+            echo "::warning::No execution log found — skipping summary comment"
+            exit 0
+          fi
+
+          # Extract the last assistant message as the summary
+          BODY=$(python3 -c "
+          import json, sys
+          with open('$LOG') as f:
+              entries = json.load(f)
+          # Walk backwards to find the last assistant text message
+          for entry in reversed(entries):
+              if entry.get('type') == 'assistant':
+                  msg = entry.get('message', {})
+                  for block in msg.get('content', []):
+                      if block.get('type') == 'text':
+                          print(block['text'])
+                          sys.exit(0)
+          print('Review completed but no summary was generated.')
+          ")
+
+          gh pr comment "${{ github.event.pull_request.number }}" --body "$BODY"
 
       - uses: actions/upload-artifact@v4
         if: always()
