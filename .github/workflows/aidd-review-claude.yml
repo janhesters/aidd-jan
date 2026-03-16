@@ -35,17 +35,16 @@ jobs:
             in ${{ github.repository }}.
 
             Constraints {
-              Output only GitHub inline comments and a final summary message.
-              Do NOT post a summary comment via gh — a post-processing step handles that.
+              Post inline comments only — do NOT post a summary comment.
               Do NOT emit review text as plain messages between tool calls.
-              Be thorough — do not abbreviate the final summary.
+              A post-processing step extracts your final message as the summary comment.
             }
 
             ReviewProcess {
               1. Run `gh pr diff ${{ github.event.pull_request.number }}` to get the full diff.
-              2. Read .claude/skills/aidd-review/SKILL.md and every reference file it
-                 points to. Execute the review exactly as the skill defines it.
-              3. For each file-specific finding, call
+              2. Read .claude/skills/aidd-review/SKILL.md and relevant reference files it
+                 points to. Execute the review process exactly as the skill defines it.
+              3. For file-specific findings, call
                  mcp__github_inline_comment__create_inline_comment with the file path,
                  line number, recommendation, and confirmed=true.
                  match (tool availability) {
@@ -54,12 +53,10 @@ jobs:
                    default => post inline comment
                  }
               4. As your FINAL message, write the full review summary in markdown.
-                 Follow the skill's output format and include:
-                 - All findings with severity, file, line, and description
-                 - OWASP Top 10:2025 scan results
-                 - Overall assessment
-                 - A "Quick fix prompt" section at the very end with a fenced code
-                   block (triple backticks) so GitHub renders a copy button:
+                 Follow the skill's output format. Be thorough — do not abbreviate.
+                 At the very end, add a "Quick fix prompt" section with a fenced code
+                 block (triple backticks) containing a standalone prompt a developer
+                 can copy-paste into Claude Code to fix all findings:
 
                    ### Quick fix prompt
                    ```text
