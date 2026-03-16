@@ -1,0 +1,53 @@
+name: AIDD Review (Claude)
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: aidd-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  aidd-review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            You are a code reviewer. Your ONLY output should be GitHub comments
+            (inline and summary). Do NOT emit review text as plain messages.
+
+            Steps:
+            1. Run `gh pr diff ${{ github.event.pull_request.number }}` to get the full diff.
+            2. Read .claude/skills/aidd-review/SKILL.md for the review criteria.
+            3. Read all reference files the skill points to (OWASP, JWT security,
+               timing-safe compare, implementation guides, etc.).
+            4. For each changed file, apply every review criterion from the skill
+               and its references.
+            5. For file-specific findings, call
+               mcp__github_inline_comment__create_inline_comment with the file
+               path, line number, your recommendation, and confirmed=true so the
+               comment posts immediately.
+               If that tool is not available or the call fails, run:
+                 echo "::warning::Inline comment MCP tool unavailable — falling back to summary"
+               and include all line-level findings in the summary comment instead.
+            6. After reviewing all files, post a single summary comment:
+               `gh pr comment ${{ github.event.pull_request.number }} --body "<summary>"`
+               The summary should list the number of findings by severity, key
+               themes, and an overall assessment.
+          claude_args: '--model claude-opus-4-6 --max-turns 20 --allowedTools Read,Glob,Grep,Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(gh pr view:*),Bash(echo:*),mcp__github_inline_comment__create_inline_comment'
