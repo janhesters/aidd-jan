@@ -16,54 +16,62 @@ async function registerAndNavigateToVerify(
   await expect(page).toHaveURL(/\/verify/);
 }
 
-test("given: any user with verification cookie, should: have the correct page title", async ({
-  page,
-}) => {
-  const email = faker.internet.email();
+test.describe("Verify Page", () => {
+  test("given: any user with verification cookie, should: have the correct page title", async ({
+    page,
+  }) => {
+    const email = faker.internet.email();
 
-  await registerAndNavigateToVerify(page, email);
+    try {
+      await registerAndNavigateToVerify(page, email);
 
-  await expect(page).toHaveTitle(/verify email/i);
+      await expect(page).toHaveTitle(/verify email/i);
+    } finally {
+      await teardownUserByEmail(email);
+    }
+  });
 
-  await teardownUserByEmail(email);
-});
+  test("given: a user without a verification email cookie, should: redirect to login", async ({
+    page,
+  }) => {
+    await page.goto(VERIFY_PAGE);
 
-test("given: a user without a verification email cookie, should: redirect to login", async ({
-  page,
-}) => {
-  await page.goto(VERIFY_PAGE);
+    await expect(page).toHaveURL(/\/login/);
+  });
 
-  await expect(page).toHaveURL(/\/login/);
-});
+  test("given: too short OTP, should: show wrong length error", async ({
+    page,
+  }) => {
+    const email = faker.internet.email();
 
-test("given: too short OTP, should: show wrong length error", async ({
-  page,
-}) => {
-  const email = faker.internet.email();
+    try {
+      await registerAndNavigateToVerify(page, email);
 
-  await registerAndNavigateToVerify(page, email);
+      await page.getByRole("textbox", { name: /verification code/i }).fill("123");
+      await page.getByRole("button", { name: /verify/i }).click();
 
-  await page.getByRole("textbox", { name: /verification code/i }).fill("123");
-  await page.getByRole("button", { name: /verify/i }).click();
+      await expect(page.getByText(/code must be 6 digits/i)).toBeVisible();
+    } finally {
+      await teardownUserByEmail(email);
+    }
+  });
 
-  await expect(page.getByText(/code must be 6 digits/i)).toBeVisible();
+  test("given: an invalid OTP, should: show invalid code error", async ({
+    page,
+  }) => {
+    const email = faker.internet.email();
 
-  await teardownUserByEmail(email);
-});
+    try {
+      await registerAndNavigateToVerify(page, email);
 
-test("given: an invalid OTP, should: show invalid code error", async ({
-  page,
-}) => {
-  const email = faker.internet.email();
+      await page
+        .getByRole("textbox", { name: /verification code/i })
+        .fill("000000");
+      await page.getByRole("button", { name: /verify/i }).click();
 
-  await registerAndNavigateToVerify(page, email);
-
-  await page
-    .getByRole("textbox", { name: /verification code/i })
-    .fill("000000");
-  await page.getByRole("button", { name: /verify/i }).click();
-
-  await expect(page.getByText(/invalid verification code/i)).toBeVisible();
-
-  await teardownUserByEmail(email);
+      await expect(page.getByText(/invalid verification code/i)).toBeVisible();
+    } finally {
+      await teardownUserByEmail(email);
+    }
+  });
 });

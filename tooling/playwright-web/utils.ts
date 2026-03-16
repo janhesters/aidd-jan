@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-import type { APIResponse, Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import type { User } from "better-auth";
 import { auth, client } from "./auth";
 
