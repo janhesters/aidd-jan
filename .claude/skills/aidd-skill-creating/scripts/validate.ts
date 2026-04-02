@@ -91,6 +91,12 @@ function validateName(fm: Record<string, unknown>): ValidationResult | null {
         valid: false,
       };
     }
+    if (!trimmed.startsWith("aidd-")) {
+      return {
+        message: `Name '${trimmed}' must start with the 'aidd-' prefix (e.g. 'aidd-${trimmed}')`,
+        valid: false,
+      };
+    }
     if (trimmed.length > 64) {
       return {
         message: `Name is too long (${trimmed.length} characters). Maximum is 64 characters.`,

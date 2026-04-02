@@ -62,8 +62,9 @@ Frontmatter {
   compatibility: string? — environment requirements, max 500 chars
 
   NamingConvention {
-    Skills: [domain]-[activity] using a gerund or deverbal noun.
-    Examples: test-writing, webapp-testing, skill-creating, canvas-design.
+    Skills: aidd-[domain]-[activity] using a gerund or deverbal noun.
+    The `aidd-` prefix is required for all skills in this project.
+    Examples: aidd-test-writing, aidd-webapp-testing, aidd-skill-creating, aidd-canvas-design.
     Skills describe what you know how to do; subagents describe who does it.
   }
 
@@ -124,7 +125,7 @@ Consult these references based on the skill's needs:
   Produce a list of reusable resources: scripts, references, assets.
 }
 
-/init [name] --path [dir] - Scaffold the skill {
+/init aidd-[name] --path [dir] - Scaffold the skill {
   Run: `bun scripts/init-skill.ts <name> --path <dir>`
   Skip if the skill already exists and only needs iteration.
   Creates SKILL.md template, scripts/, references/, assets/ with example files.
