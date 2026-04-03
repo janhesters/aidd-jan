@@ -40,6 +40,7 @@ async function sendRequest({
     params,
     request,
     unstable_pattern: "/verify",
+    unstable_url: new URL(createUrl()),
   });
 }
 
