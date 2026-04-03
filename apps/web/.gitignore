@@ -2,6 +2,9 @@
 .env
 /node_modules/
 
+# openimg
+/data/images/
+
 # React Router
 /.react-router/
 /build/

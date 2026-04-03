@@ -2,7 +2,6 @@ import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import type { Plugin } from "vite";
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 function staticCacheHeaders(): Plugin {
   return {
@@ -19,10 +18,6 @@ function staticCacheHeaders(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    reactRouter(),
-    tsconfigPaths(),
-    staticCacheHeaders(),
-  ],
+  resolve: { tsconfigPaths: true },
+  plugins: [tailwindcss(), reactRouter(), staticCacheHeaders()],
 });

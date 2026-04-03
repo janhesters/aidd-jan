@@ -112,6 +112,10 @@ jobs:
         run: bun run db:push
       - name: Install Playwright Chromium
         run: bunx playwright install chromium --with-deps
+      - name: Start emulator
+        run: bun run emulate &
+      - name: Wait for emulator
+        run: until curl -s http://localhost:4000 > /dev/null 2>&1; do sleep 0.5; done
       - run: bun run e2e
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
