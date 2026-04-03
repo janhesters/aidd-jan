@@ -27,7 +27,6 @@ const GLOBE_CONFIG: COBEOptions = {
     { location: [37.7749, -122.4194], size: 0.08 },
     { location: [55.7558, 37.6176], size: 0.08 },
   ],
-  onRender: () => {},
   phi: 0,
   theta: 0.3,
   width: 800,
@@ -80,20 +79,27 @@ export function Globe({
       ...mergedConfig,
       width: width.current * 2,
       height: width.current * 2,
-      onRender: (state) => {
-        if (!pointerInteracting.current && !prefersReducedMotion)
-          phi.current += 0.005;
-        state.phi = phi.current + r.current;
-        state.width = width.current * 2;
-        state.height = width.current * 2;
-      },
     });
+
+    let frameId: number;
+    const animate = () => {
+      if (!pointerInteracting.current && !prefersReducedMotion)
+        phi.current += 0.005;
+      globe.update({
+        phi: phi.current + r.current,
+        width: width.current * 2,
+        height: width.current * 2,
+      });
+      frameId = requestAnimationFrame(animate);
+    };
+    frameId = requestAnimationFrame(animate);
 
     setTimeout(() => {
       if (canvasRef.current) canvasRef.current.style.opacity = "1";
     }, 0);
 
     return () => {
+      cancelAnimationFrame(frameId);
       globe.destroy();
       window.removeEventListener("resize", onResize);
     };

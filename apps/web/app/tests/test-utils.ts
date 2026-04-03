@@ -33,7 +33,13 @@ export async function createTestContextProvider({
   unstable_pattern?: string;
 }) {
   const context = new RouterContextProvider();
-  const args = { context, params, request, unstable_pattern };
+  const args = {
+    context,
+    params,
+    request,
+    unstable_pattern,
+    unstable_url: new URL(request.url),
+  };
 
   // i18next middleware runs in root loader, so all routes have access to the
   // i18next context.
