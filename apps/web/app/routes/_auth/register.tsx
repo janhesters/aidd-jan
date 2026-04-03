@@ -26,12 +26,25 @@ import { validateFormData } from "~/lib/validate-form-data";
 import { getInstance } from "~/middleware/i18next";
 
 import { setEmailCookie } from "./+/email-otp-cookie.server";
+import { GoogleIcon } from "./+/google-icon";
 import type { Route } from "./+types/register";
 
-z.config({ jitless: true });
-export const schema = z.object({
+export const REGISTER_WITH_EMAIL_INTENT = "registerWithEmail" as const;
+export const REGISTER_WITH_GOOGLE_INTENT = "registerWithGoogle" as const;
+
+const registerWithEmailSchema = z.object({
   email: z.email({ message: "auth:register.errors.invalidEmail" }),
+  intent: z.literal(REGISTER_WITH_EMAIL_INTENT),
 });
+const registerWithGoogleSchema = z.object({
+  intent: z.literal(REGISTER_WITH_GOOGLE_INTENT),
+});
+
+z.config({ jitless: true });
+export const schema = z.discriminatedUnion("intent", [
+  registerWithEmailSchema,
+  registerWithGoogleSchema,
+]);
 
 export async function loader({ context }: Route.LoaderArgs) {
   const i18next = getInstance(context);
@@ -50,13 +63,31 @@ export async function action({ request }: Route.ActionArgs) {
     return result.response;
   }
 
-  const { email } = result.data;
-
-  await auth.api.sendVerificationOTP({
-    body: { email, type: "sign-in" },
-  });
-
-  return redirect(href("/verify"), { headers: await setEmailCookie(email) });
+  switch (result.data.intent) {
+    case REGISTER_WITH_EMAIL_INTENT: {
+      const { email } = result.data;
+      await auth.api.sendVerificationOTP({
+        body: { email, type: "sign-in" },
+      });
+      return redirect(href("/verify"), {
+        headers: await setEmailCookie(email),
+      });
+    }
+    case REGISTER_WITH_GOOGLE_INTENT: {
+      const { response, headers } = await auth.api.signInSocial({
+        body: {
+          provider: "google",
+          callbackURL: "/onboarding",
+          disableRedirect: true,
+        },
+        headers: request.headers,
+        returnHeaders: true,
+      });
+      if (!response.url)
+        throw new Error("Google OAuth: no redirect URL returned");
+      return redirect(response.url, { headers });
+    }
+  }
 }
 
 export default function RegisterRoute({ actionData }: Route.ComponentProps) {
@@ -65,54 +96,91 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
     lastResult: actionData?.result,
   });
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
+  const isRegisteringWithEmail =
+    navigation.formData?.get("intent") === REGISTER_WITH_EMAIL_INTENT;
+  const isRegisteringWithGoogle =
+    navigation.formData?.get("intent") === REGISTER_WITH_GOOGLE_INTENT;
+  const isSubmitting = isRegisteringWithEmail || isRegisteringWithGoogle;
 
   return (
-    <Form method="POST" {...form.props}>
-      <FieldSet disabled={isSubmitting}>
-        <FieldGroup>
-          <div className="flex flex-col items-center gap-1 text-center">
-            <h1 className="text-2xl font-bold">{t("title")}</h1>
+    <FieldSet disabled={isSubmitting}>
+      <FieldGroup>
+        <div className="flex flex-col items-center gap-1 text-center">
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
 
-            <p className="text-muted-foreground text-sm text-balance">
-              {t("subtitle")}
-            </p>
-          </div>
+          <p className="text-muted-foreground text-sm text-balance">
+            {t("subtitle")}
+          </p>
+        </div>
 
-          <Field data-invalid={fields.email.ariaInvalid}>
-            <FieldLabel htmlFor={fields.email.id}>{t("emailLabel")}</FieldLabel>
+        {/* Email Registration Form */}
+        <Form method="POST" {...form.props}>
+          <FieldGroup>
+            <Field data-invalid={fields.email.ariaInvalid}>
+              <FieldLabel htmlFor={fields.email.id}>
+                {t("emailLabel")}
+              </FieldLabel>
 
-            <InputGroup>
-              <InputGroupInput
-                {...fields.email.inputProps}
-                autoComplete="email"
-                placeholder={t("emailPlaceholder")}
-                type="email"
+              <InputGroup>
+                <InputGroupInput
+                  {...fields.email.inputProps}
+                  autoComplete="email"
+                  placeholder={t("emailPlaceholder")}
+                  type="email"
+                />
+
+                <InputGroupAddon>
+                  <MailIcon />
+                </InputGroupAddon>
+              </InputGroup>
+
+              <FieldError
+                errors={fields.email.errors}
+                id={fields.email.errorId}
               />
+            </Field>
 
-              <InputGroupAddon>
-                <MailIcon />
-              </InputGroupAddon>
-            </InputGroup>
+            <Field>
+              <Button
+                name="intent"
+                type="submit"
+                value={REGISTER_WITH_EMAIL_INTENT}
+              >
+                {isRegisteringWithEmail ? (
+                  <>
+                    <Spinner /> {t("submitButtonSubmitting")}
+                  </>
+                ) : (
+                  t("submitButton")
+                )}
+              </Button>
+            </Field>
+          </FieldGroup>
+        </Form>
 
-            <FieldError
-              errors={fields.email.errors}
-              id={fields.email.errorId}
-            />
+        <FieldSeparator>{t("separator")}</FieldSeparator>
+
+        {/* Google Registration Form */}
+        <Form method="POST">
+          <Field>
+            <Button
+              name="intent"
+              type="submit"
+              value={REGISTER_WITH_GOOGLE_INTENT}
+              variant="outline"
+            >
+              {isRegisteringWithGoogle ? (
+                <>
+                  <Spinner /> {t("googleButton")}
+                </>
+              ) : (
+                <>
+                  <GoogleIcon /> {t("googleButton")}
+                </>
+              )}
+            </Button>
           </Field>
-        </FieldGroup>
-
-        <Field>
-          <Button type="submit">
-            {isSubmitting ? (
-              <>
-                <Spinner /> {t("submitButtonSubmitting")}
-              </>
-            ) : (
-              t("submitButton")
-            )}
-          </Button>
-        </Field>
+        </Form>
 
         <Field>
           <FieldDescription className="text-muted-foreground text-sm">
@@ -164,7 +232,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
             />
           </FieldDescription>
         </Field>
-      </FieldSet>
-    </Form>
+      </FieldGroup>
+    </FieldSet>
   );
 }

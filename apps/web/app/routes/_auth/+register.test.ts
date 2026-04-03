@@ -8,7 +8,7 @@ import {
   createValidationErrorResponse,
 } from "~/tests/test-utils";
 
-import { action } from "./register";
+import { action, REGISTER_WITH_EMAIL_INTENT } from "./register";
 
 const createUrl = () => `http://localhost:3000/register`;
 
@@ -31,9 +31,11 @@ async function sendRequest({ formData }: { formData: FormData }) {
 setupMockServerLifecycle(...resendHandlers);
 
 describe("/register route action", () => {
+  const intent = REGISTER_WITH_EMAIL_INTENT;
+
   test("given: a valid email, should: redirect to /verify (with an email cookie, which is verified in the E2E tests)", async () => {
     const email = "test@example.com";
-    const formData = toFormData({ email });
+    const formData = toFormData({ email, intent });
 
     const response = (await sendRequest({ formData })) as Response;
 
@@ -44,17 +46,17 @@ describe("/register route action", () => {
 
   test.each([
     {
-      body: {},
+      body: { intent },
       expected: createValidationErrorResponse(
-        {},
+        { intent },
         { email: ["auth:register.errors.invalidEmail"] },
       ),
       given: "no email",
     },
     {
-      body: { email: "invalid-email" },
+      body: { email: "invalid-email", intent },
       expected: createValidationErrorResponse(
-        { email: "invalid-email" },
+        { email: "invalid-email", intent },
         { email: ["auth:register.errors.invalidEmail"] },
       ),
       given: "an invalid email",

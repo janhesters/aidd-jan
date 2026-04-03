@@ -19,6 +19,8 @@
         "BETTER_AUTH_*",
         "COOKIE_SECRET",
         "EMAIL_FROM",
+        "GOOGLE_*",
+        "MOCKS",
         "NODE_ENV",
         "PLAYWRIGHT_*",
         "RESEND_API_KEY",

@@ -47,7 +47,7 @@ test.describe("Register Page", () => {
       await expect(page).toHaveURL(/\/verify/);
 
       // Advance clock in 1-second increments to properly trigger React state updates
-      const RESEND_TIMER_SECONDS = 100;
+      const RESEND_TIMER_SECONDS = 150;
       for (let i = 0; i < RESEND_TIMER_SECONDS; i++) {
         await page.clock.fastForward("00:01");
       }
@@ -55,6 +55,10 @@ test.describe("Register Page", () => {
 
       const resendButton = page.getByRole("button", { name: /resend code/i });
       await resendButton.click();
+
+      // Wait for the toast confirming the new OTP was sent and the fixture to be written
+      await expect(page.getByText(/code sent/i)).toBeVisible();
+      await page.waitForTimeout(1000);
 
       const newOtp = await getOTPFromEmail(email);
       await page.getByRole("textbox", { name: /verification code/i }).fill(newOtp);

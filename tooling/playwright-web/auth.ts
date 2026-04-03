@@ -15,9 +15,13 @@ const db = drizzle(client, { schema });
 
 // NOTE: This plugin list must stay in sync with apps/web/app/lib/auth.server.ts.
 // If the app's auth config gains new plugins, update this instance to match.
+// Intentionally omitted: genericOAuth and socialProviders — not needed for DB seeding.
+const isCI = !!process.env.CI;
+
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "sqlite" }),
   advanced: { database: { generateId: () => createId() } },
+  baseURL: isCI ? "http://localhost:1355" : "https://web.localhost",
   plugins: [
     emailOTP({ sendVerificationOTP() {} }),
     organization(),

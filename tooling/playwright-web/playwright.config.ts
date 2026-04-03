@@ -22,17 +22,17 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
-  webServer: {
-    command: isCI
-      ? "bun run --cwd ../../apps/web start:mocks"
-      : "portless web bun run --cwd ../../apps/web start",
-    url: baseURL,
-    reuseExistingServer: !isCI,
-    env: {
-      NODE_ENV: "test",
-      ...(isCI
-        ? { PORT: "1355", BETTER_AUTH_URL: "http://localhost:1355" }
-        : {}),
+  // Locally, start the dev server (`bun run dev`) and emulator (`bun run emulate`) manually before running E2E tests.
+  ...(isCI && {
+    webServer: {
+      command: "bun run --cwd ../../apps/web start:mocks",
+      url: baseURL,
+      reuseExistingServer: false,
+      env: {
+        NODE_ENV: "test",
+        PORT: "1355",
+        BETTER_AUTH_URL: "http://localhost:1355",
+      },
     },
-  },
+  }),
 });
