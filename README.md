@@ -35,20 +35,32 @@ bun install
 - **Testing**: Playwright (E2E), bun:test (unit)
 - **i18n**: i18next (English + German)
 - **Security**: CSP nonce support, helmet headers
-- **Dev URLs**: [Portless](https://port1355.dev/) (stable `.localhost` URLs)
+- **Dev URLs**: [Portless](https://portless.dev/) (stable `.localhost` URLs)
 
 ## Development
 
-The dev server uses [Portless](https://port1355.dev/) to replace port numbers with a stable, named URL:
+The dev server uses [Portless](https://portless.dev/) to replace port numbers with a stable, named URL:
 
 ```bash
 bun run --filter web dev
-# -> http://web.localhost:1355
+# -> https://web.localhost
 ```
 
-Portless runs a local reverse proxy on port 1355 and routes `web.localhost:1355` to the app's randomly assigned port. This avoids port conflicts, makes URLs memorable, and prevents cookie/storage clashes between projects.
+Portless runs a local HTTPS reverse proxy and routes `web.localhost` to the app's randomly assigned port. This avoids port conflicts, makes URLs memorable, and prevents cookie/storage clashes between projects.
 
-To bypass Portless and use a regular port:
+### First-time setup
+
+Portless generates a local CA certificate for HTTPS. Trust it so browsers don't show a privacy warning:
+
+```bash
+sudo "$(which bunx)" portless trust
+```
+
+Then restart your browser. After that, `https://web.localhost` will show as secure.
+
+### Bypassing Portless
+
+To use a regular port without Portless:
 
 ```bash
 PORTLESS=0 bun run --filter web dev
