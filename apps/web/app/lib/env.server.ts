@@ -7,7 +7,7 @@ const schema = z.object({
     .string()
     .min(1)
     .default("s3cr3t-f0r-d3v-0nly-ch4ng3-1n-pr0d"),
-  BETTER_AUTH_URL: z.string().url().default("http://web.localhost:1355"),
+  BETTER_AUTH_URL: z.string().url().default("https://web.localhost"),
   COOKIE_SECRET: z.string().min(1).default("s3cr3t"),
   EMAIL_FROM: z.string().optional(),
   NODE_ENV: z.enum(["production", "development", "test"] as const),

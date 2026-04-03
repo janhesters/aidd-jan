@@ -74,7 +74,7 @@ tooling/
 ```
 
 The Playwright config starts the app server automatically and points at the
-Portless URL (`http://web.localhost:1355`).
+Portless URL (`https://web.localhost`).
 
 ---
 

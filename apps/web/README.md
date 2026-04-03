@@ -32,7 +32,7 @@ Start the development server with HMR:
 npm run dev
 ```
 
-Your application will be available at `http://web.localhost:1355`.
+Your application will be available at `https://web.localhost`.
 
 ## Building for Production
 
