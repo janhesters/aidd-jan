@@ -14,6 +14,15 @@ export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: { enabled: false },
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      ...(process.env.MOCKS === "true" && {
+        authorizationEndpoint: "http://localhost:4002/o/oauth2/v2/auth",
+      }),
+    },
+  },
   plugins: [
     emailOTP({
       async sendVerificationOTP({ email, otp, type }, ctx) {

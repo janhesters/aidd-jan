@@ -19,6 +19,7 @@
     "db:push": "turbo run db:push",
     "db:reset": "turbo run db:reset",
     "db:studio": "turbo run db:studio",
+    "emulate": "turbo run emulate",
     "validate": "turbo run check:types check:lint check:format"
   },
   "dependencies": {

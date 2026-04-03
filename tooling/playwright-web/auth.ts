@@ -13,11 +13,17 @@ export const client = createClient({
 });
 const db = drizzle(client, { schema });
 
-// NOTE: This plugin list must stay in sync with apps/web/app/lib/auth.server.ts.
-// If the app's auth config gains new plugins, update this instance to match.
+// NOTE: This config must stay in sync with apps/web/app/lib/auth.server.ts.
+// If the app's auth config gains new plugins or providers, update this instance to match.
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "sqlite" }),
   advanced: { database: { generateId: () => createId() } },
+  socialProviders: {
+    google: {
+      clientId: "emulate-google-client-id",
+      clientSecret: "emulate-google-client-secret",
+    },
+  },
   plugins: [
     emailOTP({ sendVerificationOTP() {} }),
     organization(),

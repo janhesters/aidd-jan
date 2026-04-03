@@ -10,6 +10,8 @@ const schema = z.object({
   BETTER_AUTH_URL: z.string().url().default("https://web.localhost"),
   COOKIE_SECRET: z.string().min(1).default("s3cr3t"),
   EMAIL_FROM: z.string().optional(),
+  GOOGLE_CLIENT_ID: z.string().default("emulate-google-client-id"),
+  GOOGLE_CLIENT_SECRET: z.string().default("emulate-google-client-secret"),
   NODE_ENV: z.enum(["production", "development", "test"] as const),
   IMAGE_OPTIMIZER_ENDPOINT: z.string().optional(),
   IMAGE_REMOTE_ALLOWLIST: z.string().optional(),

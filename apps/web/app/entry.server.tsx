@@ -27,7 +27,9 @@ async function initializeMockServer() {
 
   if (process.env.MOCKS === "true") {
     const { resendHandlers } = await import("~/tests/mocks/handlers/resend");
-    startMockServer([...resendHandlers]);
+    const { googleOAuthHandlers } =
+      await import("~/tests/mocks/handlers/google-oauth");
+    startMockServer([...resendHandlers, ...googleOAuthHandlers]);
   }
 
   mockServerInitialized = true;

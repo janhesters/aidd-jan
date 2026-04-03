@@ -52,6 +52,11 @@ export async function getOTPFromEmail(email: string): Promise<string> {
   return data.subject;
 }
 
+export async function selectEmulateGoogleUser(page: Page, email: string) {
+  await page.waitForURL(/localhost:4002/);
+  await page.getByText(email).click();
+}
+
 export async function teardownUserByEmail(email: string) {
   const result = await client.execute({
     sql: "SELECT id FROM user WHERE email = ?",

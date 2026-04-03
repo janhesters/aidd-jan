@@ -20,12 +20,14 @@ import { Trans, useTranslation } from "react-i18next";
 import { Form, href, Link, redirect, useNavigation } from "react-router";
 import * as z from "zod";
 
+import { authClient } from "~/lib/auth-client";
 import { auth } from "~/lib/auth.server";
 import { useForm } from "~/lib/conform";
 import { validateFormData } from "~/lib/validate-form-data";
 import { getInstance } from "~/middleware/i18next";
 
 import { setEmailCookie } from "./+/email-otp-cookie.server";
+import { GoogleIcon } from "./+/google-icon";
 import type { Route } from "./+types/register";
 
 z.config({ jitless: true });
@@ -68,49 +70,70 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
   const isSubmitting = navigation.state === "submitting";
 
   return (
-    <Form method="POST" {...form.props}>
-      <FieldSet disabled={isSubmitting}>
-        <FieldGroup>
-          <div className="flex flex-col items-center gap-1 text-center">
-            <h1 className="text-2xl font-bold">{t("title")}</h1>
+    <FieldSet disabled={isSubmitting}>
+      <FieldGroup>
+        <div className="flex flex-col items-center gap-1 text-center">
+          <h1 className="text-2xl font-bold">{t("title")}</h1>
 
-            <p className="text-muted-foreground text-sm text-balance">
-              {t("subtitle")}
-            </p>
-          </div>
+          <p className="text-muted-foreground text-sm text-balance">
+            {t("subtitle")}
+          </p>
+        </div>
 
-          <Field data-invalid={fields.email.ariaInvalid}>
-            <FieldLabel htmlFor={fields.email.id}>{t("emailLabel")}</FieldLabel>
+        <Form method="POST" {...form.props}>
+          <FieldGroup>
+            <Field data-invalid={fields.email.ariaInvalid}>
+              <FieldLabel htmlFor={fields.email.id}>
+                {t("emailLabel")}
+              </FieldLabel>
 
-            <InputGroup>
-              <InputGroupInput
-                {...fields.email.inputProps}
-                autoComplete="email"
-                placeholder={t("emailPlaceholder")}
-                type="email"
+              <InputGroup>
+                <InputGroupInput
+                  {...fields.email.inputProps}
+                  autoComplete="email"
+                  placeholder={t("emailPlaceholder")}
+                  type="email"
+                />
+
+                <InputGroupAddon>
+                  <MailIcon />
+                </InputGroupAddon>
+              </InputGroup>
+
+              <FieldError
+                errors={fields.email.errors}
+                id={fields.email.errorId}
               />
+            </Field>
 
-              <InputGroupAddon>
-                <MailIcon />
-              </InputGroupAddon>
-            </InputGroup>
+            <Field>
+              <Button type="submit">
+                {isSubmitting ? (
+                  <>
+                    <Spinner /> {t("submitButtonSubmitting")}
+                  </>
+                ) : (
+                  t("submitButton")
+                )}
+              </Button>
+            </Field>
+          </FieldGroup>
+        </Form>
 
-            <FieldError
-              errors={fields.email.errors}
-              id={fields.email.errorId}
-            />
-          </Field>
-        </FieldGroup>
+        <FieldSeparator>{t("separator")}</FieldSeparator>
 
         <Field>
-          <Button type="submit">
-            {isSubmitting ? (
-              <>
-                <Spinner /> {t("submitButtonSubmitting")}
-              </>
-            ) : (
-              t("submitButton")
-            )}
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() =>
+              authClient.signIn.social({
+                provider: "google",
+                callbackURL: "/onboarding",
+              })
+            }
+          >
+            <GoogleIcon /> {t("googleButton")}
           </Button>
         </Field>
 
@@ -164,7 +187,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
             />
           </FieldDescription>
         </Field>
-      </FieldSet>
-    </Form>
+      </FieldGroup>
+    </FieldSet>
   );
 }

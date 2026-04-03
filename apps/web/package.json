@@ -10,6 +10,7 @@
     "db:push": "cd ../../packages/db && TURSO_DATABASE_URL=file:../../apps/web/local.db bun run drizzle-kit push",
     "db:reset": "rm -f local.db && bun run db:push",
     "dev": "MOCKS=true portless web react-router dev",
+    "emulate": "emulate start --service google --port 4002 --seed emulate.config.yaml",
     "start:mocks": "MOCKS=true react-router-serve ./build/server/index.js",
     "test": "bun test",
     "start": "react-router-serve ./build/server/index.js"
@@ -61,6 +62,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@workspace/typescript-config": "workspace:*",
+    "emulate": "^0.4.1",
     "msw": "^2.12.14",
     "react-router-auto-routes": "^0.8.3",
     "tailwindcss": "^4.2.2",

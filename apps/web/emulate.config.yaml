@@ -1,0 +1,13 @@
+google:
+  users:
+    - id: "emulate-google-user-1"
+      email: "google-user@example.com"
+      name: "Google Test User"
+      email_verified: true
+      picture: "https://via.placeholder.com/96"
+  oauth_clients:
+    - client_id: "emulate-google-client-id"
+      client_secret: "emulate-google-client-secret"
+      redirect_uris:
+        - "https://web.localhost/api/auth/callback/google"
+        - "http://localhost:1355/api/auth/callback/google"
