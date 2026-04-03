@@ -19,6 +19,37 @@ jobs:
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for CI workflow to pass
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SHA="${{ github.event.pull_request.head.sha }}"
+          REPO="${{ github.repository }}"
+
+          echo "Waiting for CI workflow to complete for $SHA..."
+          for i in $(seq 1 60); do
+            RESULT=$(gh run list --repo "$REPO" --commit "$SHA" --workflow ci.yml --json status,conclusion --jq '.[0] | "\(.status) \(.conclusion)"' 2>/dev/null || echo "")
+
+            STATUS=$(echo "$RESULT" | cut -d' ' -f1)
+            CONCLUSION=$(echo "$RESULT" | cut -d' ' -f2)
+
+            if [ "$STATUS" = "completed" ]; then
+              if [ "$CONCLUSION" = "success" ]; then
+                echo "CI workflow passed!"
+                exit 0
+              else
+                echo "CI workflow failed with conclusion: $CONCLUSION"
+                exit 1
+              fi
+            fi
+
+            echo "CI workflow status: ${STATUS:-not started yet} (attempt $i/60)"
+            sleep 30
+          done
+
+          echo "Timed out waiting for CI workflow"
+          exit 1
+
       - uses: actions/checkout@v6
         with:
           fetch-depth: 1
