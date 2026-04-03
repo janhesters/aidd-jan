@@ -18,13 +18,13 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@libsql/client": "^0.14.0",
-    "drizzle-orm": "^0.44.0"
+    "@libsql/client": "^0.17.2",
+    "drizzle-orm": "^0.45.2"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.5.1",
     "@workspace/typescript-config": "workspace:*",
-    "drizzle-kit": "^0.30.0",
-    "typescript": "^5.9.3"
+    "drizzle-kit": "^0.31.10",
+    "typescript": "^6.0.2"
   }
 }

@@ -24,6 +24,7 @@ async function sendRequest({ formData }: { formData: FormData }) {
     params,
     request,
     unstable_pattern: "/login",
+    unstable_url: new URL(createUrl()),
   });
 }
 

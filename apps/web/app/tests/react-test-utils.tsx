@@ -8,7 +8,6 @@ import resources from "~/locales";
 
 // Initialize i18next for tests with actual translations.
 void i18next.use(initReactI18next).init({
-  initImmediate: false,
   lng: "en",
   react: {
     useSuspense: false,
