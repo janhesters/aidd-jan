@@ -4,6 +4,7 @@ import createGlobe from "cobe";
 import { useEffect, useRef } from "react";
 
 const MOVEMENT_DAMPING = 1400;
+const GLOBE_SIZE = 600;
 
 const GLOBE_CONFIG: COBEOptions = {
   baseColor: [1, 1, 1],
@@ -11,7 +12,7 @@ const GLOBE_CONFIG: COBEOptions = {
   devicePixelRatio: 1,
   diffuse: 0.4,
   glowColor: [1, 1, 1],
-  height: 800,
+  height: GLOBE_SIZE,
   mapBrightness: 1.2,
   mapSamples: 8000,
   markerColor: [10 / 255, 10 / 255, 10 / 255],
@@ -29,7 +30,7 @@ const GLOBE_CONFIG: COBEOptions = {
   ],
   phi: 0,
   theta: 0.3,
-  width: 800,
+  width: GLOBE_SIZE,
 };
 
 export function Globe({
@@ -65,10 +66,11 @@ export function Globe({
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    const canvasWidth = canvasRef.current?.offsetWidth ?? GLOBE_SIZE;
     const globe = createGlobe(canvasRef.current!, {
       ...mergedConfig,
-      width: 600 * 2,
-      height: 600 * 2,
+      width: canvasWidth * 2,
+      height: canvasWidth * 2,
     });
 
     let frameId: number;
@@ -97,7 +99,7 @@ export function Globe({
     <div className={cn("aspect-square w-full max-w-[600px]", className)}>
       <canvas
         aria-label="Interactive globe"
-        className="size-full opacity-0 transition-opacity duration-500"
+        className="size-full opacity-0 transition-opacity duration-500 contain-[layout_paint_size]"
         ref={canvasRef}
         role="img"
         onMouseMove={(e) => updateMovement(e.clientX)}
