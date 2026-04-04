@@ -6,7 +6,7 @@
     "tooling/*"
   ],
   "scripts": {
-    "dev": "turbo run dev",
+    "dev": "bash scripts/portless-setup.sh && turbo run dev",
     "check:format": "turbo run check:format",
     "check:lint": "turbo run check:lint",
     "check:types": "turbo run check:types",
