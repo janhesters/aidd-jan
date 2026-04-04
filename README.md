@@ -50,13 +50,7 @@ Portless runs a local HTTPS reverse proxy and routes `web.localhost` to the app'
 
 ### First-time setup
 
-Portless generates a local CA certificate for HTTPS. Trust it so browsers don't show a privacy warning:
-
-```bash
-sudo "$(which bunx)" portless trust
-```
-
-Then restart your browser. After that, `https://web.localhost` will show as secure.
+`bun dev` automatically trusts the local CA certificate and starts the proxy (you'll be prompted for sudo once). After the first run, restart your browser so it picks up the trusted certificate.
 
 ### Bypassing Portless
 
