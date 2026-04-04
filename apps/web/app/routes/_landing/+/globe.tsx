@@ -40,7 +40,6 @@ export function Globe({
   config?: Partial<COBEOptions>;
 }) {
   const phi = useRef(0);
-  const width = useRef(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
   const r = useRef(0);
@@ -62,23 +61,14 @@ export function Globe({
   useEffect(() => {
     const mergedConfig: COBEOptions = { ...GLOBE_CONFIG, ...config };
 
-    const onResize = () => {
-      if (canvasRef.current) {
-        width.current = canvasRef.current.offsetWidth;
-      }
-    };
-
-    window.addEventListener("resize", onResize);
-    onResize();
-
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
     const globe = createGlobe(canvasRef.current!, {
       ...mergedConfig,
-      width: width.current * 2,
-      height: width.current * 2,
+      width: 600 * 2,
+      height: 600 * 2,
     });
 
     let frameId: number;
@@ -87,8 +77,6 @@ export function Globe({
         phi.current += 0.005;
       globe.update({
         phi: phi.current + r.current,
-        width: width.current * 2,
-        height: width.current * 2,
       });
       frameId = requestAnimationFrame(animate);
     };
@@ -101,18 +89,16 @@ export function Globe({
     return () => {
       cancelAnimationFrame(frameId);
       globe.destroy();
-      window.removeEventListener("resize", onResize);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- config is expected to be static; re-creating the WebGL globe on every render would be expensive
   }, []);
 
   return (
-    <div
-      className={cn("mx-auto aspect-square w-full max-w-[600px]", className)}
-    >
+    <div className={cn("aspect-square w-full max-w-[600px]", className)}>
       <canvas
         aria-label="Interactive globe"
-        className="size-full opacity-0 transition-opacity duration-500 contain-[layout_paint_size]"
+        className="size-full opacity-0 transition-opacity duration-500"
+        ref={canvasRef}
         role="img"
         onMouseMove={(e) => updateMovement(e.clientX)}
         onPointerDown={(e) => {
@@ -124,7 +110,6 @@ export function Globe({
         onTouchMove={(e) =>
           e.touches[0] && updateMovement(e.touches[0].clientX)
         }
-        ref={canvasRef}
       />
     </div>
   );
