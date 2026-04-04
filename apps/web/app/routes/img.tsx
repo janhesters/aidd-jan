@@ -1,4 +1,4 @@
-import { getImgResponse, type GetImgSourceArgs } from "openimg/bun";
+import { getImgResponse, type GetImgSourceArgs } from "openimg/node";
 
 import type { Route } from "./+types/img";
 

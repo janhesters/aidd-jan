@@ -90,7 +90,7 @@ export function FeatureSection() {
 
         <FeatureCard className="p-0 sm:col-span-2 md:col-span-3">
           <div className="grid max-h-120 sm:grid-cols-2">
-            <div className="space-y-6 pt-8 pb-4 pl-8 sm:pb-8">
+            <div className="relative z-10 space-y-6 pt-8 pb-4 pl-8 sm:pb-8">
               <div className="bg-card outline-border/80 flex size-12 items-center justify-center rounded-full border shadow-xs outline outline-offset-2">
                 <IconGlobe className="text-primary/80 size-5" />
               </div>
@@ -104,7 +104,7 @@ export function FeatureSection() {
               </div>
             </div>
             <div className="relative">
-              <Globe className="-top-[12%] right-0 sm:absolute" />
+              <Globe className="top-0 right-0 sm:absolute" />
             </div>
           </div>
         </FeatureCard>
