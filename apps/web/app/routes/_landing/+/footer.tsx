@@ -44,12 +44,12 @@ export function Footer() {
     <footer className="relative">
       <div
         className={cn(
-          "mx-auto max-w-4xl lg:border-x",
+          "mx-auto max-w-5xl lg:border-x",
           "dark:bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.1),transparent)]",
         )}
       >
         <div className="bg-border pointer-events-none absolute left-1/2 h-px w-screen -translate-x-1/2" />
-        <div className="grid max-w-4xl grid-cols-6 gap-6 p-4">
+        <div className="grid max-w-5xl grid-cols-6 gap-6 p-4">
           <div className="col-span-6 flex flex-col gap-4 pt-5 md:col-span-4">
             <a aria-label="Home" className="w-max" href="#">
               <Logo className="h-5" />
@@ -106,7 +106,7 @@ export function Footer() {
           </div>
         </div>
         <div className="bg-border pointer-events-none absolute left-1/2 h-px w-screen -translate-x-1/2" />
-        <div className="flex max-w-4xl flex-col justify-between gap-2 py-4">
+        <div className="flex max-w-5xl flex-col justify-between gap-2 py-4">
           <p className="text-muted-foreground text-center text-sm font-light">
             &copy; {new Date().getFullYear()} {t("footer.copyright")}
           </p>
