@@ -10,6 +10,7 @@
   },
   "scripts": {
     "check:format": "oxfmt --check .",
+    "fix:format": "oxfmt --write .",
     "check:lint": "oxlint --type-aware",
     "check:types": "tsgo",
     "db:generate": "drizzle-kit generate",

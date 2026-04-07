@@ -5,6 +5,7 @@
   "scripts": {
     "build": "react-router build",
     "check:format": "oxfmt --check .",
+    "fix:format": "oxfmt --write .",
     "check:lint": "oxlint --type-aware",
     "check:types": "react-router typegen && tsgo",
     "db:push": "cd ../../packages/db && TURSO_DATABASE_URL=file:../../apps/web/local.db bun run drizzle-kit push",
