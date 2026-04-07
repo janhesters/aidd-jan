@@ -7,7 +7,7 @@ const schema = z.object({
     .string()
     .min(1)
     .default("s3cr3t-f0r-d3v-0nly-ch4ng3-1n-pr0d"),
-  BETTER_AUTH_URL: z.string().url().default("https://web.localhost"),
+  BETTER_AUTH_URL: z.url().default("https://web.localhost"),
   COOKIE_SECRET: z.string().min(1).default("s3cr3t"),
   GOOGLE_CLIENT_ID: z.string().min(1).default("emulate-google-client-id"),
   GOOGLE_CLIENT_SECRET: z
@@ -20,7 +20,7 @@ const schema = z.object({
   IMAGE_REMOTE_ALLOWLIST: z.string().optional(),
   IMAGE_SOURCE_MODE: z.enum(["local", "blob", "mixed"] as const).optional(),
   RESEND_API_KEY: z.string().optional(),
-  VERCEL_BLOB_BASE_URL: z.string().url().optional(),
+  VERCEL_BLOB_BASE_URL: z.url().optional(),
 });
 
 declare global {
