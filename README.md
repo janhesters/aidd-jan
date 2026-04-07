@@ -60,6 +60,23 @@ To use a regular port without Portless:
 PORTLESS=0 bun run --filter web dev
 ```
 
+## Google Places API (Business Search)
+
+The `/get-started/find-business` route uses the Google Places API (New) for business name autocomplete.
+
+### Local development
+
+No setup needed — run with `MOCKS=true` (the default) and MSW returns fake business suggestions.
+
+### Production setup
+
+1. Open [Google Cloud Console](https://console.cloud.google.com/)
+2. Enable **Places API (New)** for your project
+3. Create an API key restricted to `places.googleapis.com`
+4. Set `GOOGLE_PLACES_API_KEY` in your environment
+
+Without the key, the autocomplete silently returns no results.
+
 ## Project structure
 
 ```

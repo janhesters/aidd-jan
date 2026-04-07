@@ -14,6 +14,7 @@ const schema = z.object({
     .string()
     .min(1)
     .default("emulate-google-client-secret"),
+  GOOGLE_PLACES_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().optional(),
   NODE_ENV: z.enum(["production", "development", "test"] as const),
   IMAGE_OPTIMIZER_ENDPOINT: z.string().optional(),

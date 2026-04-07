@@ -27,7 +27,9 @@ async function initializeMockServer() {
 
   if (process.env.MOCKS === "true") {
     const { resendHandlers } = await import("~/tests/mocks/handlers/resend");
-    startMockServer([...resendHandlers]);
+    const { googlePlacesHandlers } =
+      await import("~/tests/mocks/handlers/google-places");
+    startMockServer([...resendHandlers, ...googlePlacesHandlers]);
   }
 
   mockServerInitialized = true;
