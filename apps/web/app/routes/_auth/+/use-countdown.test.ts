@@ -1,11 +1,29 @@
-import "~/tests/happy-dom";
-import { afterEach, beforeEach, describe, expect, jest, test } from "bun:test";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  jest,
+  test,
+} from "bun:test";
+
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
 
 import { act, renderHook } from "~/tests/react-test-utils";
 
 import { useCountdown } from "./use-countdown";
 
 describe("useCountdown()", () => {
+  beforeAll(() => {
+    GlobalRegistrator.register();
+  });
+
+  afterAll(async () => {
+    await GlobalRegistrator.unregister();
+  });
+
   beforeEach(() => {
     jest.useFakeTimers();
   });
