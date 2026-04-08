@@ -42,136 +42,189 @@ describe("useCountdown()", () => {
 
     const actual = result.current.secondsLeft;
     const expected = 60;
+
     expect(actual).toEqual(expected);
   });
 
   test("given: an initial time greater than zero, should: count down every second until zero", () => {
     const { result } = setup(3);
 
-    expect(result.current.secondsLeft).toEqual(3);
+    const actual1 = result.current.secondsLeft;
+    const expected1 = 3;
+
+    expect(actual1).toEqual(expected1);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current.secondsLeft).toEqual(2);
+    const actual2 = result.current.secondsLeft;
+    const expected2 = 2;
+
+    expect(actual2).toEqual(expected2);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current.secondsLeft).toEqual(1);
+    const actual3 = result.current.secondsLeft;
+    const expected3 = 1;
+
+    expect(actual3).toEqual(expected3);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    const actual = result.current.secondsLeft;
-    const expected = 0;
-    expect(actual).toEqual(expected);
+    const actual4 = result.current.secondsLeft;
+    const expected4 = 0;
+
+    expect(actual4).toEqual(expected4);
   });
 
   test("given: a countdown reaching zero, should: stop at zero and not continue", () => {
     const { result } = setup(2);
 
-    expect(result.current.secondsLeft).toEqual(2);
+    const actual1 = result.current.secondsLeft;
+    const expected1 = 2;
+
+    expect(actual1).toEqual(expected1);
 
     act(() => {
       jest.advanceTimersByTime(3000);
     });
-    expect(result.current.secondsLeft).toEqual(0);
+    const actual2 = result.current.secondsLeft;
+    const expected2 = 0;
+
+    expect(actual2).toEqual(expected2);
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+    const actual3 = result.current.secondsLeft;
+    const expected3 = 0;
+
+    expect(actual3).toEqual(expected3);
+  });
+
+  test("given: a new initial time value, should: reset the countdown to the new value", () => {
+    const { result, rerender } = setupWithProps({ initialSeconds: 5 });
+
+    const actual1 = result.current.secondsLeft;
+    const expected1 = 5;
+
+    expect(actual1).toEqual(expected1);
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+    const actual2 = result.current.secondsLeft;
+    const expected2 = 3;
+
+    expect(actual2).toEqual(expected2);
+
+    rerender({ initialSeconds: 10 });
+    const actual3 = result.current.secondsLeft;
+    const expected3 = 10;
+
+    expect(actual3).toEqual(expected3);
+  });
+
+  test("given: zero initial value, should: remain at zero without counting", () => {
+    const { result } = setup(0);
 
     act(() => {
       jest.advanceTimersByTime(2000);
     });
     const actual = result.current.secondsLeft;
     const expected = 0;
+
     expect(actual).toEqual(expected);
   });
 
-  test("given: a new initial time value, should: reset the countdown to the new value", () => {
-    const { result, rerender } = setupWithProps({ initialSeconds: 5 });
-
-    expect(result.current.secondsLeft).toEqual(5);
+  test("given: negative initial value, should: remain at the negative value without counting", () => {
+    const { result } = setup(-5);
 
     act(() => {
       jest.advanceTimersByTime(2000);
     });
-    expect(result.current.secondsLeft).toEqual(3);
-
-    rerender({ initialSeconds: 10 });
     const actual = result.current.secondsLeft;
-    const expected = 10;
-    expect(actual).toEqual(expected);
-  });
-
-  test("given: zero or negative initial values, should: remain at the initial value without counting", () => {
-    const { result: zeroResult } = setup(0);
-    expect(zeroResult.current.secondsLeft).toEqual(0);
-
-    const { result: negativeResult } = setup(-5);
-    expect(negativeResult.current.secondsLeft).toEqual(-5);
-
-    act(() => {
-      jest.advanceTimersByTime(2000);
-    });
-    expect(zeroResult.current.secondsLeft).toEqual(0);
-
-    const actual = negativeResult.current.secondsLeft;
     const expected = -5;
+
     expect(actual).toEqual(expected);
   });
 
   test("given: component unmounting, should: stop counting and maintain last value", () => {
     const { result, unmount } = setup(5);
 
-    expect(result.current.secondsLeft).toEqual(5);
+    const actual1 = result.current.secondsLeft;
+    const expected1 = 5;
+
+    expect(actual1).toEqual(expected1);
 
     unmount();
 
     act(() => {
       jest.advanceTimersByTime(2000);
     });
-    const actual = result.current.secondsLeft;
-    const expected = 5;
-    expect(actual).toEqual(expected);
+    const actual2 = result.current.secondsLeft;
+    const expected2 = 5;
+
+    expect(actual2).toEqual(expected2);
   });
 
   test("given: reset function is called, should: reset the timer back to initialSeconds", () => {
     const { result } = setup(10);
 
-    expect(result.current.secondsLeft).toEqual(10);
+    const actual1 = result.current.secondsLeft;
+    const expected1 = 10;
+
+    expect(actual1).toEqual(expected1);
 
     act(() => {
       jest.advanceTimersByTime(3000);
     });
-    expect(result.current.secondsLeft).toEqual(7);
+    const actual2 = result.current.secondsLeft;
+    const expected2 = 7;
+
+    expect(actual2).toEqual(expected2);
 
     act(() => {
       result.current.reset();
     });
-    const actual = result.current.secondsLeft;
-    const expected = 10;
-    expect(actual).toEqual(expected);
+    const actual3 = result.current.secondsLeft;
+    const expected3 = 10;
+
+    expect(actual3).toEqual(expected3);
   });
 
   test("given: reset function is called after countdown reaches zero, should: restart the countdown", () => {
     const { result } = setup(3);
 
-    expect(result.current.secondsLeft).toEqual(3);
+    const actual1 = result.current.secondsLeft;
+    const expected1 = 3;
+
+    expect(actual1).toEqual(expected1);
 
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current.secondsLeft).toEqual(0);
+    const actual2 = result.current.secondsLeft;
+    const expected2 = 0;
+
+    expect(actual2).toEqual(expected2);
 
     act(() => {
       result.current.reset();
     });
-    expect(result.current.secondsLeft).toEqual(3);
+    const actual3 = result.current.secondsLeft;
+    const expected3 = 3;
+
+    expect(actual3).toEqual(expected3);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    const actual = result.current.secondsLeft;
-    const expected = 2;
-    expect(actual).toEqual(expected);
+    const actual4 = result.current.secondsLeft;
+    const expected4 = 2;
+
+    expect(actual4).toEqual(expected4);
   });
 });
