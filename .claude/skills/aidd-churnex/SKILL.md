@@ -25,7 +25,7 @@ Constraints {
   If not installed, install it: `cargo install --git https://github.com/janhesters/churnex`
   (Requires Rust toolchain — if `cargo` is missing, install via `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y`)
   Always run churnex before making recommendations — never guess at hotspots
-  Read references/interpreting-scores.md for metric definitions and interpretation ranges
+  Read references/interpreting-scores.sudo.md for metric definitions and interpretation ranges
   Name specific files; explain which signal (LoC, churn, complexity, or density) drives each score
   For each recommendation, propose a concrete strategy — not generic advice
   Communicate as friendly markdown prose — not raw SudoLang syntax
@@ -61,7 +61,7 @@ interpretResults(hotspotReport) => analysis {
 }
 ```
 
-See references/interpreting-scores.md for score ranges and density interpretation.
+See references/interpreting-scores.sudo.md for score ranges and density interpretation.
 
 ## Step 3 — Recommend
 
