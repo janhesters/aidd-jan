@@ -70,11 +70,11 @@ export function createValidationErrorResponse(
   payload: Record<string, FormValue<string | number | boolean | null>>,
   fieldErrors: Record<string, string[]>,
 ): DataWithResponseInit<{
-  result: SubmissionResult<string, string | number | boolean | null>;
+  result: SubmissionResult<string[], string | number | boolean | null>;
 }> {
   return badRequest({
     result: {
-      error: { fieldErrors, formErrors: [] },
+      error: { fieldErrors, formErrors: null },
       submission: {
         fields: Object.keys(payload),
         intent: null,
