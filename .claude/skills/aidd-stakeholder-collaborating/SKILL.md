@@ -3,7 +3,7 @@ name: aidd-stakeholder-collaborating
 description: >-
   Collaborate with non-technical stakeholders (CEOs, product managers, project
   managers) to build features and fix bugs. Only invoke when the user explicitly
-  requests this mode (e.g. "/stakeholder-collaborating", "use stakeholder mode",
+  requests this mode (e.g. "/aidd-stakeholder-collaborating", "use stakeholder mode",
   "use the non-techie skill").
 ---
 
