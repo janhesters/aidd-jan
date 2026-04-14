@@ -123,6 +123,14 @@ export interface InitResult {
 }
 
 export function initSkill(skillName: string, basePath: string): InitResult {
+  if (!skillName.startsWith("aidd-")) {
+    return {
+      message: `Skill name '${skillName}' must start with the 'aidd-' prefix (e.g. 'aidd-${skillName}')`,
+      path: null,
+      success: false,
+    };
+  }
+
   const skillDir = resolve(basePath, skillName);
 
   if (existsSync(skillDir)) {
