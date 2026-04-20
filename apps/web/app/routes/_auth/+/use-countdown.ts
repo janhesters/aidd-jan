@@ -27,10 +27,7 @@ export function useCountdown(initialSeconds: number) {
 
     intervalIdReference.current = setInterval(() => {
       setSecondsLeft((previous) => {
-        if (previous <= 1) {
-          clearCountdown();
-          return previous <= 0 ? previous : 0;
-        }
+        if (previous <= 1) return 0;
         return previous - 1;
       });
     }, ONE_SECOND);
@@ -47,13 +44,15 @@ export function useCountdown(initialSeconds: number) {
     setSecondsLeft(initialSeconds);
   }, [initialSeconds]);
 
+  const isActive = secondsLeft > 0;
+
   useEffect(() => {
-    if (secondsLeft > 0) {
+    if (isActive) {
       startCountdown();
     }
 
     return clearCountdown;
-  }, [secondsLeft > 0, startCountdown, clearCountdown]);
+  }, [isActive, startCountdown, clearCountdown]);
 
   return { reset, secondsLeft };
 }
