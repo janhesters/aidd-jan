@@ -180,8 +180,12 @@ export default function VerifyRoute({ actionData }: Route.ComponentProps) {
 
   const { secondsLeft, reset } = useCountdown(60);
 
-  const lastReset = (actionData as { lastReset: string } | undefined)
-    ?.lastReset;
+  const lastReset =
+    actionData != null &&
+    "lastReset" in actionData &&
+    typeof actionData.lastReset === "string"
+      ? actionData.lastReset
+      : undefined;
 
   useEffect(() => {
     if (lastReset) {

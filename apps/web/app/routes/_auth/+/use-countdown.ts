@@ -15,56 +15,40 @@ export function useCountdown(initialSeconds: number) {
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
   const intervalIdReference = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  // Function to start or restart the countdown.
-  const startCountdown = useCallback(() => {
-    // Clear any existing interval.
+  const clearCountdown = useCallback(() => {
     if (intervalIdReference.current) {
       clearInterval(intervalIdReference.current);
       intervalIdReference.current = undefined;
     }
+  }, []);
 
-    // Don't start interval if value is 0 or negative.
-    if (secondsLeft <= 0) return;
+  const startCountdown = useCallback(() => {
+    clearCountdown();
 
     intervalIdReference.current = setInterval(() => {
       setSecondsLeft((previous) => {
         if (previous <= 1) {
-          if (intervalIdReference.current) {
-            clearInterval(intervalIdReference.current);
-            intervalIdReference.current = undefined;
-          }
           return 0;
         }
         return previous - 1;
       });
     }, ONE_SECOND);
-  }, [secondsLeft]);
+  }, [clearCountdown]);
 
-  // Reset function to set the timer back to initialSeconds.
   const reset = useCallback(() => {
     setSecondsLeft(initialSeconds);
-    // We'll start the countdown in the useEffect that watches secondsLeft.
   }, [initialSeconds]);
 
-  // Effect to handle initialSeconds changes.
   useEffect(() => {
-    // Reset the countdown when initialSeconds changes.
     setSecondsLeft(initialSeconds);
-    // We'll start the countdown in the useEffect that watches secondsLeft.
   }, [initialSeconds]);
 
-  // Effect to start/restart countdown when secondsLeft changes.
   useEffect(() => {
-    startCountdown();
+    if (secondsLeft <= 0) return clearCountdown();
 
-    // Cleanup interval on unmount or when secondsLeft changes.
-    return () => {
-      if (intervalIdReference.current) {
-        clearInterval(intervalIdReference.current);
-        intervalIdReference.current = undefined;
-      }
-    };
-  }, [startCountdown]);
+    startCountdown();
+    return clearCountdown;
+  }, [secondsLeft, startCountdown, clearCountdown]);
 
   return { reset, secondsLeft };
 }
