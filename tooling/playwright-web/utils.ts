@@ -43,13 +43,15 @@ const EMAIL_FIXTURES_PATH = path.join(
 /**
  * Reads the OTP from the email fixture written by the MSW handler.
  * The app's MSW handler writes emails to fixture files keyed by recipient.
- * The OTP is stored in the email's `subject` field.
+ * The OTP is embedded in the email's HTML body.
  */
 export async function getOTPFromEmail(email: string): Promise<string> {
   const filePath = path.join(EMAIL_FIXTURES_PATH, `${email.toLowerCase()}.json`);
   const content = await readFile(filePath, "utf-8");
-  const data = JSON.parse(content) as { subject: string };
-  return data.subject;
+  const data = JSON.parse(content) as { html: string };
+  const match = data.html.match(/(?<!\d)(\d{6})(?!\d)/);
+  if (!match) throw new Error(`Could not find OTP in email for ${email}`);
+  return match[1];
 }
 
 export async function teardownUserByEmail(email: string) {

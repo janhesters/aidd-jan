@@ -37,7 +37,7 @@ export const auth = betterAuth({
 
         await sendEmail({
           to: email,
-          subject: otp,
+          subject: "Your sign-in code",
           react: OtpEmail({ otp, type, locale }),
         });
       },

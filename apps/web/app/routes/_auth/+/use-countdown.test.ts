@@ -195,6 +195,42 @@ describe("useCountdown()", () => {
     expect(actual3).toEqual(expected3);
   });
 
+  test("given: reset function is called mid-countdown, should: restart from initialSeconds with no double-decrement", () => {
+    const { result } = setup(10);
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+    const actual1 = result.current.secondsLeft;
+    const expected1 = 7;
+
+    expect(actual1).toEqual(expected1);
+
+    act(() => {
+      result.current.reset();
+    });
+    const actual2 = result.current.secondsLeft;
+    const expected2 = 10;
+
+    expect(actual2).toEqual(expected2);
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+    const actual3 = result.current.secondsLeft;
+    const expected3 = 9;
+
+    expect(actual3).toEqual(expected3);
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+    const actual4 = result.current.secondsLeft;
+    const expected4 = 8;
+
+    expect(actual4).toEqual(expected4);
+  });
+
   test("given: reset function is called after countdown reaches zero, should: restart the countdown", () => {
     const { result } = setup(3);
 
