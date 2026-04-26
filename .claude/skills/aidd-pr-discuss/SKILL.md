@@ -43,6 +43,10 @@ Constraints {
   from the conversation.
   Include code examples in comments when appropriate (e.g. the comment stays
   concise, the example fits naturally, or the user requested it).
+  When the user delegates selection, lean toward inclusion over omission. The
+  user always has high standards for the code base, so maybe include borderline
+  items and NITs (clearly labeled). The dev attending to the review can drop
+  anything unworthy.
 }
 
 PRDiscussProcess {
