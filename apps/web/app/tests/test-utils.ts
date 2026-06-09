@@ -24,21 +24,21 @@ import { i18nextMiddleware } from "~/middleware/i18next";
 export async function createTestContextProvider({
   middlewares = [],
   params,
+  pattern = "/test",
   request,
-  unstable_pattern = "/test",
 }: {
   middlewares?: MiddlewareFunction[];
   params: Params;
+  pattern?: string;
   request: Request;
-  unstable_pattern?: string;
 }) {
   const context = new RouterContextProvider();
   const args = {
     context,
     params,
+    pattern,
     request,
-    unstable_pattern,
-    unstable_url: new URL(request.url),
+    url: new URL(request.url),
   };
 
   // i18next middleware runs in root loader, so all routes have access to the

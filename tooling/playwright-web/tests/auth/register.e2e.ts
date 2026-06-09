@@ -53,6 +53,13 @@ test.describe("Register Page", () => {
       }
       await page.clock.resume();
 
+      // The verification table stores createdAt with second precision and
+      // better-auth resolves the active OTP as the newest row by createdAt.
+      // Fast-forwarding skips the countdown in well under a real second, so
+      // wait long enough that the resent OTP gets a later timestamp than the
+      // original one. (Real users always wait out the countdown in real time.)
+      await page.waitForTimeout(1100);
+
       const resendButton = page.getByRole("button", { name: /resend code/i });
       await resendButton.click();
 
