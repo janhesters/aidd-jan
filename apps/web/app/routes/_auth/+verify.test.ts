@@ -39,8 +39,8 @@ async function sendRequest({
     }),
     params,
     request,
-    unstable_pattern: "/verify",
-    unstable_url: new URL(createUrl()),
+    pattern: "/verify",
+    url: new URL(createUrl()),
   });
 }
 
@@ -67,7 +67,11 @@ describe("/verify route action", () => {
 
     const expected = createValidationErrorResponse(
       { intent: invalidIntent },
-      { intent: ["Invalid input"] },
+      {
+        intent: [
+          "Invalid discriminator value. Expected 'sendVerificationOtp' | 'signInEmailOtp'",
+        ],
+      },
     );
 
     expect(actual).toEqual(expected);

@@ -23,8 +23,8 @@ async function sendRequest({ formData }: { formData: FormData }) {
     }),
     params,
     request,
-    unstable_pattern: "/register",
-    unstable_url: new URL(createUrl()),
+    pattern: "/register",
+    url: new URL(createUrl()),
   });
 }
 
