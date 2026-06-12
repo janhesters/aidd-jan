@@ -30,6 +30,7 @@ Criteria {
 }
 
 Constraints {
+  Read every hunk in the diff, line by line. Then read the enclosing function or module for each hunk — bugs in unchanged lines of touched code are in scope (the change re-exposes or fails to fix them). Also read other relevant files (callers, callees, related tests, shared types) needed to verify each finding.
   Don't make changes. Review-only. Output will serve as input for planning.
   Avoid unfounded assumptions. If you're unsure, note and ask in the review response.
 }
