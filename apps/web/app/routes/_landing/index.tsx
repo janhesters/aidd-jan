@@ -11,10 +11,10 @@ export async function loader({ context }: Route.LoaderArgs) {
   return { description: t("description"), title: t("title") };
 }
 
-export function meta({ data }: Route.MetaArgs) {
+export function meta({ loaderData }: Route.MetaArgs) {
   return [
-    { title: data?.title },
-    { content: data?.description, name: "description" },
+    { title: loaderData?.title },
+    { content: loaderData?.description, name: "description" },
   ];
 }
 
