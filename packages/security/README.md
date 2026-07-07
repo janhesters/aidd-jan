@@ -127,9 +127,7 @@ Once the console stays clean, flip to enforced:
 contentSecurity(responseHeaders, {
   contentSecurityPolicy: {
     // reportOnly: true,  <-- remove or set to false
-    directives: {
-      /* ... */
-    },
+    directives: {/* ... */},
   },
 });
 ```
