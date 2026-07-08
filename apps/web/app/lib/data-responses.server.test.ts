@@ -29,7 +29,7 @@ describe("badRequest()", () => {
 
     expect(response.init?.status).toEqual(HTTP_BAD_REQUEST);
     expect(response.data).toEqual(customErrors);
-    expect((response.init?.headers as Headers).get("X-Custom-Header")).toEqual(
+    expect(new Headers(response.init?.headers).get("X-Custom-Header")).toEqual(
       "TestValue",
     );
   });
@@ -59,7 +59,7 @@ describe("forbidden()", () => {
     expect(response.init?.status).toEqual(HTTP_FORBIDDEN);
     expect(response.data).toEqual(customErrors);
     expect(
-      (response.init?.headers as Headers).get("X-Forbidden-Reason"),
+      new Headers(response.init?.headers).get("X-Forbidden-Reason"),
     ).toEqual("No Access");
   });
 });
@@ -87,7 +87,7 @@ describe("notFound()", () => {
 
     expect(response.init?.status).toEqual(HTTP_NOT_FOUND);
     expect(response.data).toEqual(customErrors);
-    expect((response.init?.headers as Headers).get("X-Resource-Type")).toEqual(
+    expect(new Headers(response.init?.headers).get("X-Resource-Type")).toEqual(
       "User",
     );
   });

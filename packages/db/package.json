@@ -12,7 +12,7 @@
     "check:format": "oxfmt --check .",
     "fix:format": "oxfmt --write .",
     "check:lint": "oxlint --type-aware",
-    "check:types": "tsgo",
+    "check:types": "tsc",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
@@ -26,6 +26,6 @@
     "@types/node": "^26.1.0",
     "@workspace/typescript-config": "workspace:*",
     "drizzle-kit": "^0.31.10",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
