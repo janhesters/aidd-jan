@@ -277,12 +277,7 @@ function ReportsChartSvg(props: ComponentProps<"svg">) {
           />
         </linearGradient>
         <clipPath id="clip0_0_106">
-          <rect
-            fill="white"
-            height="30"
-            transform="translate(14 14)"
-            width="358"
-          />
+          <rect height="30" transform="translate(14 14)" width="358" />
         </clipPath>
       </defs>
     </svg>

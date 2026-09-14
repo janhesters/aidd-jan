@@ -14,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@workspace/ui/components/dropdown-menu";
-import { cn } from "@workspace/ui/lib/utils";
 import type { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 import { Form } from "react-router";
@@ -37,8 +36,9 @@ function ColorSchemeButton({
 
   return (
     <DropdownMenuItem
-      className={cn("w-full", isActive && "text-primary [&_svg]:text-primary!")}
+      className="w-full"
       disabled={isActive}
+      variant={isActive ? "selected" : "default"}
       render={
         <button
           {...props}

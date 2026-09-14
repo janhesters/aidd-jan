@@ -3,6 +3,15 @@
   "tasks": {
     "build": {
       "outputs": ["build/**"]
+    },
+    "check:lint": {
+      "inputs": [
+        "$TURBO_EXTENDS$",
+        "$TURBO_ROOT$/packages/ui/components.json",
+        "$TURBO_ROOT$/packages/ui/package.json",
+        "$TURBO_ROOT$/packages/ui/src/**",
+        "$TURBO_ROOT$/packages/ui/tsconfig.json"
+      ]
     }
   }
 }

@@ -43,10 +43,7 @@ export function Footer() {
   return (
     <footer className="relative">
       <div
-        className={cn(
-          "mx-auto max-w-5xl lg:border-x",
-          "dark:bg-[radial-gradient(35%_80%_at_25%_0%,--theme(--color-foreground/.1),transparent)]",
-        )}
+        className={cn("mx-auto max-w-5xl lg:border-x", "dark:bg-footer-glow")}
       >
         <div className="bg-border pointer-events-none absolute left-1/2 h-px w-screen -translate-x-1/2" />
         <div className="grid max-w-5xl grid-cols-6 gap-6 p-4">

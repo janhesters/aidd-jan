@@ -23,8 +23,7 @@ export function HeroSection() {
           <div
             className={cn(
               "absolute -inset-x-20 inset-y-0 z-0 rounded-full",
-              "bg-[radial-gradient(ellipse_at_center,theme(--color-foreground/.1),transparent,transparent)]",
-              "blur-[50px]",
+              "bg-hero-glow blur-hero-glow",
             )}
           />
           <div className="via-border to-border absolute inset-y-0 left-4 w-px bg-linear-to-b from-transparent md:left-8" />
