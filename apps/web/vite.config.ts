@@ -1,4 +1,5 @@
 import { reactRouter } from "@react-router/dev/vite";
+import transformImports from "@rolldown/plugin-transform-imports";
 import tailwindcss from "@tailwindcss/vite";
 import type { Plugin } from "vite";
 import { defineConfig } from "vite";
@@ -19,5 +20,15 @@ function staticCacheHeaders(): Plugin {
 
 export default defineConfig({
   resolve: { tsconfigPaths: true },
-  plugins: [tailwindcss(), reactRouter(), staticCacheHeaders()],
+  plugins: [
+    transformImports({
+      "@tabler/icons-react": {
+        transform: "@tabler/icons-react/dist/esm/icons/{{member}}.mjs",
+        preventFullImport: true,
+      },
+    }),
+    tailwindcss(),
+    reactRouter(),
+    staticCacheHeaders(),
+  ],
 });

@@ -226,21 +226,21 @@ export default function VerifyRoute({ actionData }: Route.ComponentProps) {
 
               <div className="flex w-full justify-center">
                 <InputOTP {...fields.otp.otpInputProps} maxLength={OTP_LENGTH}>
-                  <InputOTPGroup className="gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
+                  <InputOTPGroup variant="separated">
                     <InputOTPSlot index={0} />
                     <InputOTPSlot index={1} />
                   </InputOTPGroup>
 
                   <InputOTPSeparator />
 
-                  <InputOTPGroup className="gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
+                  <InputOTPGroup variant="separated">
                     <InputOTPSlot index={2} />
                     <InputOTPSlot index={3} />
                   </InputOTPGroup>
 
                   <InputOTPSeparator />
 
-                  <InputOTPGroup className="gap-2 *:data-[slot=input-otp-slot]:rounded-md *:data-[slot=input-otp-slot]:border">
+                  <InputOTPGroup variant="separated">
                     <InputOTPSlot index={4} />
                     <InputOTPSlot index={5} />
                   </InputOTPGroup>
@@ -278,7 +278,7 @@ export default function VerifyRoute({ actionData }: Route.ComponentProps) {
             <AlertDescription>{t("alertDescription")}</AlertDescription>
           </Alert>
 
-          <FieldDescription className="text-muted-foreground text-xs">
+          <FieldDescription size="xs">
             <Trans
               components={{ 1: <b /> }}
               count={secondsLeft}

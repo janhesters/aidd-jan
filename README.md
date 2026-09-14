@@ -30,7 +30,7 @@ bun install
 - **Framework**: React 19 + React Router 7
 - **Monorepo**: Turborepo
 - **Styling**: Tailwind CSS 4 + shadcn
-- **Linting**: oxlint (with @nkzw config)
+- **Linting**: Oxlint with @shadcn/lint design-system rules
 - **Formatting**: oxfmt
 - **Testing**: Playwright (E2E), bun:test (unit)
 - **i18n**: i18next (English + German)
@@ -122,6 +122,48 @@ import { Button } from "@workspace/ui/components/button";
 ```
 
 Tailwind and `globals.css` are already configured to work with the `ui` package.
+
+### Design-system linting
+
+[`@shadcn/lint`](https://github.com/shadcn-ui/lint) is configured in
+`.oxlintrc.json`. Run `bun run check:lint` to lint all workspaces, or
+`bun run --filter web check:lint` to lint the web app. `bun run validate`
+and CI use the same configuration.
+
+The ESLint-named parser and API dependencies support the plugin; lint
+commands continue to run Oxlint.
+
+All six [shadcn rules](https://github.com/shadcn-ui/lint#rules) run as errors
+for the web app and shared UI package. CI fails on component restyling,
+arbitrary appearance values, raw colors, inline styles, unknown classes,
+and component class values the linter cannot read. Layout classes and
+arbitrary layout values are allowed. Configure policies in the scoped
+`rules` overrides in `.oxlintrc.json`. See the
+[configuration examples](https://github.com/shadcn-ui/lint/blob/main/docs/design-systems.md)
+for component contracts and custom messages.
+
+The `components.json` files in `apps/web` and `packages/ui` identify the
+shared components and Tailwind theme for automatic discovery.
+The `paths` mappings in `packages/ui/tsconfig.json` let `@shadcn/lint`
+resolve the UI package's own component imports. Keep these mappings aligned
+with the aliases in `packages/ui/components.json`.
+
+Shared UI components define their own appearance, so their implementation
+directory is exempt from `no-restyle`, `no-arbitrary-values`, and
+`require-static-classes`. Email templates retain inline styles for email
+client compatibility, and the Google icon retains its brand colors.
+
+The class allowances cover declared gradient tokens (`bg-auth-beam`,
+`bg-auth-glow`, `bg-footer-glow`, and `bg-hero-glow`), the `tw-animate-css`
+utility `fill-mode-backwards`, and the component marker classes
+`cn-input-otp` and `toaster`. These are not palette colors or missing
+utilities. Web lint also tracks the shared UI source and theme in Turbo,
+so changes to component variants or tokens invalidate its cached results.
+
+The existing `oxlint.config.mjs` contains an opt-in `@nkzw` configuration.
+Oxlint requires `--config` to load that filename. The default lint commands
+use `.oxlintrc.json`; adopting the `@nkzw` rules requires a separate cleanup
+of existing violations.
 
 ## Scripts
 

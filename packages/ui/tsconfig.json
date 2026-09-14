@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "paths": {
+      "@workspace/ui/components": ["./src/components"],
+      "@workspace/ui/components/*": ["./src/components/*"]
+    }
+  },
   "extends": "@workspace/typescript-config/react-library.json",
   "include": ["src"]
 }

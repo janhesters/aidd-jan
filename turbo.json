@@ -10,7 +10,9 @@
     "fix:format": {
       "cache": false
     },
-    "check:lint": {},
+    "check:lint": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/.oxlintrc.json"]
+    },
     "check:types": {},
     "test": {},
     "e2e": {

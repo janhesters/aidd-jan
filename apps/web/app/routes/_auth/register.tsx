@@ -183,7 +183,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
         </Form>
 
         <Field>
-          <FieldDescription className="text-muted-foreground text-sm">
+          <FieldDescription>
             <Trans
               components={{
                 pp: (

@@ -1,0 +1,52 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "jsPlugins": ["@shadcn/lint"],
+  "overrides": [
+    {
+      "files": ["apps/web/**", "packages/ui/**"],
+      "rules": {
+        "shadcn/no-arbitrary-values": ["error", { "allow": ["layout"] }],
+        "shadcn/no-inline-styles": "error",
+        "shadcn/no-raw-colors": [
+          "error",
+          {
+            "allow": [
+              "bg-auth-beam",
+              "bg-auth-glow",
+              "bg-footer-glow",
+              "bg-hero-glow",
+              "fill-mode-backwards"
+            ]
+          }
+        ],
+        "shadcn/no-restyle": ["error", { "allow": ["layout"] }],
+        "shadcn/no-unknown-classes": "error",
+        "shadcn/require-static-classes": "error"
+      }
+    },
+    {
+      "files": ["packages/ui/src/components/**"],
+      "rules": {
+        "shadcn/no-arbitrary-values": "off",
+        "shadcn/no-restyle": "off",
+        "shadcn/no-unknown-classes": [
+          "error",
+          { "allow": ["cn-input-otp", "toaster"] }
+        ],
+        "shadcn/require-static-classes": "off"
+      }
+    },
+    {
+      "files": ["apps/web/app/emails/**"],
+      "rules": {
+        "shadcn/no-inline-styles": "off"
+      }
+    },
+    {
+      "files": ["apps/web/app/routes/_auth/+/google-icon.tsx"],
+      "rules": {
+        "shadcn/no-raw-colors": "off"
+      }
+    }
+  ]
+}

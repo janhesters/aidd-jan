@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "e2e": "playwright test",
+    "e2e:install": "playwright install chromium --with-deps",
     "e2e:ui": "playwright test --ui"
   },
   "dependencies": {

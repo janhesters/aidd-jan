@@ -19,6 +19,30 @@
 }
 
 @theme inline {
+  --background-image-auth-glow: radial-gradient(
+    68.54% 68.72% at 55.02% 31.46%,
+    --theme(--color-foreground / 0.06) 0,
+    hsla(0, 0%, 55%, 0.02) 50%,
+    --theme(--color-foreground / 0.01) 80%
+  );
+  --background-image-auth-beam: radial-gradient(
+    50% 50% at 50% 50%,
+    --theme(--color-foreground / 0.04) 0,
+    --theme(--color-foreground / 0.01) 80%,
+    transparent 100%
+  );
+  --background-image-footer-glow: radial-gradient(
+    35% 80% at 25% 0%,
+    --theme(--color-foreground / 0.1),
+    transparent
+  );
+  --background-image-hero-glow: radial-gradient(
+    ellipse at center,
+    --theme(--color-foreground / 0.1),
+    transparent,
+    transparent
+  );
+  --blur-hero-glow: 50px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);

@@ -111,7 +111,7 @@ jobs:
       - name: Setup database
         run: bun run db:push
       - name: Install Playwright Chromium
-        run: bunx playwright install chromium --with-deps
+        run: bun run --filter @workspace/playwright-web e2e:install
       - name: Start emulator
         run: bun run emulate &
       - name: Wait for emulator
