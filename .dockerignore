@@ -1,0 +1,37 @@
+# Docker only reads a .dockerignore at the build-context root, and
+# apps/web/Dockerfile has to be built with the repo root as context, so this
+# file is the one that counts.
+
+# Never ship host installs: libsql and sharp resolve per-platform binaries, so
+# the image runs its own bun install.
+node_modules
+**/node_modules
+
+.git
+.github
+.husky
+
+# Build output and caches, all regenerated inside the image.
+**/.turbo
+**/build
+**/dist
+apps/web/.react-router
+
+# Local state and secrets.
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/.env
+**/.env.*
+!**/.env.example
+
+# Test artifacts.
+**/playwright-report
+**/test-results
+**/blob-report
+
+# Agent and editor tooling, irrelevant to the image.
+.agents
+.claude
+.cursor
+docs

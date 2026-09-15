@@ -6,6 +6,14 @@ on:
   pull_request:
     branches: [main]
 
+# None of these jobs write to the repository, and none need git credentials
+# after the clone. `actions/checkout` otherwise persists the token into
+# .git/config, where every later step in the job can read it -- including the
+# composite action and everything `bun install` pulls in. Hence both the
+# read-only token and `persist-credentials: false` on each checkout.
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
@@ -15,16 +23,11 @@ jobs:
     name: Commitlint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - run: bun install --frozen-lockfile
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - name: Lint commits (PR)
         if: github.event_name == 'pull_request'
         run: bunx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
@@ -36,56 +39,40 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
         with:
-          node-version: 22
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - run: bun install --frozen-lockfile
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - run: bun run check:lint
 
   format:
     name: Format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
         with:
-          node-version: 22
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - run: bun install --frozen-lockfile
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - run: bun run check:format
 
   typecheck:
     name: Type Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
         with:
-          node-version: 22
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - run: bun install --frozen-lockfile
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - run: bun run check:types
 
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
         with:
-          node-version: 22
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - run: bun install --frozen-lockfile
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - name: Copy test env vars
         run: cp apps/web/.env.example apps/web/.env
       - name: Setup database
@@ -96,14 +83,10 @@ jobs:
     name: E2E
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
         with:
-          node-version: 22
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - run: bun install --frozen-lockfile
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - name: Copy test env vars
         run: |
           cp apps/web/.env.example apps/web/.env
@@ -123,3 +106,52 @@ jobs:
           name: playwright-report
           path: tooling/playwright-web/playwright-report/
           retention-days: 30
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      # No ./.github/actions/setup here: the Dockerfile runs its own
+      # `bun install` inside the image, and .dockerignore excludes node_modules,
+      # so a runner-side install would be dead weight the build never reads.
+      - name: Read the Bun pin
+        id: bun
+        run: echo "version=$(jq -r .packageManager package.json | cut -d@ -f2)" >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        run: docker build -f apps/web/Dockerfile --build-arg BUN_VERSION=${{ steps.bun.outputs.version }} -t web:ci .
+
+      # Building only proves it compiles. The entrypoint runs react-router-serve
+      # through Bun's node shim, so start it and check it answers.
+      # better-auth refuses its dev default secret under NODE_ENV=production, so
+      # a production container genuinely needs these. Throwaway values: this
+      # checks that the server boots and answers, not that auth works.
+      - name: Start container
+        run: |
+          docker run -d --name web-ci -p 3000:3000 \
+            -e TURSO_DATABASE_URL=file:/tmp/ci.db \
+            -e BETTER_AUTH_SECRET=ci-smoke-test-secret-not-a-real-one \
+            -e BETTER_AUTH_URL=http://localhost:3000 \
+            -e COOKIE_SECRET=ci-smoke-test-cookie-secret \
+            web:ci
+
+      - name: Wait for a response
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:3000/ > /dev/null; then
+              echo "Server responded after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::No response from the container after 30s"
+          docker logs web-ci
+          exit 1
+
+      - name: Container logs
+        if: always()
+        run: docker logs web-ci 2>&1 | tail -30

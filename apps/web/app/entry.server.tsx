@@ -13,7 +13,6 @@ import { ServerRouter } from "react-router";
 
 import { getEnv, init } from "./lib/env.server";
 import { getInstance } from "./middleware/i18next";
-import { startMockServer } from "./tests/mocks/server";
 
 init();
 global.ENV = getEnv();
@@ -26,7 +25,13 @@ async function initializeMockServer() {
   }
 
   if (process.env.MOCKS === "true") {
-    const { resendHandlers } = await import("~/tests/mocks/handlers/resend");
+    // Imported inside the guard, not at module scope: mocks/server.ts pulls in
+    // msw/node, and msw is a devDependency. A static import puts it in the
+    // production bundle, where it fails to resolve and the server dies at boot.
+    const [{ startMockServer }, { resendHandlers }] = await Promise.all([
+      import("~/tests/mocks/server"),
+      import("~/tests/mocks/handlers/resend"),
+    ]);
     startMockServer([...resendHandlers]);
   }
 

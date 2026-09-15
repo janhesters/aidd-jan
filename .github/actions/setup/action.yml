@@ -1,0 +1,22 @@
+name: Setup
+description: Install the Node and Bun toolchains and this workspace's dependencies.
+
+runs:
+  using: composite
+  steps:
+    # Oxlint's type-aware rules and the react-router / tsgo CLIs resolve `node`
+    # through their shebang, so Node has to be on PATH before Bun installs.
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 22
+
+    # Reads the exact version from package.json's `packageManager` field, so CI
+    # tracks the pin instead of silently moving with every Bun release. Naming
+    # the file is deliberate: setup-bun's implicit default falls through to
+    # `latest` if the field ever goes missing, while this errors instead.
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: package.json
+
+    - run: bun install --frozen-lockfile
+      shell: bash
